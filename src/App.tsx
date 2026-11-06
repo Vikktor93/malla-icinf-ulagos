@@ -356,6 +356,15 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
           <button type="button" onClick={() => prog.elegirMalla(otra.id)} className="font-semibold text-mar underline underline-offset-2">
             {otra.nombre}
           </button>
+          . Plataforma desarrollada por{' '}
+          <a
+            href="https://github.com/Vikktor93/malla-icinf-ulagos"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-mar underline underline-offset-2"
+          >
+            @Vikktor93
+          </a>
           .
         </p>
       </footer>
