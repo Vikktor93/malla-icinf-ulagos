@@ -28,6 +28,14 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
   const [aviso, setAviso] = useState<string | null>(null)
   const [confirmarReinicio, setConfirmarReinicio] = useState(false)
   const [generandoPDF, setGenerandoPDF] = useState(false)
+  const [dialogoPDF, setDialogoPDF] = useState(false)
+  const [nombre, setNombre] = useState(() => {
+    try {
+      return localStorage.getItem('icinf:nombre') ?? ''
+    } catch {
+      return ''
+    }
+  })
   const soloLectura = prog.viendoCompartido
 
   const referencia = useMemo(() => semestreReferencia(malla, prog.aprobadas), [malla, prog.aprobadas])
@@ -45,7 +53,11 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
   const foco = hover ?? seleccion
 
   useEffect(() => {
-    const esc = (e: KeyboardEvent) => e.key === 'Escape' && setVista(null)
+    const esc = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return
+      setVista(null)
+      setDialogoPDF(false)
+    }
     addEventListener('keydown', esc)
     return () => removeEventListener('keydown', esc)
   }, [])
@@ -67,6 +79,12 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
   }
 
   const exportarPDF = async () => {
+    const limpio = nombre.trim()
+    try {
+      localStorage.setItem('icinf:nombre', limpio)
+    } catch {
+      /* noop */
+    }
     setGenerandoPDF(true)
     try {
       const { descargarPDF } = await import('./lib/pdf')
@@ -77,7 +95,9 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
         referencia,
         // En un avance compartido no se incluye el plan propio
         plan: soloLectura ? new Set() : prog.plan,
+        nombre: limpio,
       })
+      setDialogoPDF(false)
       setAviso('PDF descargado.')
     } catch {
       setAviso('No se pudo generar el PDF. Inténtalo de nuevo.')
@@ -201,14 +221,51 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
           <button type="button" onClick={compartir} className="flex h-9 items-center gap-2 rounded-full bg-white px-4 text-[14px] font-semibold ring-1 ring-bruma hover:ring-marea">
             <Link2 size={16} /> Compartir avance
           </button>
-          <button
-            type="button"
-            onClick={exportarPDF}
-            disabled={generandoPDF}
-            className="flex h-9 items-center gap-2 rounded-full bg-white px-4 text-[14px] font-semibold ring-1 ring-bruma hover:ring-marea disabled:opacity-60"
-          >
-            <FileDown size={16} /> {generandoPDF ? 'Generando PDF…' : 'Descargar PDF'}
-          </button>
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setDialogoPDF((v) => !v)}
+              aria-expanded={dialogoPDF}
+              className="flex h-9 items-center gap-2 rounded-full bg-white px-4 text-[14px] font-semibold ring-1 ring-bruma hover:ring-marea"
+            >
+              <FileDown size={16} /> Descargar PDF
+            </button>
+            {dialogoPDF && (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  exportarPDF()
+                }}
+                className="absolute top-11 right-0 z-30 w-[300px] rounded-2xl bg-white p-4 shadow-[0_12px_40px_-12px_rgba(18,53,64,0.45)] ring-1 ring-bruma"
+              >
+                <label htmlFor="nombre-pdf" className="block text-[14px] font-semibold">
+                  Nombre del estudiante <span className="font-normal text-mar-suave">(opcional)</span>
+                </label>
+                <input
+                  id="nombre-pdf"
+                  autoFocus
+                  value={nombre}
+                  onChange={(e) => setNombre(e.target.value)}
+                  maxLength={80}
+                  autoComplete="name"
+                  placeholder="Aparecerá en el encabezado del PDF"
+                  className="mt-2 h-10 w-full rounded-lg bg-niebla px-3 text-[14px] ring-1 ring-bruma placeholder:text-mar-suave/70 focus:ring-2 focus:ring-marea focus:outline-none"
+                />
+                <div className="mt-3 flex justify-end gap-2">
+                  <button type="button" onClick={() => setDialogoPDF(false)} className="h-9 rounded-full px-3 text-[14px] font-semibold text-mar-suave">
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={generandoPDF}
+                    className="h-9 rounded-full bg-mar px-4 text-[14px] font-semibold text-white hover:bg-mar/90 disabled:opacity-60"
+                  >
+                    {generandoPDF ? 'Generando PDF…' : 'Descargar PDF'}
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
           {!soloLectura &&
             (confirmarReinicio ? (
               <span className="flex items-center gap-1.5 text-[14px]">

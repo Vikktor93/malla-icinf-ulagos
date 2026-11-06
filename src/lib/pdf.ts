@@ -9,6 +9,8 @@ interface Datos {
   estados: Map<string, Estado>
   referencia: number
   plan: Set<string>
+  /** Nombre del estudiante (opcional) para el encabezado */
+  nombre?: string
 }
 
 const MAR = '#123540'
@@ -44,7 +46,7 @@ async function imagenComoDataURL(url: string): Promise<string | null> {
 const sumaSCT = (xs: Asignatura[]) => xs.reduce((t, a) => t + a.sct, 0)
 
 /** Genera y descarga el informe de avance en PDF. Las librerías se cargan solo al usarlo. */
-export async function descargarPDF({ malla, aprobadas, estados, referencia, plan }: Datos) {
+export async function descargarPDF({ malla, aprobadas, estados, referencia, plan, nombre = '' }: Datos) {
   const [{ jsPDF }, { default: autoTable }, logoData] = await Promise.all([
     import('jspdf'),
     import('jspdf-autotable'),
@@ -72,10 +74,16 @@ export async function descargarPDF({ malla, aprobadas, estados, referencia, plan
   doc.setTextColor('#FFFFFF')
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(17)
-  doc.text('Informe de Avance Académico', M + 25, 14)
+  // Con nombre, el título sube para dejar espacio a una tercera línea
+  const yTitulo = nombre ? 11.5 : 14
+  doc.text('Informe de Avance Académico', M + 25, yTitulo)
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(9.5)
-  doc.text('Ingeniería Civil en Informática, Universidad de Los Lagos', M + 25, 20.5)
+  doc.text('Ingeniería Civil en Informática, Universidad de Los Lagos', M + 25, yTitulo + 6.5)
+  if (nombre) {
+    doc.setFont('helvetica', 'bold')
+    doc.text(`Estudiante: ${nombre}`, M + 25, yTitulo + 12.5)
+  }
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(12)
   doc.text(malla.nombre, W - M, 13, { align: 'right' })
@@ -320,5 +328,11 @@ export async function descargarPDF({ malla, aprobadas, estados, referencia, plan
   }
 
   const iso = hoy.toISOString().slice(0, 10)
-  doc.save(`avance-icinf-${malla.id}-${iso}.pdf`)
+  const slug = nombre
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+  doc.save(`avance-icinf-${malla.id}${slug ? `-${slug}` : ''}-${iso}.pdf`)
 }
