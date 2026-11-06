@@ -162,7 +162,7 @@ export function Inscribir({ malla, idx, estados, referencia, plan, soloLectura, 
               : `La suma de los ramos que inscribas no debería superar los ${SCT_RECOMENDADOS} SCT del semestre.`}
           </p>
         )}
-        <p className="mt-2 text-[12px] leading-snug text-mar-suave/90">
+        <p className="mt-2 text-center text-[12px] leading-snug text-balance text-mar-suave/90">
           Si tienes dudas sobre la inscripción de asignaturas, acércate personalmente a la oficina de tu Dirección Docente.
         </p>
       </div>
