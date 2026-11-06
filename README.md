@@ -141,13 +141,41 @@ repositorio:
 - Si un despliegue falla, el detalle está en Vercel → *Deployments* → *Build Logs*. Antes de
   hacer push conviene correr `npm run build` localmente, que es el mismo comando que usa Vercel.
 
-## Próximos pasos
+## Fases del proyecto
 
-### 1. Ramos atrasados según período de dictación
+### Fase 1: Malla interactiva
 
-Si cada asignatura se dicta una vez al año, un ramo atrasado solo se puede inscribir en el período
-en que se dicta (semestres impares o pares). Por definir si el panel de inscripción debe mostrar
-los ramos atrasados solo cuando corresponde dictarlos.
+- [x] Transcripción de la Malla DU 416 y de la Malla 2027 con SCT, DD, TA, áreas y previaturas
+- [x] Estados de cada ramo y conexiones visuales entre previaturas
+- [x] Panel de detalle por asignatura
+- [x] Avance guardado en el navegador y enlace para compartirlo
+- [x] Despliegue en Vercel
+
+### Fase 2: Planificación de la inscripción
+
+- [x] Semestre de referencia del estudiante
+- [x] Separación de ramos atrasados y ramos del semestre siguiente
+- [x] Contador de SCT con aviso informativo al superar el tope
+- [x] Nota para consultar dudas en la Dirección Docente
+
+### Fase 3: Exportación y ayuda
+
+- [x] Informe de avance en PDF, con nombre del estudiante opcional
+- [x] Guía de uso integrada
+- [x] Reporte de problemas a través de GitHub
+- [x] Indicadores de avance hacia la Licenciatura y el Título profesional
+
+### Fase 4: Ajustes según la operación de la carrera
+
+- [ ] Mostrar los ramos atrasados solo en el período en que se dictan (por definir)
+- [ ] Incorporar en la Guía el valor oficial de 1 SCT en la Universidad de Los Lagos
+- [ ] Canal para reportar problemas sin necesidad de una cuenta de GitHub
+
+### Fase 5: Cuentas y datos centralizados (Supabase)
+
+- [ ] Inicio de sesión con correo institucional y avance sincronizado entre dispositivos
+- [ ] Panel para que la Dirección de Carrera edite la malla sin modificar código
+- [ ] Estadísticas agregadas para planificar la oferta de asignaturas
 
 ## Licencia
 
