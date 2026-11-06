@@ -296,20 +296,27 @@ export async function descargarPDF({ malla, aprobadas, estados, referencia, plan
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(7)
     doc.setTextColor(MAR_SUAVE)
-    // "Documento referencial generado en <enlace>. <advertencia>"
+    // Línea 1: "Documento referencial generado en <enlace>."
+    const y1 = alto - 10
     let x = M
     const previo = 'Documento referencial generado en '
-    doc.text(previo, x, alto - 7)
+    doc.text(previo, x, y1)
     x += doc.getTextWidth(previo)
     doc.setTextColor(MAREA)
-    doc.textWithLink(SITIO, x, alto - 7, { url: URL_SITIO })
+    doc.textWithLink(SITIO, x, y1, { url: URL_SITIO })
     doc.setDrawColor(MAREA)
     doc.setLineWidth(0.15)
-    doc.line(x, alto - 6.5, x + doc.getTextWidth(SITIO), alto - 6.5)
+    doc.line(x, y1 + 0.5, x + doc.getTextWidth(SITIO), y1 + 0.5)
     x += doc.getTextWidth(SITIO)
     doc.setTextColor(MAR_SUAVE)
-    doc.text('. No reemplaza el registro académico oficial de la universidad.', x, alto - 7)
-    doc.text(`Página ${p} de ${paginas}`, ancho - M, alto - 7, { align: 'right' })
+    doc.text('.', x, y1)
+    // Línea 2: advertencia
+    doc.text(
+      'Este documento no es oficial y no reemplaza el registro académico oficial de la Universidad de Los Lagos. Es de uso interno.',
+      M,
+      alto - 6.5,
+    )
+    doc.text(`Página ${p} de ${paginas}`, ancho - M, alto - 6.5, { align: 'right' })
   }
 
   const iso = hoy.toISOString().slice(0, 10)
