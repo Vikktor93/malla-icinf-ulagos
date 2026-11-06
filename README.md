@@ -182,6 +182,20 @@ repositorio:
 - [ ] Panel para que la Dirección de Carrera edite la malla sin modificar código
 - [ ] Estadísticas agregadas para planificar la oferta de asignaturas
 
+## Versionamiento
+
+La plataforma usa [versionamiento semántico](https://semver.org/lang/es/) con el formato
+`MAYOR.MENOR.PARCHE`:
+
+| Parte | Cuándo cambia | Ejemplo |
+|---|---|---|
+| **MAYOR** | Cambios de fondo en la plataforma o en cómo se guarda el avance | Incorporar una nueva malla o cuentas de usuario con Supabase |
+| **MENOR** | Nuevas funcionalidades que no afectan lo existente | Agregar la exportación a PDF o la Guía |
+| **PARCHE** | Correcciones de errores, datos de la malla, textos o estilos | Corregir una previatura o los SCT de una asignatura |
+
+Cada versión publicada se marca con una etiqueta de Git (por ejemplo `v1.0.0`) y se registra en
+[GitHub Releases](https://github.com/Vikktor93/malla-icinf-ulagos/releases).
+
 ## Licencia
 
 El código de esta plataforma se distribuye bajo la [licencia MIT](LICENSE).
@@ -198,3 +212,7 @@ Ingeniería, Universidad de Los Lagos.
 Si tienes dudas o consultas sobre el uso de la plataforma, contáctame a través de
 [GitHub](https://github.com/Vikktor93) o abre un
 [issue](https://github.com/Vikktor93/malla-icinf-ulagos/issues) en este repositorio.
+
+---
+
+**Versión:** 1.0.0 | **Última actualización:** 6 de noviembre de 2026
