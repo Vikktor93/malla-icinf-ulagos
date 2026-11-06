@@ -1,4 +1,4 @@
-import { Link2, ListChecks, RotateCcw, Search, X } from 'lucide-react'
+import { FileDown, Link2, ListChecks, RotateCcw, Search, X } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { Cinta } from './components/Cinta'
 import { Detalle } from './components/Detalle'
@@ -27,6 +27,7 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
   const [busqueda, setBusqueda] = useState('')
   const [aviso, setAviso] = useState<string | null>(null)
   const [confirmarReinicio, setConfirmarReinicio] = useState(false)
+  const [generandoPDF, setGenerandoPDF] = useState(false)
   const soloLectura = prog.viendoCompartido
 
   const referencia = useMemo(() => semestreReferencia(malla, prog.aprobadas), [malla, prog.aprobadas])
@@ -62,6 +63,26 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
       setAviso('Enlace copiado. Quien lo abra verá tu avance.')
     } catch {
       prompt('Copia este enlace para compartir tu avance:', url)
+    }
+  }
+
+  const exportarPDF = async () => {
+    setGenerandoPDF(true)
+    try {
+      const { descargarPDF } = await import('./lib/pdf')
+      await descargarPDF({
+        malla,
+        aprobadas: prog.aprobadas,
+        estados,
+        referencia,
+        // En un avance compartido no se incluye el plan propio
+        plan: soloLectura ? new Set() : prog.plan,
+      })
+      setAviso('PDF descargado.')
+    } catch {
+      setAviso('No se pudo generar el PDF. Inténtalo de nuevo.')
+    } finally {
+      setGenerandoPDF(false)
     }
   }
 
@@ -179,6 +200,14 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
         <div className="ml-auto flex items-center gap-2">
           <button type="button" onClick={compartir} className="flex h-9 items-center gap-2 rounded-full bg-white px-4 text-[14px] font-semibold ring-1 ring-bruma hover:ring-marea">
             <Link2 size={16} /> Compartir avance
+          </button>
+          <button
+            type="button"
+            onClick={exportarPDF}
+            disabled={generandoPDF}
+            className="flex h-9 items-center gap-2 rounded-full bg-white px-4 text-[14px] font-semibold ring-1 ring-bruma hover:ring-marea disabled:opacity-60"
+          >
+            <FileDown size={16} /> {generandoPDF ? 'Generando PDF…' : 'Descargar PDF'}
           </button>
           {!soloLectura &&
             (confirmarReinicio ? (
