@@ -32,6 +32,21 @@ qué pueden inscribir.
   abre por primera vez.
 - Botón "Reportar problema" que abre un issue en este repositorio con la malla ya indicada.
 
+## Stack tecnológico
+
+| Tecnología | Uso en la plataforma |
+|---|---|
+| [React 19](https://react.dev/) | Interfaz y estado de la aplicación |
+| [TypeScript 7](https://www.typescriptlang.org/) | Tipado de los datos de las mallas y de la lógica de previaturas |
+| [Vite 8](https://vite.dev/) | Servidor de desarrollo y compilación para producción |
+| [Tailwind CSS 4](https://tailwindcss.com/) | Estilos y diseño responsive |
+| [Lucide](https://lucide.dev/) | Íconos |
+| [jsPDF 4](https://github.com/parallax/jsPDF) y [jsPDF-AutoTable 5](https://github.com/simonbengtsson/jsPDF-AutoTable) | Generación del informe de avance en PDF |
+| [Fontsource](https://fontsource.org/) | Tipografías Bricolage Grotesque e Instrument Sans, incluidas en el sitio |
+| [Oxlint](https://oxc.rs/docs/guide/usage/linter) | Revisión de calidad del código |
+| [Vercel](https://vercel.com/) | Hosting y despliegue automático desde GitHub |
+| `localStorage` del navegador | Guardado del avance del estudiante, sin servidor ni cuentas |
+
 ## Estructura
 
 ```
