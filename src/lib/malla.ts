@@ -64,6 +64,19 @@ export function semestreReferencia(malla: Malla, aprobadas: Set<string>): number
   return Math.min(max + 1, malla.semestres)
 }
 
+/** Carga recomendada por semestre (referencial, nunca bloquea la inscripción). */
+export const SCT_RECOMENDADOS = 30
+
+/**
+ * Tope para el aviso de sobrecarga: 30 SCT o los SCT oficiales del semestre, lo que sea mayor.
+ * Así, quien inscribe su semestre tal como viene en la malla (p. ej. 32 SCT en el semestre 1
+ * de la DU 416) no recibe el aviso.
+ */
+export function topeSCT(malla: Malla, semestre: number): number {
+  const oficial = malla.asignaturas.filter((a) => a.semestre === semestre).reduce((t, a) => t + a.sct, 0)
+  return Math.max(SCT_RECOMENDADOS, oficial)
+}
+
 /** Estados de todos los ramos, considerando el semestre de referencia del estudiante. */
 export function calcularEstados(malla: Malla, aprobadas: Set<string>, referencia: number): Map<string, Estado> {
   const m = new Map<string, Estado>()

@@ -1,7 +1,7 @@
-import { ShieldQuestion, X } from 'lucide-react'
+import { Info, ShieldQuestion, TriangleAlert, X } from 'lucide-react'
 import { AREAS } from '../data/mallas'
 import type { Asignatura, Malla } from '../data/types'
-import { descendientes, type Estado, type Indice } from '../lib/malla'
+import { descendientes, SCT_RECOMENDADOS, topeSCT, type Estado, type Indice } from '../lib/malla'
 
 interface Props {
   malla: Malla
@@ -45,6 +45,8 @@ export function Inscribir({ malla, idx, estados, referencia, plan, soloLectura, 
   const enPlan = opciones.filter((o) => plan.has(o.a.id))
   const sct = enPlan.reduce((t, o) => t + o.a.sct, 0)
   const horas = enPlan.reduce((t, o) => t + o.a.dd + o.a.ta, 0)
+  const tope = topeSCT(malla, referencia)
+  const excede = sct > tope
 
   const fila = ({ a, abre, cond }: Opcion, atrasado: boolean) => (
     <li key={a.id}>
@@ -120,8 +122,11 @@ export function Inscribir({ malla, idx, estados, referencia, plan, soloLectura, 
         <div className="flex items-end justify-between gap-4">
           <div>
             <p className="text-[13px] text-mar-suave">Tu plan</p>
-            <p className="font-display text-[22px] leading-tight font-bold tabular-nums">
-              {sct} SCT <span className="text-[14px] font-medium text-mar-suave">en {enPlan.length} {enPlan.length === 1 ? 'ramo' : 'ramos'}, {horas} h/semana</span>
+            <p className={`font-display text-[22px] leading-tight font-bold tabular-nums ${excede ? 'text-amber-700' : ''}`}>
+              {sct} de {tope} SCT
+            </p>
+            <p className="text-[13px] text-mar-suave tabular-nums">
+              {enPlan.length} {enPlan.length === 1 ? 'ramo' : 'ramos'}, {horas} h/semana
             </p>
           </div>
           {enPlan.length > 0 && !soloLectura && (
@@ -130,6 +135,33 @@ export function Inscribir({ malla, idx, estados, referencia, plan, soloLectura, 
             </button>
           )}
         </div>
+        <div
+          className="mt-2 h-1.5 overflow-hidden rounded-full bg-bruma"
+          role="meter"
+          aria-label="SCT del plan"
+          aria-valuemin={0}
+          aria-valuemax={tope}
+          aria-valuenow={sct}
+        >
+          <div
+            className={`h-full rounded-full transition-[width] duration-300 ${excede ? 'bg-amber-500' : 'bg-marea'}`}
+            style={{ width: `${Math.min(100, (sct / tope) * 100)}%` }}
+          />
+        </div>
+
+        {excede ? (
+          <p className="mt-2.5 flex items-start gap-2 rounded-lg bg-amber-50 px-3 py-2 text-[13px] text-amber-900 ring-1 ring-amber-200">
+            <TriangleAlert size={16} className="mt-px shrink-0" />
+            Tu plan supera los {tope} SCT. Puedes inscribirlo igual, pero revisa si podrás con esa carga.
+          </p>
+        ) : (
+          <p className="mt-2.5 flex items-start gap-2 text-[13px] text-mar-suave">
+            <Info size={16} className="mt-px shrink-0" />
+            {tope > SCT_RECOMENDADOS
+              ? `La carga recomendada es de ${SCT_RECOMENDADOS} SCT por semestre. Tu semestre ${referencia} suma ${tope} SCT en la malla.`
+              : `La suma de los ramos que inscribas no debería superar los ${SCT_RECOMENDADOS} SCT del semestre.`}
+          </p>
+        )}
       </div>
     </div>
   )
