@@ -1,4 +1,4 @@
-import logo from '../assets/logo-icinf.png'
+import logo from '../assets/logo-icinf.webp'
 import { AREAS } from '../data/mallas'
 import type { Asignatura, Malla } from '../data/types'
 import { topeSCT, type Estado } from './malla'
@@ -29,15 +29,17 @@ const ETIQUETA: Record<Estado, string> = {
   bloqueada: 'Previaturas pendientes',
 }
 
-async function imagenComoDataURL(url: string): Promise<string | null> {
+/** Convierte una imagen (el logo está en WebP) a PNG, que es el formato que admite jsPDF. */
+async function imagenComoPNG(url: string): Promise<string | null> {
   try {
-    const blob = await (await fetch(url)).blob()
-    return await new Promise((ok, error) => {
-      const r = new FileReader()
-      r.onload = () => ok(r.result as string)
-      r.onerror = error
-      r.readAsDataURL(blob)
-    })
+    const img = new Image()
+    img.src = url
+    await img.decode()
+    const canvas = document.createElement('canvas')
+    canvas.width = img.naturalWidth
+    canvas.height = img.naturalHeight
+    canvas.getContext('2d')!.drawImage(img, 0, 0)
+    return canvas.toDataURL('image/png')
   } catch {
     return null
   }
@@ -50,7 +52,7 @@ export async function descargarPDF({ malla, aprobadas, estados, referencia, plan
   const [{ jsPDF }, { default: autoTable }, logoData] = await Promise.all([
     import('jspdf'),
     import('jspdf-autotable'),
-    imagenComoDataURL(logo),
+    imagenComoPNG(logo),
   ])
 
   const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' })

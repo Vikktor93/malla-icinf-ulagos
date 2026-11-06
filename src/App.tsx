@@ -10,7 +10,7 @@ import { MALLAS } from './data/mallas'
 import type { Malla } from './data/types'
 import { calcularEstados, indexar, semestreReferencia } from './lib/malla'
 import { useProgreso } from './lib/useProgreso'
-import logo from './assets/logo-icinf.png'
+import logo from './assets/logo-icinf.webp'
 
 type Vista = { tipo: 'detalle'; id: string } | { tipo: 'inscribir' } | null
 

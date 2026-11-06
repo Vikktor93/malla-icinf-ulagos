@@ -1,6 +1,6 @@
 import { BookOpen, CheckCheck, FileDown, Link2, Lock, RotateCcw, Search, ShieldQuestion } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
-import logo from '../assets/logo-icinf.png'
+import logo from '../assets/logo-icinf.webp'
 import { AREAS } from '../data/mallas'
 import type { Asignatura } from '../data/types'
 import type { Estado } from '../lib/malla'
