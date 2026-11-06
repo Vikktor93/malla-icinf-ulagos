@@ -1,0 +1,114 @@
+import type { Asignatura, Malla, Requisito } from '../data/types'
+
+export type Estado = 'aprobada' | 'disponible' | 'condicional' | 'bloqueada'
+
+export interface Indice {
+  porId: Map<string, Asignatura>
+  /** id -> asignaturas que lo tienen como previatura directa */
+  abre: Map<string, Asignatura[]>
+  /** id -> asignaturas que exigen tener aprobado un semestre que incluye este ramo */
+  abrePorSemestre: Map<string, Asignatura[]>
+}
+
+export function indexar(malla: Malla): Indice {
+  const porId = new Map(malla.asignaturas.map((a) => [a.id, a]))
+  const abre = new Map<string, Asignatura[]>()
+  const abrePorSemestre = new Map<string, Asignatura[]>()
+  for (const a of malla.asignaturas) {
+    abre.set(a.id, [])
+    abrePorSemestre.set(a.id, [])
+  }
+  for (const a of malla.asignaturas) {
+    for (const q of a.requisitos) {
+      if (q.tipo === 'curso') abre.get(q.id)!.push(a)
+      if (q.tipo === 'semestre') {
+        for (const b of malla.asignaturas) if (b.semestre <= q.n) abrePorSemestre.get(b.id)!.push(a)
+      }
+    }
+  }
+  return { porId, abre, abrePorSemestre }
+}
+
+export function requisitoCumplido(q: Requisito, malla: Malla, aprobadas: Set<string>): boolean {
+  switch (q.tipo) {
+    case 'curso':
+      return aprobadas.has(q.id)
+    case 'semestre':
+      return malla.asignaturas.every((b) => b.semestre > q.n || aprobadas.has(b.id))
+    case 'consejo':
+      return true // no se puede verificar desde aquí: se marca como condicional
+  }
+}
+
+export function estadoDe(a: Asignatura, malla: Malla, aprobadas: Set<string>): Estado {
+  if (aprobadas.has(a.id)) return 'aprobada'
+  const ok = a.requisitos.every((q) => requisitoCumplido(q, malla, aprobadas))
+  if (!ok) return 'bloqueada'
+  if (a.requisitos.some((q) => q.tipo === 'consejo')) return 'condicional'
+  return 'disponible'
+}
+
+export function textoRequisito(q: Requisito, idx: Indice): string {
+  if (q.tipo === 'curso') return idx.porId.get(q.id)?.nombre ?? q.id
+  if (q.tipo === 'semestre') return `Semestres 1 al ${q.n} aprobados`
+  return 'Aprobación del Consejo de Carrera'
+}
+
+/** Todas las asignaturas que dependen (directa o indirectamente) de `id` */
+export function descendientes(id: string, idx: Indice): Set<string> {
+  const out = new Set<string>()
+  const pila = [id]
+  while (pila.length) {
+    const actual = pila.pop()!
+    for (const h of [...(idx.abre.get(actual) ?? []), ...(idx.abrePorSemestre.get(actual) ?? [])]) {
+      if (!out.has(h.id)) {
+        out.add(h.id)
+        pila.push(h.id)
+      }
+    }
+  }
+  return out
+}
+
+/** Todas las previaturas (directas o indirectas) de `id`, solo por ramo */
+export function ancestros(id: string, idx: Indice): Set<string> {
+  const out = new Set<string>()
+  const pila = [id]
+  while (pila.length) {
+    const a = idx.porId.get(pila.pop()!)
+    for (const q of a?.requisitos ?? []) {
+      if (q.tipo === 'curso' && !out.has(q.id)) {
+        out.add(q.id)
+        pila.push(q.id)
+      }
+    }
+  }
+  return out
+}
+
+/* ---------- Guardar y compartir avance ---------- */
+
+/** Codifica las aprobadas como un mapa de bits en base64url (orden de la malla). */
+export function codificar(malla: Malla, aprobadas: Set<string>): string {
+  const bytes = new Uint8Array(Math.ceil(malla.asignaturas.length / 8))
+  malla.asignaturas.forEach((a, i) => {
+    if (aprobadas.has(a.id)) bytes[i >> 3] |= 1 << (i & 7)
+  })
+  let bin = ''
+  bytes.forEach((b) => (bin += String.fromCharCode(b)))
+  return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+}
+
+export function decodificar(malla: Malla, txt: string): Set<string> {
+  const out = new Set<string>()
+  try {
+    const bin = atob(txt.replace(/-/g, '+').replace(/_/g, '/'))
+    malla.asignaturas.forEach((a, i) => {
+      const b = bin.charCodeAt(i >> 3)
+      if (b & (1 << (i & 7))) out.add(a.id)
+    })
+  } catch {
+    /* enlace inválido: se ignora */
+  }
+  return out
+}

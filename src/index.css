@@ -1,0 +1,62 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/bricolage-grotesque';
+@import '@fontsource-variable/instrument-sans';
+
+@theme {
+  --font-display: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
+
+  /* Paleta: niebla y mar del sur de Chiloé */
+  --color-niebla: #e6edef; /* fondo */
+  --color-bruma: #d3dee2; /* superficies hundidas, bordes */
+  --color-mar: #123540; /* texto principal y barra superior */
+  --color-mar-suave: #4b6670; /* texto secundario */
+  --color-marea: #0e8a80; /* acción y estado "puedes inscribir" */
+  --color-marea-clara: #c9ebe6;
+  --color-ambar: #b7791f; /* condicional */
+}
+
+html {
+  background: var(--color-niebla);
+  color: var(--color-mar);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-marea);
+  outline-offset: 2px;
+}
+
+.scroll-fino {
+  scrollbar-width: thin;
+  scrollbar-color: #9fb3ba transparent;
+}
+
+@keyframes trazo {
+  from {
+    stroke-dashoffset: var(--largo);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.linea-dep {
+  stroke-dasharray: var(--largo);
+  animation: trazo 380ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .linea-dep {
+    animation: none;
+    stroke-dasharray: none;
+  }
+  * {
+    transition-duration: 0ms !important;
+  }
+}
