@@ -97,3 +97,11 @@ avance y los ramos que puede inscribir.
 Si cada asignatura se dicta una vez al año, un ramo atrasado solo se puede inscribir en el período
 en que se dicta (semestres impares o pares). Por definir si el panel de inscripción debe mostrar
 los ramos atrasados solo cuando corresponde dictarlos.
+
+## Licencia
+
+El código de esta plataforma se distribuye bajo la [licencia MIT](LICENSE).
+
+Los planes de estudio (asignaturas, créditos, horas y previaturas) corresponden a la información
+oficial de la Universidad de Los Lagos y se incluyen solo como referencia. La licencia MIT cubre el
+código, no esos contenidos ni el logo de la carrera.
