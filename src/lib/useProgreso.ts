@@ -102,6 +102,9 @@ export function useProgreso() {
     }
   }, [])
 
+  /** Vuelve a la pantalla de elección de malla (el avance de cada malla se conserva). */
+  const volverInicio = useCallback(() => setMallaId(null), [])
+
   const alternar = useCallback(
     (id: string) =>
       actualizar((g) => {
@@ -158,6 +161,7 @@ export function useProgreso() {
   return {
     malla,
     elegirMalla,
+    volverInicio,
     aprobadas,
     plan,
     alternar,

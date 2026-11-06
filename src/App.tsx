@@ -8,6 +8,7 @@ import { AREAS, MALLAS } from './data/mallas'
 import type { Malla } from './data/types'
 import { estadoDe, indexar, type Estado } from './lib/malla'
 import { useProgreso } from './lib/useProgreso'
+import logo from './assets/logo-icinf.png'
 
 type Vista = { tipo: 'detalle'; id: string } | { tipo: 'inscribir' } | null
 
@@ -74,12 +75,23 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
       <header className="bg-mar text-white">
         <div className="mx-auto max-w-[1500px] px-4 pt-5 pb-5 sm:px-6">
           <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
-            <div>
+            <div className="flex items-center gap-4">
+              <button
+                type="button"
+                onClick={prog.volverInicio}
+                title="Volver a elegir malla"
+                aria-label="Volver a la pantalla de inicio para elegir malla"
+                className="shrink-0 rounded-full transition-transform hover:scale-105"
+              >
+                <img src={logo} alt="" className="size-14 sm:size-16" />
+              </button>
+              <div>
               <p className="text-[13px] text-white/65">Ingeniería Civil en Informática, Universidad de Los Lagos</p>
               <h1 className="mt-1 font-display text-[30px] leading-none font-extrabold sm:text-[38px]">
                 {malla.nombre}
                 <span className="ml-3 align-middle text-[14px] font-medium text-white/65 sm:text-[15px]">{malla.cohortes}</span>
               </h1>
+              </div>
             </div>
             <div className="flex rounded-full bg-white/10 p-1" role="radiogroup" aria-label="Elegir malla">
               {[MALLAS.du416, MALLAS['2027']].map((m) => (
@@ -327,6 +339,7 @@ function Bienvenida({ onElegir }: { onElegir: (id: Malla['id']) => void }) {
   return (
     <div className="grid min-h-dvh place-items-center bg-mar px-5 py-12 text-white">
       <div className="w-full max-w-[880px]">
+        <img src={logo} alt="Logo de Ingeniería Civil en Informática, Universidad de Los Lagos" className="mb-7 size-24 sm:size-28" />
         <p className="text-[14px] text-white/65">Ingeniería Civil en Informática, Universidad de Los Lagos</p>
         <h1 className="mt-3 max-w-[16ch] font-display text-[44px] leading-[1.02] font-extrabold sm:text-[64px]">
           ¿Con qué malla estudias?
