@@ -351,7 +351,7 @@ function Bienvenida({ onElegir }: { onElegir: (id: Malla['id']) => void }) {
         <h1 className="mt-3 font-display text-[40px] leading-[1.02] font-extrabold sm:text-[60px] md:whitespace-nowrap">
           ¿Con qué malla estudias?
         </h1>
-        <p className="mt-4 max-w-[56ch] text-[17px] leading-relaxed text-white/80">
+        <p className="mt-4 text-[17px] leading-relaxed text-white/80">
           Marca los ramos que ya aprobaste y verás qué puedes inscribir, cuántos créditos llevas y qué abre cada asignatura.
         </p>
         <div className="mt-10 grid gap-4 sm:grid-cols-2">
