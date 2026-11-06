@@ -73,3 +73,33 @@ npm run build
 3. Vercel detecta Vite automáticamente (build `npm run build`, salida `dist`). Pulsa *Deploy*.
 
 O desde la terminal: `npx vercel` y luego `npx vercel --prod`.
+
+## Próximos pasos
+
+### 1. Exportar el avance a PDF
+
+Que el avance (incluido el que se abre desde un enlace compartido) se pueda descargar como PDF,
+con la malla y cohorte, los ramos aprobados por semestre, los SCT acumulados, el porcentaje de
+avance y los ramos que puede inscribir.
+
+### 2. Botón "Puedes inscribir" acotado al semestre siguiente
+
+Hoy el botón cuenta todos los ramos cuyas previaturas están cumplidas, sin importar el semestre.
+Por ejemplo, un estudiante con los semestres 1 al 6 aprobados ve "Puedes inscribir 19 ramos",
+porque también se cuentan ramos de semestres superiores sin previatura. Un estudiante puede
+tomarlo de forma literal.
+
+Cambio a realizar:
+
+- Mostrar solo los ramos del semestre siguiente al último semestre completo (en el ejemplo, el
+  semestre 7).
+- Definir cómo tratar los ramos pendientes de semestres anteriores (rezagados), que también
+  deberían ofrecerse para inscripción.
+- Cambiar el texto del botón para que no se lea como un número de ramos a inscribir, por ejemplo
+  "Ver ramos para tu próximo semestre".
+
+### 3. Límite de 30 SCT semestrales
+
+Mostrar un mensaje visible, en el panel de inscripción y junto al botón, que indique que la suma de
+las asignaturas inscritas no debe superar los 30 SCT semestrales, y avisar cuando el plan del
+estudiante lo supere.
