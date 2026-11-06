@@ -25,6 +25,9 @@ qué pueden inscribir.
 - Descarga del avance en PDF, con el nombre del estudiante como dato opcional: resumen con la malla
   en miniatura, ramos que puede inscribir, plan de inscripción y estado de cada asignatura por
   semestre.
+- Guía integrada con el significado de cada estado y área, cómo marcar el avance, qué son los
+  créditos SCT y cómo planificar la carga académica.
+- Botón "Reportar problema" que abre un issue en este repositorio con la malla ya indicada.
 
 ## Estructura
 
