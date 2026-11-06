@@ -6,7 +6,7 @@ import { Guia } from './components/Guia'
 import { Inscribir } from './components/Inscribir'
 import { MapaMalla } from './components/MapaMalla'
 import { Reportar } from './components/Reportar'
-import { AREAS, MALLAS } from './data/mallas'
+import { MALLAS } from './data/mallas'
 import type { Malla } from './data/types'
 import { calcularEstados, indexar, semestreReferencia } from './lib/malla'
 import { useProgreso } from './lib/useProgreso'
@@ -322,16 +322,6 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
         </div>
       </div>
 
-      <div className="hidden md:block">
-        <Leyenda />
-      </div>
-      <details className="mx-4 rounded-xl bg-white/60 px-3 py-2 ring-1 ring-bruma md:hidden">
-        <summary className="cursor-pointer text-[14px] font-semibold">Ver simbología</summary>
-        <div className="-mx-4 mt-2">
-          <Leyenda />
-        </div>
-      </details>
-
       <main className="mt-2">
         <MapaMalla
           malla={malla}
@@ -431,41 +421,6 @@ function Cifra({ valor, sufijo, texto }: { valor: string; sufijo?: string; texto
       {sufijo && <span className="ml-1.5 text-[14px] font-semibold text-white/80">{sufijo}</span>}
       <span className="block text-[13px] text-white/65">{texto}</span>
     </p>
-  )
-}
-
-function Leyenda() {
-  return (
-    <div className="mx-auto max-w-[1500px] px-4 text-[13px] text-mar-suave sm:px-6">
-      <div className="flex flex-col gap-2 lg:grid lg:grid-cols-[auto_1fr] lg:gap-x-10">
-        {/* Estados del ramo */}
-        <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-          <span className="flex items-center gap-1.5">
-            <span className="size-3.5 rounded-[4px] bg-[#3E6FB0]" /> Aprobada (color de su área)
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="size-3.5 rounded-[4px] bg-white ring-2 ring-marea" /> Puedes inscribirla
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="size-3.5 rounded-[4px] bg-white outline-2 outline-dashed outline-ambar" /> Requiere Consejo de Carrera
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="size-3.5 rounded-[4px] bg-white opacity-60 ring-1 ring-bruma" /> Con previaturas pendientes
-          </span>
-        </div>
-        {/* Áreas de formación */}
-        <div className="flex flex-wrap items-center gap-x-5 gap-y-2 lg:justify-end">
-          {Object.values(AREAS).map((a) => (
-            <span key={a.id} className="flex items-center gap-1.5">
-              <span className="h-3.5 w-1 rounded-full" style={{ background: a.color }} /> {a.nombre}
-            </span>
-          ))}
-        </div>
-      </div>
-      <p className="mt-2 text-[12.5px]">
-        Pasa el cursor o toca un ramo para ver sus conexiones: en azul oscuro sus previaturas, en verde marea lo que abre.
-      </p>
-    </div>
   )
 }
 
