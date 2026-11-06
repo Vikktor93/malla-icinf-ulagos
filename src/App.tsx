@@ -1,10 +1,11 @@
-import { BookOpen, FileDown, Link2, ListChecks, RotateCcw, Search, X } from 'lucide-react'
+import { BookOpen, FileDown, Flag, Link2, ListChecks, RotateCcw, Search, X } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Cinta } from './components/Cinta'
 import { Detalle } from './components/Detalle'
 import { Guia } from './components/Guia'
 import { Inscribir } from './components/Inscribir'
 import { MapaMalla } from './components/MapaMalla'
+import { Reportar } from './components/Reportar'
 import { AREAS, MALLAS } from './data/mallas'
 import type { Malla } from './data/types'
 import { calcularEstados, indexar, semestreReferencia } from './lib/malla'
@@ -31,6 +32,7 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
   const [generandoPDF, setGenerandoPDF] = useState(false)
   const [dialogoPDF, setDialogoPDF] = useState(false)
   const [guia, setGuia] = useState(false)
+  const [reportar, setReportar] = useState(false)
   const [nombre, setNombre] = useState(() => {
     try {
       return localStorage.getItem('icinf:nombre') ?? ''
@@ -109,6 +111,7 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
   }
 
   const cerrarGuia = useCallback(() => setGuia(false), [])
+  const cerrarReportar = useCallback(() => setReportar(false), [])
 
   const otra = malla.id === 'du416' ? MALLAS['2027'] : MALLAS.du416
 
@@ -144,6 +147,13 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
                 className="flex h-8 items-center gap-1.5 rounded-full px-3 text-[14px] font-semibold text-white/85 ring-1 ring-white/20 transition-colors hover:bg-white/10 hover:text-white"
               >
                 <BookOpen size={15} /> Guía
+              </button>
+              <button
+                type="button"
+                onClick={() => setReportar(true)}
+                className="flex h-8 items-center gap-1.5 rounded-full px-3 text-[14px] font-semibold text-white/85 ring-1 ring-white/20 transition-colors hover:bg-white/10 hover:text-white"
+              >
+                <Flag size={15} /> Reportar problema
               </button>
             </nav>
             <div className="flex rounded-full bg-white/10 p-1" role="radiogroup" aria-label="Elegir malla">
@@ -394,6 +404,7 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
       </aside>
 
       {guia && <Guia onCerrar={cerrarGuia} />}
+      {reportar && <Reportar malla={malla} onCerrar={cerrarReportar} />}
 
       {aviso && (
         <div role="status" className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2 rounded-full bg-mar px-5 py-2.5 text-[14px] font-medium text-white shadow-lg">
