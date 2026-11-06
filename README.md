@@ -93,14 +93,18 @@ qué pueden inscribir.
         └── 📁components
             ├── Cinta.tsx
             ├── Detalle.tsx
+            ├── Guia.tsx
             ├── Inscribir.tsx
             ├── MapaMalla.tsx
+            ├── Modal.tsx
+            ├── Reportar.tsx
             ├── Tarjeta.tsx
         └── 📁data
             ├── mallas.ts
             ├── types.ts
         └── 📁lib
             ├── malla.ts
+            ├── pdf.ts
             ├── useProgreso.ts
         ├── App.tsx
         ├── index.css
@@ -108,6 +112,7 @@ qué pueden inscribir.
     ├── .gitignore
     ├── .oxlintrc.json
     ├── index.html
+    ├── LICENSE
     ├── package-lock.json
     ├── package.json
     ├── README.md
