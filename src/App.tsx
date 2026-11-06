@@ -202,9 +202,11 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
           </div>
 
           <div className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-3">
-            <Cifra valor={`${sctAprob}`} sufijo={`de ${total} SCT`} texto={`${Math.round((sctAprob / total) * 100)}% de la carrera`} />
+            <Cifra valor={`${sctAprob}`} sufijo={`de ${total} SCT`} texto="créditos aprobados" />
             <Cifra valor={`${prog.aprobadas.size}`} sufijo={`de ${malla.asignaturas.length}`} texto="ramos aprobados" />
             <Cifra valor={`${Math.round((licAprob / licTotal) * 100)}%`} texto="hacia la Licenciatura" />
+            {/* El título exige aprobar toda la malla, por eso se calcula sobre el total de SCT */}
+            <Cifra valor={`${Math.round((sctAprob / total) * 100)}%`} texto="hacia el Título profesional" />
             <button
               type="button"
               onClick={() => setVista({ tipo: 'inscribir' })}

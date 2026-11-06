@@ -183,7 +183,7 @@ function UsarMalla() {
       <Seccion titulo="Tu avance">
         <p className="text-mar-suave">
           La franja de colores de la parte superior representa toda la carrera: cada segmento es un ramo y su ancho son sus SCT.
-          Junto a ella verás tus SCT aprobados, los ramos aprobados y tu avance hacia la Licenciatura.
+          Junto a ella verás tus SCT aprobados, los ramos aprobados y tu avance hacia la Licenciatura (semestres 1 al 8) y hacia el Título profesional (toda la malla).
         </p>
         <ul className="mt-3.5 space-y-3.5">
           <Item icono={<Lock size={15} />} titulo="Se guarda en este navegador">
