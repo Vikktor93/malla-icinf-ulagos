@@ -32,6 +32,23 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
   const [generandoPDF, setGenerandoPDF] = useState(false)
   const [dialogoPDF, setDialogoPDF] = useState(false)
   const [guia, setGuia] = useState(false)
+  // El botón Guía se anima hasta que el estudiante la abre por primera vez
+  const [guiaVista, setGuiaVista] = useState(() => {
+    try {
+      return localStorage.getItem('icinf:guia-vista') === '1'
+    } catch {
+      return false
+    }
+  })
+  const abrirGuia = () => {
+    setGuia(true)
+    setGuiaVista(true)
+    try {
+      localStorage.setItem('icinf:guia-vista', '1')
+    } catch {
+      /* noop */
+    }
+  }
   const [reportar, setReportar] = useState(false)
   const [nombre, setNombre] = useState(() => {
     try {
@@ -143,10 +160,15 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
             <nav className="flex gap-2" aria-label="Ayuda">
               <button
                 type="button"
-                onClick={() => setGuia(true)}
-                className="flex h-8 items-center gap-1.5 rounded-full px-3 text-[14px] font-semibold text-white/85 ring-1 ring-white/20 transition-colors hover:bg-white/10 hover:text-white"
+                onClick={abrirGuia}
+                className={`relative flex h-8 items-center gap-1.5 rounded-full px-3 text-[14px] font-semibold transition-colors hover:bg-white/10 hover:text-white ${
+                  guiaVista ? 'text-white/85 ring-1 ring-white/20' : 'halo-guia bg-white/10 text-white ring-1 ring-[#5fc7bb]'
+                }`}
               >
                 <BookOpen size={15} /> Guía
+                {!guiaVista && (
+                  <span aria-hidden className="absolute -top-0.5 -right-0.5 size-2.5 rounded-full bg-[#5fc7bb] ring-2 ring-mar" />
+                )}
               </button>
               <button
                 type="button"
