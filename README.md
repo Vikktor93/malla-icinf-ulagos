@@ -105,3 +105,12 @@ El código de esta plataforma se distribuye bajo la [licencia MIT](LICENSE).
 Los planes de estudio (asignaturas, créditos, horas y previaturas) corresponden a la información
 oficial de la Universidad de Los Lagos y se incluyen solo como referencia. La licencia MIT cubre el
 código, no esos contenidos ni el logo de la carrera.
+
+## Desarrollo y contacto
+
+Plataforma desarrollada por **Victor Saldivia Vera**, académico del Departamento de Ciencias de la
+Ingeniería, Universidad de Los Lagos.
+
+Si tienes dudas o consultas sobre el uso de la plataforma, contáctame a través de
+[GitHub](https://github.com/Vikktor93) o abre un
+[issue](https://github.com/Vikktor93/malla-icinf-ulagos/issues) en este repositorio.
