@@ -235,8 +235,8 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
         />
       </main>
 
-      <footer className="mx-auto max-w-[1500px] px-4 pb-10 text-[13px] leading-relaxed text-mar-suave sm:px-6">
-        <p className="max-w-[72ch]">
+      <footer className="mx-auto max-w-[1500px] px-4 pb-8 text-[13px] leading-relaxed text-mar-suave sm:px-6">
+        <p className="border-t border-bruma pt-4 text-center text-balance">
           Tu avance se guarda solo en este navegador. Esta herramienta es referencial: la inscripción oficial y la validación de
           previaturas se realizan en los sistemas de la universidad. ¿Ingresaste en otra cohorte? Cambia a la{' '}
           <button type="button" onClick={() => prog.elegirMalla(otra.id)} className="font-semibold text-mar underline underline-offset-2">
