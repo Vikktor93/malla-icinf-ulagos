@@ -25,8 +25,11 @@ qué pueden inscribir.
 - Descarga del avance en PDF, con el nombre del estudiante como dato opcional: resumen con la malla
   en miniatura, ramos que puede inscribir, plan de inscripción y estado de cada asignatura por
   semestre.
+- Indicadores de avance: créditos y ramos aprobados, porcentaje hacia la Licenciatura (semestres
+  1 al 8) y hacia el Título profesional (toda la malla).
 - Guía integrada con el significado de cada estado y área, cómo marcar el avance, qué son los
-  créditos SCT y cómo planificar la carga académica.
+  créditos SCT y cómo planificar la carga académica. El botón se anima hasta que el estudiante la
+  abre por primera vez.
 - Botón "Reportar problema" que abre un issue en este repositorio con la malla ya indicada.
 
 ## Estructura
