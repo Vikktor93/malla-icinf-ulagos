@@ -6,7 +6,7 @@ import { Inscribir } from './components/Inscribir'
 import { MapaMalla } from './components/MapaMalla'
 import { AREAS, MALLAS } from './data/mallas'
 import type { Malla } from './data/types'
-import { estadoDe, indexar, type Estado } from './lib/malla'
+import { calcularEstados, indexar, semestreReferencia } from './lib/malla'
 import { useProgreso } from './lib/useProgreso'
 import logo from './assets/logo-icinf.png'
 
@@ -29,11 +29,8 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
   const [confirmarReinicio, setConfirmarReinicio] = useState(false)
   const soloLectura = prog.viendoCompartido
 
-  const estados = useMemo(() => {
-    const m = new Map<string, Estado>()
-    for (const a of malla.asignaturas) m.set(a.id, estadoDe(a, malla, prog.aprobadas))
-    return m
-  }, [malla, prog.aprobadas])
+  const referencia = useMemo(() => semestreReferencia(malla, prog.aprobadas), [malla, prog.aprobadas])
+  const estados = useMemo(() => calcularEstados(malla, prog.aprobadas, referencia), [malla, prog.aprobadas, referencia])
 
   const total = malla.asignaturas.reduce((t, a) => t + a.sct, 0)
   const sctAprob = malla.asignaturas.filter((a) => prog.aprobadas.has(a.id)).reduce((t, a) => t + a.sct, 0)
@@ -41,6 +38,7 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
   const licTotal = lic.reduce((t, a) => t + a.sct, 0)
   const licAprob = lic.filter((a) => prog.aprobadas.has(a.id)).reduce((t, a) => t + a.sct, 0)
   const disponibles = [...estados.values()].filter((e) => e === 'disponible' || e === 'condicional').length
+  const carreraCompleta = prog.aprobadas.size === malla.asignaturas.length
 
   const seleccion = vista?.tipo === 'detalle' ? vista.id : null
   const foco = hover ?? seleccion
@@ -125,7 +123,12 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
               className="ml-auto flex items-center gap-2 rounded-full bg-[#5fc7bb] px-5 py-2.5 text-[15px] font-bold text-mar transition-colors hover:bg-[#7dd6cb]"
             >
               <ListChecks size={18} />
-              {disponibles === 1 ? 'Puedes inscribir 1 ramo' : `Puedes inscribir ${disponibles} ramos`}
+              {carreraCompleta
+                ? 'Completaste la malla'
+                : `Ramos para tu semestre ${referencia}`}
+              {!carreraCompleta && (
+                <span className="rounded-full bg-mar/15 px-2 py-px text-[13px] tabular-nums">{disponibles}</span>
+              )}
             </button>
           </div>
         </div>

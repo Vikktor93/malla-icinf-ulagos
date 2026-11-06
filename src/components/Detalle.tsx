@@ -1,4 +1,4 @@
-import { ArrowRight, Check, CircleDashed, Lock, ShieldQuestion, X } from 'lucide-react'
+import { ArrowRight, Check, CircleDashed, Clock, Lock, ShieldQuestion, X } from 'lucide-react'
 import { AREAS } from '../data/mallas'
 import type { Asignatura, Malla } from '../data/types'
 import { descendientes, requisitoCumplido, textoRequisito, type Estado, type Indice } from '../lib/malla'
@@ -174,6 +174,13 @@ function EstadoAviso({ estado, pendientes }: { estado: Estado; pendientes: strin
     return (
       <p className="flex items-center gap-2 rounded-xl bg-marea px-3.5 py-3 text-[14px] font-semibold text-white">
         <Check size={18} strokeWidth={3} /> Cumples las previaturas: puedes inscribirla.
+      </p>
+    )
+  if (estado === 'adelantable')
+    return (
+      <p className="flex items-start gap-2 rounded-xl bg-white px-3.5 py-3 text-[14px] ring-1 ring-bruma">
+        <Clock size={17} className="mt-0.5 shrink-0 text-mar-suave" />
+        Cumples sus previaturas, pero corresponde a un semestre posterior al que te toca cursar.
       </p>
     )
   if (estado === 'condicional')

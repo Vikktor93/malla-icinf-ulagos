@@ -20,6 +20,7 @@ const etiquetaEstado: Record<Estado, string> = {
   aprobada: 'Aprobada',
   disponible: 'Puedes inscribirla',
   condicional: 'Requiere aprobación del Consejo de Carrera',
+  adelantable: 'Corresponde a un semestre posterior',
   bloqueada: 'Tiene previaturas pendientes',
 }
 

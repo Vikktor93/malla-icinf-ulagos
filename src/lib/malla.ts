@@ -1,6 +1,12 @@
 import type { Asignatura, Malla, Requisito } from '../data/types'
 
-export type Estado = 'aprobada' | 'disponible' | 'condicional' | 'bloqueada'
+/**
+ * - aprobada: ya la aprobó.
+ * - disponible / condicional: cumple previaturas y corresponde a su próximo semestre o a uno anterior.
+ * - adelantable: cumple previaturas, pero es de un semestre posterior al que le toca cursar.
+ * - bloqueada: tiene previaturas pendientes.
+ */
+export type Estado = 'aprobada' | 'disponible' | 'condicional' | 'adelantable' | 'bloqueada'
 
 export interface Indice {
   porId: Map<string, Asignatura>
@@ -46,6 +52,26 @@ export function estadoDe(a: Asignatura, malla: Malla, aprobadas: Set<string>): E
   if (!ok) return 'bloqueada'
   if (a.requisitos.some((q) => q.tipo === 'consejo')) return 'condicional'
   return 'disponible'
+}
+
+/**
+ * Semestre que le corresponde cursar al estudiante: el semestre más alto en que tiene
+ * al menos un ramo aprobado, más uno (sin pasarse del último semestre de la malla).
+ */
+export function semestreReferencia(malla: Malla, aprobadas: Set<string>): number {
+  let max = 0
+  for (const a of malla.asignaturas) if (aprobadas.has(a.id)) max = Math.max(max, a.semestre)
+  return Math.min(max + 1, malla.semestres)
+}
+
+/** Estados de todos los ramos, considerando el semestre de referencia del estudiante. */
+export function calcularEstados(malla: Malla, aprobadas: Set<string>, referencia: number): Map<string, Estado> {
+  const m = new Map<string, Estado>()
+  for (const a of malla.asignaturas) {
+    const e = estadoDe(a, malla, aprobadas)
+    m.set(a.id, (e === 'disponible' || e === 'condicional') && a.semestre > referencia ? 'adelantable' : e)
+  }
+  return m
 }
 
 export function textoRequisito(q: Requisito, idx: Indice): string {
