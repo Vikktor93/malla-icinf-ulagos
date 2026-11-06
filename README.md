@@ -22,6 +22,8 @@ qué pueden inscribir.
 - Marcar un semestre completo de una vez, búsqueda y filtro de lo inscribible.
 - Avance guardado automáticamente en el navegador (sin cuenta ni archivos) y botón para
   compartirlo por enlace.
+- Descarga del avance en PDF: resumen con la malla en miniatura, ramos que puede inscribir, plan
+  de inscripción y estado de cada asignatura por semestre.
 
 ## Estructura
 
@@ -86,13 +88,7 @@ repositorio:
 
 ## Próximos pasos
 
-### 1. Exportar el avance a PDF
-
-Que el avance (incluido el que se abre desde un enlace compartido) se pueda descargar como PDF,
-con la malla y cohorte, los ramos aprobados por semestre, los SCT acumulados, el porcentaje de
-avance y los ramos que puede inscribir.
-
-### 2. Ramos atrasados según período de dictación
+### 1. Ramos atrasados según período de dictación
 
 Si cada asignatura se dicta una vez al año, un ramo atrasado solo se puede inscribir en el período
 en que se dicta (semestres impares o pares). Por definir si el panel de inscripción debe mostrar
