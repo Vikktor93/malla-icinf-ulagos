@@ -281,6 +281,7 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
             malla={malla}
             idx={idx}
             estados={estados}
+            referencia={referencia}
             plan={prog.plan}
             soloLectura={soloLectura}
             onPlan={prog.alternarPlan}
