@@ -235,8 +235,8 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
         />
       </main>
 
-      <footer className="mx-auto max-w-[1500px] px-4 pb-10 text-[13px] leading-relaxed text-mar-suave sm:px-6">
-        <p className="max-w-[72ch]">
+      <footer className="mx-auto max-w-[1500px] px-4 pb-8 text-[13px] leading-relaxed text-mar-suave sm:px-6">
+        <p className="border-t border-bruma pt-4 text-center text-balance">
           Tu avance se guarda solo en este navegador. Esta herramienta es referencial: la inscripción oficial y la validación de
           previaturas se realizan en los sistemas de la universidad. ¿Ingresaste en otra cohorte? Cambia a la{' '}
           <button type="button" onClick={() => prog.elegirMalla(otra.id)} className="font-semibold text-mar underline underline-offset-2">
@@ -309,28 +309,35 @@ function Cifra({ valor, sufijo, texto }: { valor: string; sufijo?: string; texto
 
 function Leyenda() {
   return (
-    <div className="mx-auto flex max-w-[1500px] flex-wrap items-center gap-x-5 gap-y-2 px-4 text-[13px] text-mar-suave sm:px-6">
-      <span className="flex items-center gap-1.5">
-        <span className="size-3.5 rounded-[4px] bg-[#3E6FB0]" /> Aprobada (color de su área)
-      </span>
-      <span className="flex items-center gap-1.5">
-        <span className="size-3.5 rounded-[4px] bg-white ring-2 ring-marea" /> Puedes inscribirla
-      </span>
-      <span className="flex items-center gap-1.5">
-        <span className="size-3.5 rounded-[4px] bg-white outline-2 outline-dashed outline-ambar" /> Requiere Consejo de Carrera
-      </span>
-      <span className="flex items-center gap-1.5">
-        <span className="size-3.5 rounded-[4px] bg-white opacity-60 ring-1 ring-bruma" /> Con previaturas pendientes
-      </span>
-      <span className="mx-1 hidden h-4 w-px bg-bruma md:block" />
-      {Object.values(AREAS).map((a) => (
-        <span key={a.id} className="flex items-center gap-1.5">
-          <span className="h-3.5 w-1 rounded-full" style={{ background: a.color }} /> {a.nombre}
-        </span>
-      ))}
-      <span className="basis-full text-[12.5px]">
+    <div className="mx-auto max-w-[1500px] px-4 text-[13px] text-mar-suave sm:px-6">
+      <div className="flex flex-col gap-2 lg:grid lg:grid-cols-[auto_1fr] lg:gap-x-10">
+        {/* Estados del ramo */}
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+          <span className="flex items-center gap-1.5">
+            <span className="size-3.5 rounded-[4px] bg-[#3E6FB0]" /> Aprobada (color de su área)
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="size-3.5 rounded-[4px] bg-white ring-2 ring-marea" /> Puedes inscribirla
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="size-3.5 rounded-[4px] bg-white outline-2 outline-dashed outline-ambar" /> Requiere Consejo de Carrera
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="size-3.5 rounded-[4px] bg-white opacity-60 ring-1 ring-bruma" /> Con previaturas pendientes
+          </span>
+        </div>
+        {/* Áreas de formación */}
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2 lg:justify-end">
+          {Object.values(AREAS).map((a) => (
+            <span key={a.id} className="flex items-center gap-1.5">
+              <span className="h-3.5 w-1 rounded-full" style={{ background: a.color }} /> {a.nombre}
+            </span>
+          ))}
+        </div>
+      </div>
+      <p className="mt-2 text-[12.5px]">
         Pasa el cursor o toca un ramo para ver sus conexiones: en azul oscuro sus previaturas, en verde marea lo que abre.
-      </span>
+      </p>
     </div>
   )
 }
@@ -338,10 +345,10 @@ function Leyenda() {
 function Bienvenida({ onElegir }: { onElegir: (id: Malla['id']) => void }) {
   return (
     <div className="grid min-h-dvh place-items-center bg-mar px-5 py-12 text-white">
-      <div className="w-full max-w-[880px]">
+      <div className="w-full max-w-[920px]">
         <img src={logo} alt="Logo de Ingeniería Civil en Informática, Universidad de Los Lagos" className="mb-7 size-24 sm:size-28" />
         <p className="text-[14px] text-white/65">Ingeniería Civil en Informática, Universidad de Los Lagos</p>
-        <h1 className="mt-3 max-w-[16ch] font-display text-[44px] leading-[1.02] font-extrabold sm:text-[64px]">
+        <h1 className="mt-3 font-display text-[40px] leading-[1.02] font-extrabold sm:text-[60px] md:whitespace-nowrap">
           ¿Con qué malla estudias?
         </h1>
         <p className="mt-4 max-w-[56ch] text-[17px] leading-relaxed text-white/80">
