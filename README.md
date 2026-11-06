@@ -111,6 +111,7 @@ qué pueden inscribir.
         ├── main.tsx
     ├── .gitignore
     ├── .oxlintrc.json
+    ├── CHANGELOG.md
     ├── index.html
     ├── LICENSE
     ├── package-lock.json
@@ -195,6 +196,7 @@ La plataforma usa [versionamiento semántico](https://semver.org/lang/es/) con e
 
 Cada versión publicada se marca con una etiqueta de Git (por ejemplo `v1.0.0`) y se registra en
 [GitHub Releases](https://github.com/Vikktor93/malla-icinf-ulagos/releases).
+El detalle de los cambios de cada versión está en el [CHANGELOG](CHANGELOG.md).
 
 ## Licencia
 
