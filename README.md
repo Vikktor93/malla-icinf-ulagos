@@ -1,5 +1,12 @@
 # Malla interactiva ICINF - Universidad de Los Lagos
 
+[![Versión](https://img.shields.io/github/package-json/v/Vikktor93/malla-icinf-ulagos?label=versi%C3%B3n&color=0e8a80)](CHANGELOG.md)
+[![Licencia MIT](https://img.shields.io/github/license/Vikktor93/malla-icinf-ulagos?label=licencia&color=123540)](LICENSE)
+[![Desplegado en Vercel](https://img.shields.io/badge/Vercel-desplegado-000000?logo=vercel)](https://malla-icinf-ulagos.vercel.app/)
+[![React 19](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-7-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)](https://vite.dev/)
+
 Plataforma web para que estudiantes de Ingeniería Civil en Informática revisen su malla
 (DU 416 para cohortes 2024-2026, o Malla 2027 en adelante), marquen sus ramos aprobados y vean
 qué pueden inscribir.
