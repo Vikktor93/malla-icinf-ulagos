@@ -70,7 +70,7 @@ export async function descargarPDF({ malla, aprobadas, estados, referencia, plan
   doc.setTextColor('#FFFFFF')
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(17)
-  doc.text('Informe de avance académico', M + 25, 14)
+  doc.text('Informe de Avance Académico', M + 25, 14)
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(9.5)
   doc.text('Ingeniería Civil en Informática, Universidad de Los Lagos', M + 25, 20.5)
