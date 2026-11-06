@@ -16,6 +16,8 @@ const MAR_SUAVE = '#4B6670'
 const MAREA = '#0E8A80'
 const BRUMA = '#D3DEE2'
 const AMBAR = '#B7791F'
+const SITIO = 'malla-icinf-ulagos.vercel.app'
+const URL_SITIO = 'https://malla-icinf-ulagos.vercel.app/'
 
 const ETIQUETA: Record<Estado, string> = {
   aprobada: 'Aprobada',
@@ -294,11 +296,19 @@ export async function descargarPDF({ malla, aprobadas, estados, referencia, plan
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(7)
     doc.setTextColor(MAR_SUAVE)
-    doc.text(
-      'Documento referencial generado en malla-icinf-ulagos.vercel.app. No reemplaza el registro académico oficial de la universidad.',
-      M,
-      alto - 7,
-    )
+    // "Documento referencial generado en <enlace>. <advertencia>"
+    let x = M
+    const previo = 'Documento referencial generado en '
+    doc.text(previo, x, alto - 7)
+    x += doc.getTextWidth(previo)
+    doc.setTextColor(MAREA)
+    doc.textWithLink(SITIO, x, alto - 7, { url: URL_SITIO })
+    doc.setDrawColor(MAREA)
+    doc.setLineWidth(0.15)
+    doc.line(x, alto - 6.5, x + doc.getTextWidth(SITIO), alto - 6.5)
+    x += doc.getTextWidth(SITIO)
+    doc.setTextColor(MAR_SUAVE)
+    doc.text('. No reemplaza el registro académico oficial de la universidad.', x, alto - 7)
     doc.text(`Página ${p} de ${paginas}`, ancho - M, alto - 7, { align: 'right' })
   }
 
