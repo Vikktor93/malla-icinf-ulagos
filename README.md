@@ -4,6 +4,8 @@ Plataforma web para que estudiantes de Ingeniería Civil en Informática revisen
 (DU 416 para cohortes 2024-2026, o Malla 2027 en adelante), marquen sus ramos aprobados y vean
 qué pueden inscribir.
 
+**Plataforma en línea:** https://malla-icinf-ulagos.vercel.app/
+
 ## Funcionalidades
 
 - Elección de malla (DU 416: 11 semestres, 330 SCT, 65 asignaturas / 2027: 10 semestres, 300 SCT, 56 asignaturas).
@@ -68,11 +70,13 @@ npm run build
 
 ## Despliegue en Vercel
 
-1. Sube esta carpeta a un repositorio de GitHub.
-2. En vercel.com → *Add New Project* → importa el repositorio.
-3. Vercel detecta Vite automáticamente (build `npm run build`, salida `dist`). Pulsa *Deploy*.
+La plataforma está publicada en https://malla-icinf-ulagos.vercel.app/ y conectada a este
+repositorio:
 
-O desde la terminal: `npx vercel` y luego `npx vercel --prod`.
+- Cada `git push` a `main` genera y publica una nueva versión automáticamente.
+- Vercel detecta Vite: build `npm run build`, salida `dist`. No requiere variables de entorno.
+- Si un despliegue falla, el detalle está en Vercel → *Deployments* → *Build Logs*. Antes de
+  hacer push conviene correr `npm run build` localmente, que es el mismo comando que usa Vercel.
 
 ## Próximos pasos
 
