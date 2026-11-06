@@ -47,6 +47,39 @@ qué pueden inscribir.
 | [Vercel](https://vercel.com/) | Hosting y despliegue automático desde GitHub |
 | `localStorage` del navegador | Guardado del avance del estudiante, sin servidor ni cuentas |
 
+## Optimizaciones implementadas
+
+**Rendimiento**
+
+- **Carga diferida del PDF:** las librerías para generar el PDF (unos 250 KB comprimidos) se
+  descargan solo cuando el estudiante presiona "Descargar PDF". La carga inicial de JavaScript es
+  de unos 90 KB comprimidos.
+- **Sitio estático:** no hay servidor ni base de datos. Vercel entrega los archivos desde su red de
+  distribución (CDN), lo que hace que la plataforma cargue rápido y no tenga costos de operación.
+- **Fuentes incluidas en el sitio:** las tipografías se sirven desde el mismo dominio con
+  Fontsource, sin depender de Google Fonts.
+- **Cálculos precalculados y memorizados:** las relaciones entre ramos (qué abre cada uno) se
+  indexan una sola vez por malla, y los estados de los ramos se recalculan solo cuando cambia el
+  avance.
+- **Líneas de conexión eficientes:** las curvas entre ramos se dibujan en una sola capa SVG y se
+  recalculan solo al cambiar el ramo enfocado o el tamaño de la ventana.
+
+**Experiencia de uso**
+
+- **Avance sin cuenta:** se guarda automáticamente en el navegador.
+- **Enlaces cortos para compartir:** el avance se codifica como un mapa de bits en base64url, así
+  que el enlace pesa unos pocos caracteres aunque la malla tenga más de 60 ramos.
+- **PDF liviano:** usa fuentes estándar, por lo que el archivo pesa poco y su texto se puede
+  seleccionar y buscar.
+
+**Accesibilidad**
+
+- Navegación con teclado, foco visible, etiquetas para lectores de pantalla y cierre de ventanas
+  con Esc.
+- Respeta la preferencia de movimiento reducido del sistema operativo en animaciones y
+  transiciones.
+- Diseño adaptado a celulares, tablets y computadores.
+
 ## Estructura
 
 ```
