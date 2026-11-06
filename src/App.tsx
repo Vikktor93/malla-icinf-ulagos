@@ -1,7 +1,8 @@
-import { FileDown, Link2, ListChecks, RotateCcw, Search, X } from 'lucide-react'
-import { useEffect, useMemo, useState } from 'react'
+import { BookOpen, FileDown, Link2, ListChecks, RotateCcw, Search, X } from 'lucide-react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Cinta } from './components/Cinta'
 import { Detalle } from './components/Detalle'
+import { Guia } from './components/Guia'
 import { Inscribir } from './components/Inscribir'
 import { MapaMalla } from './components/MapaMalla'
 import { AREAS, MALLAS } from './data/mallas'
@@ -29,6 +30,7 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
   const [confirmarReinicio, setConfirmarReinicio] = useState(false)
   const [generandoPDF, setGenerandoPDF] = useState(false)
   const [dialogoPDF, setDialogoPDF] = useState(false)
+  const [guia, setGuia] = useState(false)
   const [nombre, setNombre] = useState(() => {
     try {
       return localStorage.getItem('icinf:nombre') ?? ''
@@ -106,6 +108,8 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
     }
   }
 
+  const cerrarGuia = useCallback(() => setGuia(false), [])
+
   const otra = malla.id === 'du416' ? MALLAS['2027'] : MALLAS.du416
 
   return (
@@ -132,6 +136,16 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
               </h1>
               </div>
             </div>
+            <div className="flex flex-col items-start gap-3 sm:items-end">
+            <nav className="flex gap-2" aria-label="Ayuda">
+              <button
+                type="button"
+                onClick={() => setGuia(true)}
+                className="flex h-8 items-center gap-1.5 rounded-full px-3 text-[14px] font-semibold text-white/85 ring-1 ring-white/20 transition-colors hover:bg-white/10 hover:text-white"
+              >
+                <BookOpen size={15} /> Guía
+              </button>
+            </nav>
             <div className="flex rounded-full bg-white/10 p-1" role="radiogroup" aria-label="Elegir malla">
               {[MALLAS.du416, MALLAS['2027']].map((m) => (
                 <button
@@ -147,6 +161,7 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
                   {m.id === 'du416' ? 'DU 416 (2024 a 2026)' : 'Malla 2027'}
                 </button>
               ))}
+            </div>
             </div>
           </div>
 
@@ -377,6 +392,8 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
           />
         )}
       </aside>
+
+      {guia && <Guia onCerrar={cerrarGuia} />}
 
       {aviso && (
         <div role="status" className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2 rounded-full bg-mar px-5 py-2.5 text-[14px] font-medium text-white shadow-lg">
