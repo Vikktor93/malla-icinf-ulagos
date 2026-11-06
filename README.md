@@ -22,8 +22,9 @@ qué pueden inscribir.
 - Marcar un semestre completo de una vez, búsqueda y filtro de lo inscribible.
 - Avance guardado automáticamente en el navegador (sin cuenta ni archivos) y botón para
   compartirlo por enlace.
-- Descarga del avance en PDF: resumen con la malla en miniatura, ramos que puede inscribir, plan
-  de inscripción y estado de cada asignatura por semestre.
+- Descarga del avance en PDF, con el nombre del estudiante como dato opcional: resumen con la malla
+  en miniatura, ramos que puede inscribir, plan de inscripción y estado de cada asignatura por
+  semestre.
 
 ## Estructura
 
