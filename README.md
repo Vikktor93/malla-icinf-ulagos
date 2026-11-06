@@ -25,8 +25,11 @@ qué pueden inscribir.
 ```
 └── 📁malla-icinf
     └── 📁public
+        ├── apple-touch-icon.png
         ├── favicon.svg
     └── 📁src
+        └── 📁assets
+            ├── logo-icinf.png
         └── 📁components
             ├── Cinta.tsx
             ├── Detalle.tsx
