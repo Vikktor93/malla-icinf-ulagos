@@ -309,28 +309,35 @@ function Cifra({ valor, sufijo, texto }: { valor: string; sufijo?: string; texto
 
 function Leyenda() {
   return (
-    <div className="mx-auto flex max-w-[1500px] flex-wrap items-center gap-x-5 gap-y-2 px-4 text-[13px] text-mar-suave sm:px-6">
-      <span className="flex items-center gap-1.5">
-        <span className="size-3.5 rounded-[4px] bg-[#3E6FB0]" /> Aprobada (color de su área)
-      </span>
-      <span className="flex items-center gap-1.5">
-        <span className="size-3.5 rounded-[4px] bg-white ring-2 ring-marea" /> Puedes inscribirla
-      </span>
-      <span className="flex items-center gap-1.5">
-        <span className="size-3.5 rounded-[4px] bg-white outline-2 outline-dashed outline-ambar" /> Requiere Consejo de Carrera
-      </span>
-      <span className="flex items-center gap-1.5">
-        <span className="size-3.5 rounded-[4px] bg-white opacity-60 ring-1 ring-bruma" /> Con previaturas pendientes
-      </span>
-      <span className="mx-1 hidden h-4 w-px bg-bruma md:block" />
-      {Object.values(AREAS).map((a) => (
-        <span key={a.id} className="flex items-center gap-1.5">
-          <span className="h-3.5 w-1 rounded-full" style={{ background: a.color }} /> {a.nombre}
-        </span>
-      ))}
-      <span className="basis-full text-[12.5px]">
+    <div className="mx-auto max-w-[1500px] px-4 text-[13px] text-mar-suave sm:px-6">
+      <div className="flex flex-col gap-2 lg:grid lg:grid-cols-[auto_1fr] lg:gap-x-10">
+        {/* Estados del ramo */}
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+          <span className="flex items-center gap-1.5">
+            <span className="size-3.5 rounded-[4px] bg-[#3E6FB0]" /> Aprobada (color de su área)
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="size-3.5 rounded-[4px] bg-white ring-2 ring-marea" /> Puedes inscribirla
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="size-3.5 rounded-[4px] bg-white outline-2 outline-dashed outline-ambar" /> Requiere Consejo de Carrera
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="size-3.5 rounded-[4px] bg-white opacity-60 ring-1 ring-bruma" /> Con previaturas pendientes
+          </span>
+        </div>
+        {/* Áreas de formación */}
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2 lg:justify-end">
+          {Object.values(AREAS).map((a) => (
+            <span key={a.id} className="flex items-center gap-1.5">
+              <span className="h-3.5 w-1 rounded-full" style={{ background: a.color }} /> {a.nombre}
+            </span>
+          ))}
+        </div>
+      </div>
+      <p className="mt-2 text-[12.5px]">
         Pasa el cursor o toca un ramo para ver sus conexiones: en azul oscuro sus previaturas, en verde marea lo que abre.
-      </span>
+      </p>
     </div>
   )
 }
