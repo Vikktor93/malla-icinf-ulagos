@@ -14,8 +14,11 @@ qué pueden inscribir.
 - Al pasar el cursor o enfocar un ramo se dibujan sus conexiones: toda la cadena de previaturas
   y todo lo que abre.
 - Panel de detalle con previaturas (cumplidas o pendientes) y ramos que desbloquea.
-- "Puedes inscribir": lista de ramos disponibles, ordenados por cuántos ramos abren, con un plan
-  de inscripción que suma SCT y horas semanales.
+- Inscripción acotada al semestre que le corresponde al estudiante (el más alto con algún ramo
+  aprobado, más uno). El panel separa los ramos pendientes de semestres anteriores de los del
+  semestre siguiente, ordenados por cuántos ramos abren.
+- Plan de inscripción con contador de SCT y horas semanales. Si el plan supera el tope (30 SCT o
+  los SCT oficiales del semestre, lo que sea mayor) aparece un aviso informativo, que no bloquea.
 - Marcar un semestre completo de una vez, búsqueda y filtro de lo inscribible.
 - Avance guardado automáticamente en el navegador (sin cuenta ni archivos) y botón para
   compartirlo por enlace.
@@ -89,24 +92,8 @@ Que el avance (incluido el que se abre desde un enlace compartido) se pueda desc
 con la malla y cohorte, los ramos aprobados por semestre, los SCT acumulados, el porcentaje de
 avance y los ramos que puede inscribir.
 
-### 2. Botón "Puedes inscribir" acotado al semestre siguiente
+### 2. Ramos atrasados según período de dictación
 
-Hoy el botón cuenta todos los ramos cuyas previaturas están cumplidas, sin importar el semestre.
-Por ejemplo, un estudiante con los semestres 1 al 6 aprobados ve "Puedes inscribir 19 ramos",
-porque también se cuentan ramos de semestres superiores sin previatura. Un estudiante puede
-tomarlo de forma literal.
-
-Cambio a realizar:
-
-- Mostrar solo los ramos del semestre siguiente al último semestre completo (en el ejemplo, el
-  semestre 7).
-- Definir cómo tratar los ramos pendientes de semestres anteriores (rezagados), que también
-  deberían ofrecerse para inscripción.
-- Cambiar el texto del botón para que no se lea como un número de ramos a inscribir, por ejemplo
-  "Ver ramos para tu próximo semestre".
-
-### 3. Límite de 30 SCT semestrales
-
-Mostrar un mensaje visible, en el panel de inscripción y junto al botón, que indique que la suma de
-las asignaturas inscritas no debe superar los 30 SCT semestrales, y avisar cuando el plan del
-estudiante lo supere.
+Si cada asignatura se dicta una vez al año, un ramo atrasado solo se puede inscribir en el período
+en que se dicta (semestres impares o pares). Por definir si el panel de inscripción debe mostrar
+los ramos atrasados solo cuando corresponde dictarlos.
