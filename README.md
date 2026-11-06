@@ -177,11 +177,11 @@ repositorio:
 - [ ] Incorporar en la Guía el valor oficial de 1 SCT en la Universidad de Los Lagos
 - [ ] Canal para reportar problemas sin necesidad de una cuenta de GitHub
 
-### Fase 5: Cuentas y datos centralizados (Supabase)
+### Fase 5: Estadísticas para el estudiante
 
-- [ ] Inicio de sesión con correo institucional y avance sincronizado entre dispositivos
-- [ ] Panel para que la Dirección de Carrera edite la malla sin modificar código
-- [ ] Estadísticas agregadas para planificar la oferta de asignaturas
+- [ ] Gráfico de aprobación por semestre (SCT y ramos aprobados en cada semestre)
+- [ ] Avance por área de formación
+- [ ] Vista de estadísticas más visual y atractiva dentro de la plataforma
 
 ## Versionamiento
 
