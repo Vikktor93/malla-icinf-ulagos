@@ -4,6 +4,21 @@ Todos los cambios relevantes de la plataforma se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el proyecto usa
 [versionamiento semántico](https://semver.org/lang/es/).
 
+## [1.4.0] - 2026-11-06
+
+Avanza en la fase 4: ajustes según la operación de la carrera.
+
+### Agregado
+
+- Período de dictación de cada asignatura: impares en el primer semestre del año, pares en el
+  segundo, y excepciones para inglés, electivos de formación integral, prácticas, anteproyecto y
+  proyecto de título, que se dictan en ambos.
+- Selector de período en el panel de inscripción, sugerido según la fecha (inscripciones en marzo y
+  agosto). Los ramos que se dictan en el otro período se muestran aparte.
+- Período de dictación en el detalle de cada asignatura y en el PDF.
+- Equivalencias SCT oficiales de la Universidad de Los Lagos en la Guía, con fórmulas y una
+  calculadora de horas por asignatura.
+
 ## [1.3.0] - 2026-11-06
 
 ### Agregado
@@ -46,6 +61,7 @@ Primera versión publicada en https://malla-icinf-ulagos.vercel.app/.
 - Guía de uso integrada y opción para reportar problemas en GitHub.
 - Indicadores de avance hacia la Licenciatura y el Título profesional.
 
+[1.4.0]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.4.0
 [1.3.0]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.3.0
 [1.2.0]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.2.0
 [1.1.0]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.1.0
