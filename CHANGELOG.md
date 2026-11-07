@@ -4,6 +4,18 @@ Todos los cambios relevantes de la plataforma se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el proyecto usa
 [versionamiento semántico](https://semver.org/lang/es/).
 
+## [1.1.0] - 2026-11-06
+
+### Agregado
+
+- Modo oscuro, con botón en la barra superior. Por defecto sigue el tema del sistema operativo y
+  recuerda la elección del estudiante.
+
+### Cambiado
+
+- La animación del botón Guía queda permanente.
+- El logo pasa de PNG a WebP (de 68 KB a 18 KB).
+
 ## [1.0.0] - 2026-11-06
 
 Primera versión publicada en https://malla-icinf-ulagos.vercel.app/.
@@ -20,4 +32,5 @@ Primera versión publicada en https://malla-icinf-ulagos.vercel.app/.
 - Guía de uso integrada y opción para reportar problemas en GitHub.
 - Indicadores de avance hacia la Licenciatura y el Título profesional.
 
+[1.1.0]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.1.0
 [1.0.0]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.0.0
