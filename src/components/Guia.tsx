@@ -1,4 +1,4 @@
-import { BookOpen, CheckCheck, FileDown, Link2, Lock, RotateCcw, Search, ShieldQuestion } from 'lucide-react'
+import { ChartColumn, BookOpen, CheckCheck, FileDown, Link2, Lock, RotateCcw, Search, ShieldQuestion } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import logo from '../assets/logo-icinf.webp'
 import { AREAS } from '../data/mallas'
@@ -197,6 +197,10 @@ function UsarMalla() {
           </Item>
           <Item icono={<Link2 size={16} />} titulo="Compartir avance">
             Copia un enlace con tus ramos aprobados, por ejemplo para revisarlo con tu profesor guía.
+          </Item>
+          <Item icono={<ChartColumn size={16} />} titulo="Mis estadísticas">
+            La pestaña junto a la búsqueda muestra tu avance en gráficos: por semestre, por área, hacia cada hito, los ramos que
+            más te conviene priorizar y una estimación mínima de los semestres que te faltan.
           </Item>
           <Item icono={<FileDown size={16} />} titulo="Descargar PDF">
             Genera un informe con tu malla, tu avance y los ramos que puedes inscribir. Puedes agregar tu nombre.
