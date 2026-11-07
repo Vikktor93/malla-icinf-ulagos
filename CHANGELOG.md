@@ -4,6 +4,21 @@ Todos los cambios relevantes de la plataforma se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el proyecto usa
 [versionamiento semántico](https://semver.org/lang/es/).
 
+## [1.4.1] - 2026-11-06
+
+### Corregido
+
+- La regla del período de dictación se aplicaba a todos los ramos. Ahora los ramos del semestre del
+  estudiante se ofrecen siempre, y la regla se aplica solo a los ramos atrasados: un ramo pendiente
+  de un semestre impar solo se ofrece cuando el estudiante cursa un semestre impar, y lo mismo con
+  los pares.
+
+### Cambiado
+
+- El período ya no se elige ni se sugiere por fecha: se deduce del semestre que cursa el
+  estudiante. Se quita el selector de período del panel de inscripción.
+- Nuevo estado "Pendiente para otro período" en la malla, el detalle, la Guía y el PDF.
+
 ## [1.4.0] - 2026-11-06
 
 Avanza en la fase 4: ajustes según la operación de la carrera.
@@ -61,6 +76,7 @@ Primera versión publicada en https://malla-icinf-ulagos.vercel.app/.
 - Guía de uso integrada y opción para reportar problemas en GitHub.
 - Indicadores de avance hacia la Licenciatura y el Título profesional.
 
+[1.4.1]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.4.1
 [1.4.0]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.4.0
 [1.3.0]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.3.0
 [1.2.0]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.2.0
