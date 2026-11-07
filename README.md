@@ -40,6 +40,8 @@ qué pueden inscribir.
   semestre.
 - Indicadores de avance: créditos y ramos aprobados, porcentaje hacia la Licenciatura (semestres
   1 al 8) y hacia el Título profesional (toda la malla).
+- Vista "Mis estadísticas" con gráficos de avance por semestre y por área de formación,
+  indicadores de los hitos, ramos clave pendientes y una proyección mínima de egreso.
 - Guía integrada con el significado de cada estado y área, cómo marcar el avance, las
   equivalencias SCT de la Universidad de Los Lagos (con una calculadora de horas por asignatura) y
   cómo planificar la carga académica. El botón se anima hasta que el estudiante la
@@ -119,6 +121,7 @@ qué pueden inscribir.
             ├── Cinta.tsx
             ├── CorreoContacto.tsx
             ├── Detalle.tsx
+            ├── Estadisticas.tsx
             ├── Guia.tsx
             ├── Inscribir.tsx
             ├── MapaMalla.tsx
@@ -131,6 +134,7 @@ qué pueden inscribir.
             ├── types.ts
         └── 📁lib
             ├── contacto.ts
+            ├── estadisticas.ts
             ├── malla.ts
             ├── pdf.ts
             ├── useProgreso.ts
@@ -213,14 +217,14 @@ repositorio:
 
 ### Fase 5: Estadísticas para el estudiante
 
-- [ ] Vista "Mis estadísticas", con pestañas para alternar entre la malla y las estadísticas
-- [ ] Avance por semestre: barras con los SCT aprobados y pendientes de cada semestre
-- [ ] Avance por área de formación
-- [ ] Indicadores circulares de avance hacia la Licenciatura y el Título profesional
-- [ ] Ramos clave pendientes: los que más ramos desbloquean más adelante
-- [ ] Proyección de egreso según los SCT pendientes y la carga de 30 SCT por semestre
+- [x] Vista "Mis estadísticas", con pestañas para alternar entre la malla y las estadísticas
+- [x] Avance por semestre: barras con los SCT aprobados y pendientes de cada semestre
+- [x] Avance por área de formación
+- [x] Indicadores circulares de avance hacia la Licenciatura y el Título profesional
+- [x] Ramos clave pendientes: los que más ramos desbloquean más adelante
+- [x] Proyección mínima de egreso según los SCT pendientes y la cadena de previaturas más larga
 - [ ] Gráficos incluidos en el informe PDF
-- [ ] Gráficos hechos en SVG propio, compatibles con el modo oscuro y sin dependencias nuevas
+- [x] Gráficos hechos en SVG propio, compatibles con el modo oscuro y sin dependencias nuevas
 
 ### Fase 6: Accesibilidad
 
