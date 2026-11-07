@@ -13,6 +13,8 @@ qué pueden inscribir.
 
 **Plataforma en línea:** https://malla-icinf-ulagos.vercel.app/
 
+![Demostración de la malla interactiva: marcar ramos aprobados, ver conexiones, armar el plan de inscripción, modo oscuro y Guía](docs/demo.gif)
+
 ## Funcionalidades
 
 - Elección de malla (DU 416: 11 semestres, 330 SCT, 65 asignaturas / 2027: 10 semestres, 300 SCT, 56 asignaturas).
