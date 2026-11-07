@@ -279,6 +279,21 @@ function InscribirRamos() {
         </p>
       </Seccion>
 
+      <Seccion titulo="¿Cuándo se dicta cada ramo?">
+        <p>
+          Por regla general, los ramos de semestres <strong className="font-semibold">impares</strong> (1, 3, 5…) se dictan en el
+          primer semestre del año, con inscripciones en marzo, y los de semestres <strong className="font-semibold">pares</strong>{' '}
+          (2, 4, 6…) en el segundo, con inscripciones en agosto. Inglés, electivos de formación integral, prácticas, anteproyecto
+          y proyecto de título se dictan en ambos períodos.
+        </p>
+        <p className="mt-2 text-mar-suave">
+          Por eso, un ramo atrasado solo lo puedes inscribir en el período en que se dicta. En el panel de inscripción elige
+          para qué período estás planificando (la plataforma sugiere uno según la fecha): los ramos que se dictan en el otro
+          período aparecen aparte. La Dirección Docente puede definir excepciones, por ejemplo para asignaturas con alta
+          reprobación.
+        </p>
+      </Seccion>
+
       <Seccion titulo="Qué inscribir primero">
         <ol className="space-y-3">
           <Paso n={1} titulo="Ramos pendientes de semestres anteriores">
