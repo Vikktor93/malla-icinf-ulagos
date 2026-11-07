@@ -44,9 +44,11 @@ qué pueden inscribir.
   equivalencias SCT de la Universidad de Los Lagos (con una calculadora de horas por asignatura) y
   cómo planificar la carga académica. El botón se anima hasta que el estudiante la
   abre por primera vez.
-- Botón "Reportar problema" que abre un issue en este repositorio con la malla ya indicada.
-- Sección "Sugerir mejoras" que abre una discusión en la categoría Ideas de
-  [GitHub Discussions](https://github.com/Vikktor93/malla-icinf-ulagos/discussions).
+- Botón "Reportar problema" para abrir un issue en este repositorio o, sin cuenta de GitHub,
+  escribir por correo electrónico. En ambos casos la malla queda indicada.
+- Botón flotante "Sugerir mejoras" para proponer ideas en la categoría Ideas de
+  [GitHub Discussions](https://github.com/Vikktor93/malla-icinf-ulagos/discussions) o por correo
+  electrónico.
 - Modo claro y oscuro. Por defecto sigue el tema del sistema operativo y recuerda la elección del
   estudiante.
 
@@ -115,6 +117,7 @@ qué pueden inscribir.
             ├── logo-icinf.webp
         └── 📁components
             ├── Cinta.tsx
+            ├── CorreoContacto.tsx
             ├── Detalle.tsx
             ├── Guia.tsx
             ├── Inscribir.tsx
@@ -127,6 +130,7 @@ qué pueden inscribir.
             ├── mallas.ts
             ├── types.ts
         └── 📁lib
+            ├── contacto.ts
             ├── malla.ts
             ├── pdf.ts
             ├── useProgreso.ts
@@ -205,7 +209,7 @@ repositorio:
 
 - [x] Mostrar los ramos atrasados solo en el período en que se dictan
 - [x] Incorporar en la Guía el valor oficial de 1 SCT en la Universidad de Los Lagos
-- [ ] Canal para reportar problemas sin necesidad de una cuenta de GitHub
+- [x] Canal para reportar problemas y sugerir mejoras sin necesidad de una cuenta de GitHub
 
 ### Fase 5: Estadísticas para el estudiante
 
@@ -251,7 +255,8 @@ código, no esos contenidos ni el logo de la carrera.
 Plataforma desarrollada por **Victor Saldivia Vera**, académico del Departamento de Ciencias de la
 Ingeniería, Universidad de Los Lagos.
 
-Si tienes dudas o consultas sobre el uso de la plataforma, contáctame a través de
+Si tienes dudas o consultas sobre el uso de la plataforma, escríbeme a
+[victor.saldivia@ulagos.cl](mailto:victor.saldivia@ulagos.cl), contáctame a través de
 [GitHub](https://github.com/Vikktor93) o abre un
 [issue](https://github.com/Vikktor93/malla-icinf-ulagos/issues) en este repositorio.
 
