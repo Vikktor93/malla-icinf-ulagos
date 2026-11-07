@@ -40,6 +40,8 @@ qué pueden inscribir.
   créditos SCT y cómo planificar la carga académica. El botón se anima hasta que el estudiante la
   abre por primera vez.
 - Botón "Reportar problema" que abre un issue en este repositorio con la malla ya indicada.
+- Sección "Sugerir mejoras" que abre una discusión en la categoría Ideas de
+  [GitHub Discussions](https://github.com/Vikktor93/malla-icinf-ulagos/discussions).
 - Modo claro y oscuro. Por defecto sigue el tema del sistema operativo y recuerda la elección del
   estudiante.
 
@@ -113,6 +115,7 @@ qué pueden inscribir.
             ├── MapaMalla.tsx
             ├── Modal.tsx
             ├── Reportar.tsx
+            ├── SugerirMejoras.tsx
             ├── Tarjeta.tsx
         └── 📁data
             ├── mallas.ts
@@ -230,6 +233,9 @@ Ingeniería, Universidad de Los Lagos.
 Si tienes dudas o consultas sobre el uso de la plataforma, contáctame a través de
 [GitHub](https://github.com/Vikktor93) o abre un
 [issue](https://github.com/Vikktor93/malla-icinf-ulagos/issues) en este repositorio.
+
+Si tienes una idea para mejorar la plataforma, compártela en
+[Discussions](https://github.com/Vikktor93/malla-icinf-ulagos/discussions/categories/ideas).
 
 ---
 
