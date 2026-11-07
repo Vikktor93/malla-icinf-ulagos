@@ -1,8 +1,10 @@
 import logo from '../assets/logo-icinf.webp'
 import { AREAS } from '../data/mallas'
 import type { Asignatura, Malla } from '../data/types'
-import { nombrePeriodo, opcionesInscripcion, topeSCT, type Estado } from './malla'
+import { calcularEstadisticas } from './estadisticas'
+import { indexar, nombrePeriodo, opcionesInscripcion, topeSCT, type Estado } from './malla'
 import { AMBAR, BRUMA, MAR, MAR_SUAVE, MAREA, NIEBLA } from './pdfColores'
+import { dibujarEstadisticas } from './pdfEstadisticas'
 
 interface Datos {
   malla: Malla
@@ -193,7 +195,11 @@ export async function descargarPDF({ malla, aprobadas, estados, referencia, plan
   doc.rect(lx, ly - 1.3, 6, 0.8, 'F')
   doc.text('Semestre que le corresponde cursar', lx + 8, ly)
 
-  /* ---------------- Página 2: inscripción y detalle ---------------- */
+  /* ---------------- Página 2: estadísticas ---------------- */
+  doc.addPage('a4', 'landscape')
+  dibujarEstadisticas(doc, malla, calcularEstadisticas(malla, aprobadas, indexar(malla)))
+
+  /* ---------------- Página 3: inscripción y detalle ---------------- */
   doc.addPage('a4', 'portrait')
   const WP = 210
   let y = 18
@@ -306,8 +312,8 @@ export async function descargarPDF({ malla, aprobadas, estados, referencia, plan
   const paginas = doc.getNumberOfPages()
   for (let p = 1; p <= paginas; p++) {
     doc.setPage(p)
-    const ancho = p === 1 ? W : WP
-    const alto = p === 1 ? 210 : 297
+    const ancho = doc.internal.pageSize.getWidth()
+    const alto = doc.internal.pageSize.getHeight()
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(7)
     doc.setTextColor(MAR_SUAVE)
