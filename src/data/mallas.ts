@@ -1,4 +1,4 @@
-import type { Area, AreaId, Asignatura, Malla, Requisito } from './types'
+import type { Area, AreaId, Asignatura, Dictacion, Malla, Requisito } from './types'
 
 /**
  * Áreas de formación. Los colores siguen los de las mallas oficiales en PDF
@@ -28,6 +28,23 @@ function semestres(def: Fila[][]): Asignatura[] {
   )
 }
 
+/**
+ * Excepciones al período de dictación.
+ * Por regla general, los ramos de semestres impares se dictan en el primer semestre del año y los de
+ * semestres pares en el segundo. Las asignaturas listadas aquí se dictan en otro período. Cualquier
+ * otra excepción la define la Dirección Docente (por ejemplo, por alta reprobación) y se agrega aquí.
+ */
+function conDictacion(asignaturas: Asignatura[], excepciones: Partial<Record<Dictacion, string[]>>): Asignatura[] {
+  const porId = new Map<string, Dictacion>()
+  for (const [dictacion, ids] of Object.entries(excepciones) as [Dictacion, string[]][]) {
+    for (const id of ids) porId.set(id, dictacion)
+  }
+  for (const id of porId.keys()) {
+    if (!asignaturas.some((a) => a.id === id)) throw new Error(`Excepción de dictación para un ramo inexistente: ${id}`)
+  }
+  return asignaturas.map((a) => (porId.has(a.id) ? { ...a, dictacion: porId.get(a.id) } : a))
+}
+
 /* ------------------------------------------------------------------ */
 /* Malla DU 416 — 11 semestres, 330 SCT (cohortes 2024, 2025 y 2026)  */
 /* ------------------------------------------------------------------ */
@@ -38,7 +55,7 @@ export const MALLA_DU416: Malla = {
   cohortes: 'Cohortes 2024, 2025 y 2026',
   semestres: 11,
   licenciaturaTras: 8,
-  asignaturas: semestres([
+  asignaturas: conDictacion(semestres([
     // Semestre 1
     [
       ['intro-mat', 'Introducción a la Matemática', 'basicas', 6, 11, 11],
@@ -137,7 +154,15 @@ export const MALLA_DU416: Malla = {
       ['proyecto-titulo', 'Proyecto de Título', 'gestion', 4, 25, 18, r('anteproyecto')],
       ['practica-profesional', 'Práctica Profesional', 'electivos', 0, 19, 12, SEM(8)],
     ],
-  ]),
+  ]), {
+    // Inglés, electivos AFI, prácticas, anteproyecto y proyecto de título se dictan en ambos períodos
+    ambos: [
+      'ingles-1', 'ingles-2', 'ingles-3', 'ingles-4', 'ingles-inf-1', 'ingles-inf-2',
+      'afi-1', 'afi-2', 'afi-3', 'afi-4',
+      'practica-intermedia', 'practica-profesional',
+      'anteproyecto', 'proyecto-titulo',
+    ],
+  }),
 }
 
 /* ------------------------------------------------------------------ */
@@ -150,7 +175,7 @@ export const MALLA_2027: Malla = {
   cohortes: 'Cohorte 2027 en adelante',
   semestres: 10,
   licenciaturaTras: 8,
-  asignaturas: semestres([
+  asignaturas: conDictacion(semestres([
     // Semestre 1
     [
       ['calculo-1', 'Cálculo I', 'basicas', 6, 4, 6],
@@ -237,7 +262,15 @@ export const MALLA_2027: Malla = {
       ['electivo-prof-4', 'Electivo Profesional IV', 'electivos', 4, 3, 4, CONSEJO],
       ['proyecto-titulo', 'Proyecto de Título', 'gestion', 3, 31, 22, r('anteproyecto')],
     ],
-  ]),
+  ]), {
+    // Inglés, electivo de formación integral, prácticas, anteproyecto y proyecto de título
+    ambos: [
+      'ingles-1', 'ingles-2', 'ingles-3', 'ingles-ingenieria', 'ingles-tecnico',
+      'electivo-fi',
+      'practica-intermedia', 'practica-profesional',
+      'anteproyecto', 'proyecto-titulo',
+    ],
+  }),
 }
 
 export const MALLAS = { du416: MALLA_DU416, '2027': MALLA_2027 } as const

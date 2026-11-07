@@ -1,4 +1,4 @@
-import type { Asignatura, Malla, Requisito } from '../data/types'
+import type { Asignatura, Dictacion, Malla, Requisito } from '../data/types'
 
 /**
  * - aprobada: ya la aprobó.
@@ -62,6 +62,35 @@ export function semestreReferencia(malla: Malla, aprobadas: Set<string>): number
   let max = 0
   for (const a of malla.asignaturas) if (aprobadas.has(a.id)) max = Math.max(max, a.semestre)
   return Math.min(max + 1, malla.semestres)
+}
+
+/* ---------- Período de dictación ---------- */
+
+/** 1 = primer semestre del año (marzo a julio), 2 = segundo semestre (agosto a diciembre). */
+export type Periodo = 1 | 2
+
+export function dictacionDe(a: Asignatura): Dictacion {
+  return a.dictacion ?? (a.semestre % 2 === 1 ? 'impar' : 'par')
+}
+
+export function seDictaEn(a: Asignatura, periodo: Periodo): boolean {
+  const d = dictacionDe(a)
+  return d === 'ambos' || (d === 'impar' && periodo === 1) || (d === 'par' && periodo === 2)
+}
+
+export function textoDictacion(a: Asignatura): string {
+  const d = dictacionDe(a)
+  return d === 'ambos' ? 'Ambos semestres del año' : d === 'impar' ? 'Primer semestre del año' : 'Segundo semestre del año'
+}
+
+/**
+ * Período para el que conviene planificar según la fecha. Las inscripciones del primer semestre son
+ * en marzo y las del segundo en agosto: de abril a agosto se planifica el segundo semestre, y de
+ * septiembre a marzo, el primero.
+ */
+export function periodoSugerido(fecha = new Date()): Periodo {
+  const mes = fecha.getMonth() // 0 = enero
+  return mes >= 3 && mes <= 7 ? 2 : 1
 }
 
 /** Carga recomendada por semestre (referencial, nunca bloquea la inscripción). */

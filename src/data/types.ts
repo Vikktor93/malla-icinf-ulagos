@@ -1,3 +1,11 @@
+/**
+ * Período del año en que se dicta una asignatura:
+ * - impar: primer semestre del año (marzo a julio)
+ * - par: segundo semestre del año (agosto a diciembre)
+ * - ambos: se dicta en los dos períodos
+ */
+export type Dictacion = 'impar' | 'par' | 'ambos'
+
 export type AreaId = 'basicas' | 'software' | 'sistemas' | 'gestion' | 'electivos' | 'general'
 
 export type Requisito =
@@ -16,6 +24,8 @@ export interface Asignatura {
   requisitos: Requisito[]
   /** Fila visual dentro del semestre (orden del documento oficial) */
   fila: number
+  /** Excepción al período de dictación. Si no se indica, sigue la paridad de su semestre. */
+  dictacion?: Dictacion
 }
 
 export interface Malla {
