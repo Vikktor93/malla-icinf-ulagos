@@ -26,10 +26,10 @@ qué pueden inscribir.
 - Inscripción acotada al semestre que le corresponde al estudiante (el más alto con algún ramo
   aprobado, más uno). El panel separa los ramos pendientes de semestres anteriores de los del
   semestre siguiente, ordenados por cuántos ramos abren.
-- Inscripción según el período de dictación: los ramos de semestres impares se dictan en el primer
+- Período de dictación para ramos atrasados: los ramos de semestres impares se dictan en el primer
   semestre del año y los pares en el segundo, con excepciones para asignaturas que se dictan en
-  ambos. El período se sugiere según la fecha (inscripciones en marzo y agosto) y el estudiante lo
-  puede cambiar.
+  ambos. Los ramos del semestre del estudiante se ofrecen siempre; un ramo atrasado solo se ofrece
+  si se dicta en el mismo período que ese semestre, y si no, queda como pendiente para el próximo.
 - Plan de inscripción con contador de SCT y horas semanales. Si el plan supera el tope (30 SCT o
   los SCT oficiales del semestre, lo que sea mayor) aparece un aviso informativo, que no bloquea.
 - Marcar un semestre completo de una vez, búsqueda y filtro de lo inscribible.
@@ -203,7 +203,7 @@ repositorio:
 
 ### Fase 4: Ajustes según la operación de la carrera
 
-- [x] Mostrar los ramos atrasados solo en el período en que se dictan, con selector de período
+- [x] Mostrar los ramos atrasados solo en el período en que se dictan
 - [x] Incorporar en la Guía el valor oficial de 1 SCT en la Universidad de Los Lagos
 - [ ] Canal para reportar problemas sin necesidad de una cuenta de GitHub
 
