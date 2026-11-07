@@ -113,3 +113,21 @@ body {
     opacity: 1;
   }
 }
+
+/* Apertura del panel "Sugerir mejoras" desde el botón flotante */
+@keyframes aparecer-panel {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+}
+
+.panel-sugerir {
+  animation: aparecer-panel 160ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel-sugerir {
+    animation: none;
+  }
+}
