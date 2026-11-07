@@ -58,6 +58,7 @@ qué pueden inscribir.
 | [Fontsource](https://fontsource.org/) | Tipografías Bricolage Grotesque e Instrument Sans, incluidas en el sitio |
 | [Oxlint](https://oxc.rs/docs/guide/usage/linter) | Revisión de calidad del código |
 | [Vercel](https://vercel.com/) | Hosting y despliegue automático desde GitHub |
+| [Vercel Web Analytics](https://vercel.com/docs/analytics) | Conteo anónimo de visitas, sin cookies |
 | `localStorage` del navegador | Guardado del avance del estudiante, sin servidor ni cuentas |
 
 ## Optimizaciones implementadas
@@ -201,6 +202,16 @@ repositorio:
 - [ ] Gráfico de aprobación por semestre (SCT y ramos aprobados en cada semestre)
 - [ ] Avance por área de formación
 - [ ] Vista de estadísticas más visual y atractiva dentro de la plataforma
+
+## Privacidad
+
+- El avance de cada estudiante se guarda solo en su navegador. La plataforma no tiene servidor ni
+  base de datos, y no pide datos personales. El nombre que se escribe para el PDF también queda
+  solo en el navegador.
+- Las visitas se miden con [Vercel Web Analytics](https://vercel.com/docs/analytics), que entrega
+  cifras agregadas (visitas, país, dispositivo y sitio de origen) sin usar cookies ni identificar a
+  las personas. Antes de enviar cada visita se quita la parte de la URL que contiene el avance
+  compartido por enlace.
 
 ## Versionamiento
 
