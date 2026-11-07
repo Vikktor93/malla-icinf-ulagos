@@ -1,13 +1,27 @@
-import { Info, ShieldQuestion, TriangleAlert, X } from 'lucide-react'
+import { CalendarClock, Info, ShieldQuestion, TriangleAlert, X } from 'lucide-react'
 import { AREAS } from '../data/mallas'
 import type { Asignatura, Malla } from '../data/types'
-import { descendientes, SCT_RECOMENDADOS, topeSCT, type Estado, type Indice } from '../lib/malla'
+import {
+  descendientes,
+  dictacionDe,
+  nombrePeriodo,
+  periodoSugerido,
+  SCT_RECOMENDADOS,
+  topeSCT,
+  type Estado,
+  type Indice,
+  type OpcionesInscripcion,
+  type Periodo,
+} from '../lib/malla'
 
 interface Props {
   malla: Malla
   idx: Indice
   estados: Map<string, Estado>
   referencia: number
+  opciones: OpcionesInscripcion
+  periodo: Periodo
+  onPeriodo: (p: Periodo) => void
   plan: Set<string>
   soloLectura: boolean
   onPlan: (id: string) => void
@@ -22,11 +36,21 @@ interface Opcion {
   cond: boolean
 }
 
-export function Inscribir({ malla, idx, estados, referencia, plan, soloLectura, onPlan, onLimpiar, onIr, onCerrar }: Props) {
-  const inscribible = (a: Asignatura) => {
-    const e = estados.get(a.id)
-    return e === 'disponible' || e === 'condicional'
-  }
+export function Inscribir({
+  malla,
+  idx,
+  estados,
+  referencia,
+  opciones: grupos,
+  periodo,
+  onPeriodo,
+  plan,
+  soloLectura,
+  onPlan,
+  onLimpiar,
+  onIr,
+  onCerrar,
+}: Props) {
   const aOpcion = (a: Asignatura): Opcion => ({
     a,
     abre: descendientes(a.id, idx).size,
@@ -34,12 +58,16 @@ export function Inscribir({ malla, idx, estados, referencia, plan, soloLectura, 
   })
 
   // Pendientes de semestres anteriores: primero los que más ramos abren
-  const atrasados = malla.asignaturas
-    .filter((a) => a.semestre < referencia && inscribible(a))
-    .map(aOpcion)
-    .sort((x, y) => y.abre - x.abre || x.a.semestre - y.a.semestre)
-  const proximo = malla.asignaturas.filter((a) => a.semestre === referencia && inscribible(a)).map(aOpcion)
-  const bloqueadosProximo = malla.asignaturas.filter((a) => a.semestre === referencia && estados.get(a.id) === 'bloqueada')
+  const atrasados = grupos.atrasados.map(aOpcion).sort((x, y) => y.abre - x.abre || x.a.semestre - y.a.semestre)
+  const proximo = grupos.proximo.map(aOpcion)
+  const otroPeriodo = grupos.otroPeriodo.map(aOpcion)
+  const bloqueadosProximo = grupos.bloqueadosProximo
+  const sugerido = periodoSugerido()
+  const otro: Periodo = periodo === 1 ? 2 : 1
+  // ¿Los ramos del semestre del estudiante se dictan en otro período? (p. ej. semestre 6 en el primer semestre del año)
+  const desfase = malla.asignaturas.some(
+    (a) => a.semestre === referencia && dictacionDe(a) === (otro === 1 ? 'impar' : 'par'),
+  )
 
   const opciones = [...atrasados, ...proximo]
   const enPlan = opciones.filter((o) => plan.has(o.a.id))
@@ -83,7 +111,7 @@ export function Inscribir({ malla, idx, estados, referencia, plan, soloLectura, 
           <h2 className="font-display text-[26px] leading-tight font-bold">Tu semestre {referencia}</h2>
           <p className="mt-1 text-[14px] text-white/75">
             {opciones.length === 0
-              ? 'No tienes ramos disponibles para inscribir en este semestre.'
+              ? `No tienes ramos para inscribir en el ${nombrePeriodo(periodo)} del año.`
               : 'Ramos que cumplen sus previaturas. Elige los que vas a tomar.'}
           </p>
         </div>
@@ -93,6 +121,41 @@ export function Inscribir({ malla, idx, estados, referencia, plan, soloLectura, 
       </div>
 
       <div className="scroll-fino flex-1 space-y-6 overflow-y-auto px-4 py-4">
+        <section aria-label="Período de inscripción" className="px-1">
+          <p className="flex items-center gap-1.5 text-[13px] font-semibold">
+            <CalendarClock size={15} className="text-marea" /> Inscribir para el
+          </p>
+          <div className="mt-1.5 flex rounded-full bg-superficie p-1 ring-1 ring-bruma" role="radiogroup" aria-label="Período">
+            {([1, 2] as const).map((p) => (
+              <button
+                key={p}
+                type="button"
+                role="radio"
+                aria-checked={periodo === p}
+                onClick={() => onPeriodo(p)}
+                className={`flex-1 rounded-full px-3 py-1.5 text-[13px] font-semibold transition-colors ${
+                  periodo === p ? 'bg-primario text-sobre-primario' : 'text-mar-suave hover:text-tinta'
+                }`}
+              >
+                {p === 1 ? '1er semestre (marzo)' : '2º semestre (agosto)'}
+              </button>
+            ))}
+          </div>
+          <p className="mt-1.5 text-[12px] text-mar-suave">
+            {periodo === sugerido ? 'Sugerido según la fecha de hoy.' : `Según la fecha de hoy, lo próximo es el ${nombrePeriodo(sugerido)}.`}
+          </p>
+        </section>
+
+        {desfase && (
+          <p className="flex items-start gap-2 rounded-xl bg-amber-50 px-3.5 py-3 text-[13px] text-amber-900 ring-1 ring-amber-200 dark:bg-amber-950/50 dark:text-amber-200 dark:ring-amber-800">
+            <CalendarClock size={16} className="mt-px shrink-0" />
+            <span>
+              Los ramos de tu semestre {referencia} se dictan en el {nombrePeriodo(otro)} del año. En este período puedes
+              avanzar con ramos pendientes o que se dictan en ambos semestres. Si tienes dudas, consulta en la Dirección Docente.
+            </span>
+          </p>
+        )}
+
         {atrasados.length > 0 && (
           <section>
             <h3 className="px-1 font-display text-[15px] font-bold">Pendientes de semestres anteriores</h3>
@@ -108,7 +171,7 @@ export function Inscribir({ malla, idx, estados, referencia, plan, soloLectura, 
           ) : (
             <p className="mt-1 px-1 text-[13px] text-mar-suave">No hay ramos de este semestre que puedas inscribir todavía.</p>
           )}
-          {bloqueadosProximo.length > 0 && (
+          {bloqueadosProximo.length > 0 && !desfase && (
             <p className="mt-2 px-1 text-[13px] text-mar-suave">
               {bloqueadosProximo.length === 1
                 ? `${bloqueadosProximo[0].nombre} aún tiene previaturas pendientes.`
@@ -116,6 +179,45 @@ export function Inscribir({ malla, idx, estados, referencia, plan, soloLectura, 
             </p>
           )}
         </section>
+
+        {otroPeriodo.length > 0 && (
+          <section>
+            <h3 className="px-1 font-display text-[15px] font-bold text-mar-suave">Se dictan en el {nombrePeriodo(otro)} del año</h3>
+            <p className="mt-0.5 mb-2 px-1 text-[13px] text-mar-suave">
+              Cumples sus previaturas, pero no se dictan en este período. Tenlos en cuenta para planificar el siguiente.
+            </p>
+            <ul className="space-y-1.5">
+              {otroPeriodo.map(({ a }) => (
+                <li key={a.id}>
+                  <button
+                    type="button"
+                    onClick={() => onIr(a.id)}
+                    className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left border border-dashed border-bruma opacity-75 hover:opacity-100"
+                  >
+                    <span aria-hidden className="h-7 w-1 shrink-0 rounded-full" style={{ background: AREAS[a.area].color }} />
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[14px] leading-snug font-semibold">{a.nombre}</span>
+                      <span className="text-[12px] text-mar-suave">
+                        Semestre {a.semestre}
+                        {a.semestre < referencia ? ', pendiente' : ''}
+                      </span>
+                    </span>
+                    <span className="font-display text-[15px] font-bold tabular-nums">
+                      {a.sct}
+                      <span className="ml-0.5 text-[10px] font-semibold text-mar-suave">SCT</span>
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        <p className="px-1 text-[12px] text-mar-suave">
+          Por regla general, los ramos de semestres impares se dictan en el primer semestre del año y los de semestres pares en el
+          segundo. Inglés, electivos de formación integral, prácticas, anteproyecto y proyecto de título se dictan en ambos.
+          La Dirección Docente puede definir otras excepciones.
+        </p>
       </div>
 
       <div className="border-t border-bruma bg-superficie px-5 py-3.5">

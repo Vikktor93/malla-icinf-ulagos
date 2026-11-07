@@ -9,7 +9,7 @@ import { Reportar } from './components/Reportar'
 import { SugerirMejoras } from './components/SugerirMejoras'
 import { MALLAS } from './data/mallas'
 import type { Malla } from './data/types'
-import { calcularEstados, indexar, semestreReferencia } from './lib/malla'
+import { calcularEstados, indexar, opcionesInscripcion, periodoSugerido, semestreReferencia, type Periodo } from './lib/malla'
 import { useProgreso } from './lib/useProgreso'
 import { useTema } from './lib/useTema'
 import logo from './assets/logo-icinf.webp'
@@ -53,7 +53,10 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
   const lic = malla.asignaturas.filter((a) => a.semestre <= malla.licenciaturaTras)
   const licTotal = lic.reduce((t, a) => t + a.sct, 0)
   const licAprob = lic.filter((a) => prog.aprobadas.has(a.id)).reduce((t, a) => t + a.sct, 0)
-  const disponibles = [...estados.values()].filter((e) => e === 'disponible' || e === 'condicional').length
+  // Período para el que se planifica la inscripción: se propone según la fecha y el estudiante lo puede cambiar
+  const [periodo, setPeriodo] = useState<Periodo>(() => periodoSugerido())
+  const opciones = useMemo(() => opcionesInscripcion(malla, estados, referencia, periodo), [malla, estados, referencia, periodo])
+  const disponibles = opciones.atrasados.length + opciones.proximo.length
   const carreraCompleta = prog.aprobadas.size === malla.asignaturas.length
 
   const seleccion = vista?.tipo === 'detalle' ? vista.id : null
@@ -410,6 +413,9 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
             idx={idx}
             estados={estados}
             referencia={referencia}
+            opciones={opciones}
+            periodo={periodo}
+            onPeriodo={setPeriodo}
             plan={prog.plan}
             soloLectura={soloLectura}
             onPlan={prog.alternarPlan}

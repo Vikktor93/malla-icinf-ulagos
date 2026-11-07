@@ -93,6 +93,40 @@ export function periodoSugerido(fecha = new Date()): Periodo {
   return mes >= 3 && mes <= 7 ? 2 : 1
 }
 
+export const nombrePeriodo = (p: Periodo) => (p === 1 ? 'primer semestre' : 'segundo semestre')
+
+export interface OpcionesInscripcion {
+  /** Ramos de semestres anteriores que cumplen previaturas y se dictan en el período */
+  atrasados: Asignatura[]
+  /** Ramos del semestre de referencia que cumplen previaturas y se dictan en el período */
+  proximo: Asignatura[]
+  /** Ramos que cumplen previaturas, pero se dictan en el otro período */
+  otroPeriodo: Asignatura[]
+  /** Ramos del semestre de referencia que aún tienen previaturas pendientes */
+  bloqueadosProximo: Asignatura[]
+}
+
+/** Ramos que el estudiante puede inscribir en su semestre de referencia, según el período. */
+export function opcionesInscripcion(
+  malla: Malla,
+  estados: Map<string, Estado>,
+  referencia: number,
+  periodo: Periodo,
+): OpcionesInscripcion {
+  const inscribible = (a: Asignatura) => {
+    const e = estados.get(a.id)
+    return e === 'disponible' || e === 'condicional'
+  }
+  const candidatos = malla.asignaturas.filter((a) => a.semestre <= referencia && inscribible(a))
+  const enPeriodo = candidatos.filter((a) => seDictaEn(a, periodo))
+  return {
+    atrasados: enPeriodo.filter((a) => a.semestre < referencia),
+    proximo: enPeriodo.filter((a) => a.semestre === referencia),
+    otroPeriodo: candidatos.filter((a) => !seDictaEn(a, periodo)),
+    bloqueadosProximo: malla.asignaturas.filter((a) => a.semestre === referencia && estados.get(a.id) === 'bloqueada'),
+  }
+}
+
 /** Carga recomendada por semestre (referencial, nunca bloquea la inscripción). */
 export const SCT_RECOMENDADOS = 30
 
