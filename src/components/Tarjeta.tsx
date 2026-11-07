@@ -1,4 +1,4 @@
-import { Check, Lock, ShieldQuestion } from 'lucide-react'
+import { CalendarClock, Check, Lock, ShieldQuestion } from 'lucide-react'
 import { AREAS } from '../data/mallas'
 import type { Asignatura } from '../data/types'
 import type { Estado } from '../lib/malla'
@@ -21,6 +21,7 @@ const etiquetaEstado: Record<Estado, string> = {
   disponible: 'Puedes inscribirla',
   condicional: 'Requiere aprobación del Consejo de Carrera',
   adelantable: 'Corresponde a un semestre posterior',
+  otroPeriodo: 'Pendiente, se dicta en el otro período del año',
   bloqueada: 'Tiene previaturas pendientes',
 }
 
@@ -98,7 +99,7 @@ export function Tarjeta({ a, estado, enfasis, enPlan, soloLectura, onAbrir, onAl
         className={`absolute top-1.5 right-1.5 grid size-6 place-items-center rounded-full transition-colors ${
           aprobada
             ? 'bg-white/90 text-mar'
-            : estado === 'bloqueada'
+            : estado === 'bloqueada' || estado === 'otroPeriodo'
               ? 'text-mar-suave/70 hover:bg-bruma'
               : 'border border-bruma text-transparent hover:border-marea hover:text-marea'
         } disabled:cursor-default`}
@@ -107,6 +108,8 @@ export function Tarjeta({ a, estado, enfasis, enPlan, soloLectura, onAbrir, onAl
           <Check size={15} strokeWidth={3} />
         ) : estado === 'bloqueada' ? (
           <Lock size={13} />
+        ) : estado === 'otroPeriodo' ? (
+          <CalendarClock size={13} />
         ) : estado === 'condicional' ? (
           <ShieldQuestion size={14} className="text-ambar" />
         ) : (

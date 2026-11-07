@@ -1,7 +1,7 @@
 import logo from '../assets/logo-icinf.webp'
 import { AREAS } from '../data/mallas'
 import type { Asignatura, Malla } from '../data/types'
-import { nombrePeriodo, opcionesInscripcion, topeSCT, type Estado, type Periodo } from './malla'
+import { nombrePeriodo, opcionesInscripcion, topeSCT, type Estado } from './malla'
 
 interface Datos {
   malla: Malla
@@ -9,8 +9,6 @@ interface Datos {
   estados: Map<string, Estado>
   referencia: number
   plan: Set<string>
-  /** Período para el que se planifica la inscripción */
-  periodo: Periodo
   /** Nombre del estudiante (opcional) para el encabezado */
   nombre?: string
 }
@@ -28,6 +26,7 @@ const ETIQUETA: Record<Estado, string> = {
   disponible: 'Puede inscribirla',
   condicional: 'Requiere Consejo de Carrera',
   adelantable: 'Semestre posterior',
+  otroPeriodo: 'Pendiente, otro período',
   bloqueada: 'Previaturas pendientes',
 }
 
@@ -50,7 +49,7 @@ async function imagenComoPNG(url: string): Promise<string | null> {
 const sumaSCT = (xs: Asignatura[]) => xs.reduce((t, a) => t + a.sct, 0)
 
 /** Genera y descarga el informe de avance en PDF. Las librerías se cargan solo al usarlo. */
-export async function descargarPDF({ malla, aprobadas, estados, referencia, plan, periodo, nombre = '' }: Datos) {
+export async function descargarPDF({ malla, aprobadas, estados, referencia, plan, nombre = '' }: Datos) {
   const [{ jsPDF }, { default: autoTable }, logoData] = await Promise.all([
     import('jspdf'),
     import('jspdf-autotable'),
@@ -154,7 +153,7 @@ export async function descargarPDF({ malla, aprobadas, estados, referencia, plan
         doc.roundedRect(x, y, colW, cardH, 1.2, 1.2, 'FD')
         doc.setFillColor(area.color)
         doc.rect(x + 0.6, y + 1.5, 0.8, cardH - 3, 'F')
-        doc.setTextColor(e === 'bloqueada' || e === 'adelantable' ? MAR_SUAVE : MAR)
+        doc.setTextColor(e === 'bloqueada' || e === 'adelantable' || e === 'otroPeriodo' ? MAR_SUAVE : MAR)
       }
       doc.setFont('helvetica', 'bold')
       doc.setFontSize(5.6)
@@ -219,8 +218,8 @@ export async function descargarPDF({ malla, aprobadas, estados, referencia, plan
   const finTabla = () => (doc as unknown as { lastAutoTable: { finalY: number } }).lastAutoTable.finalY
 
   if (!completa) {
-    const { atrasados, proximo, otroPeriodo } = opcionesInscripcion(malla, estados, referencia, periodo)
-    titulo(`Semestre ${referencia}: ramos que puede inscribir en el ${nombrePeriodo(periodo)} del año`)
+    const { periodo, atrasados, proximo, otroPeriodo } = opcionesInscripcion(malla, estados, referencia)
+    titulo(`Semestre ${referencia}: ramos que puede inscribir`)
     const filas = [...atrasados, ...proximo].map((a) => [
       a.nombre + (estados.get(a.id) === 'condicional' ? ' (requiere Consejo de Carrera)' : ''),
       a.semestre < referencia ? `Atrasado (sem. ${a.semestre})` : `Semestre ${a.semestre}`,
@@ -240,7 +239,7 @@ export async function descargarPDF({ malla, aprobadas, estados, referencia, plan
       doc.setFont('helvetica', 'normal')
       doc.setFontSize(9)
       doc.setTextColor(MAR_SUAVE)
-      doc.text(`No tiene ramos disponibles para inscribir en el ${nombrePeriodo(periodo)} del año.`, M, y + 4)
+      doc.text('No tiene ramos disponibles para inscribir en este semestre.', M, y + 4)
       y += 10
     }
 
@@ -250,7 +249,7 @@ export async function descargarPDF({ malla, aprobadas, estados, referencia, plan
       doc.setTextColor(MAR_SUAVE)
       const otro = nombrePeriodo(periodo === 1 ? 2 : 1)
       const lineas = doc.splitTextToSize(
-        `Cumple también las previaturas de ramos que se dictan en el ${otro} del año: ${otroPeriodo.map((a) => a.nombre).join(', ')}.`,
+        `Ramos pendientes que se dictan en el ${otro} del año y podrá inscribir en su próximo semestre: ${otroPeriodo.map((a) => a.nombre).join(', ')}.`,
         WP - 2 * M,
       ) as string[]
       doc.text(lineas, M, y)

@@ -183,6 +183,14 @@ function EstadoAviso({ estado, pendientes }: { estado: Estado; pendientes: strin
         <Check size={18} strokeWidth={3} /> Cumples las previaturas: puedes inscribirla.
       </p>
     )
+  if (estado === 'otroPeriodo')
+    return (
+      <p className="flex items-start gap-2 rounded-xl bg-superficie px-3.5 py-3 text-[14px] ring-1 ring-bruma">
+        <CalendarClock size={17} className="mt-0.5 shrink-0 text-mar-suave" />
+        Cumples sus previaturas, pero es un ramo pendiente que se dicta en el otro período del año. Podrás inscribirla en tu
+        próximo semestre.
+      </p>
+    )
   if (estado === 'adelantable')
     return (
       <p className="flex items-start gap-2 rounded-xl bg-superficie px-3.5 py-3 text-[14px] ring-1 ring-bruma">

@@ -4,9 +4,10 @@ import type { Asignatura, Dictacion, Malla, Requisito } from '../data/types'
  * - aprobada: ya la aprobó.
  * - disponible / condicional: cumple previaturas y corresponde a su próximo semestre o a uno anterior.
  * - adelantable: cumple previaturas, pero es de un semestre posterior al que le toca cursar.
+ * - otroPeriodo: ramo pendiente de un semestre anterior que se dicta en el otro período del año.
  * - bloqueada: tiene previaturas pendientes.
  */
-export type Estado = 'aprobada' | 'disponible' | 'condicional' | 'adelantable' | 'bloqueada'
+export type Estado = 'aprobada' | 'disponible' | 'condicional' | 'adelantable' | 'otroPeriodo' | 'bloqueada'
 
 export interface Indice {
   porId: Map<string, Asignatura>
@@ -83,46 +84,43 @@ export function textoDictacion(a: Asignatura): string {
   return d === 'ambos' ? 'Ambos semestres del año' : d === 'impar' ? 'Primer semestre del año' : 'Segundo semestre del año'
 }
 
-/**
- * Período para el que conviene planificar según la fecha. Las inscripciones del primer semestre son
- * en marzo y las del segundo en agosto: de abril a agosto se planifica el segundo semestre, y de
- * septiembre a marzo, el primero.
- */
-export function periodoSugerido(fecha = new Date()): Periodo {
-  const mes = fecha.getMonth() // 0 = enero
-  return mes >= 3 && mes <= 7 ? 2 : 1
+/** Período del año en que se cursa un semestre de la malla: impares en el primero, pares en el segundo. */
+export function periodoDeSemestre(semestre: number): Periodo {
+  return semestre % 2 === 1 ? 1 : 2
 }
 
 export const nombrePeriodo = (p: Periodo) => (p === 1 ? 'primer semestre' : 'segundo semestre')
 
 export interface OpcionesInscripcion {
-  /** Ramos de semestres anteriores que cumplen previaturas y se dictan en el período */
+  /** Período del año en que el estudiante cursa su semestre de referencia */
+  periodo: Periodo
+  /** Ramos pendientes de semestres anteriores que se dictan en ese período */
   atrasados: Asignatura[]
-  /** Ramos del semestre de referencia que cumplen previaturas y se dictan en el período */
+  /** Ramos del semestre de referencia que cumplen previaturas (todos se dictan en su período) */
   proximo: Asignatura[]
-  /** Ramos que cumplen previaturas, pero se dictan en el otro período */
+  /** Ramos pendientes de semestres anteriores que se dictan en el otro período */
   otroPeriodo: Asignatura[]
   /** Ramos del semestre de referencia que aún tienen previaturas pendientes */
   bloqueadosProximo: Asignatura[]
 }
 
-/** Ramos que el estudiante puede inscribir en su semestre de referencia, según el período. */
-export function opcionesInscripcion(
-  malla: Malla,
-  estados: Map<string, Estado>,
-  referencia: number,
-  periodo: Periodo,
-): OpcionesInscripcion {
+/**
+ * Ramos que el estudiante puede inscribir en su semestre de referencia.
+ * Los ramos de ese semestre se ofrecen siempre. La regla del período de dictación se aplica solo a
+ * los ramos atrasados: un ramo reprobado o pendiente de un semestre impar solo se puede tomar cuando
+ * el estudiante cursa un semestre impar, y lo mismo para los pares.
+ */
+export function opcionesInscripcion(malla: Malla, estados: Map<string, Estado>, referencia: number): OpcionesInscripcion {
+  // calcularEstados ya marca como 'otroPeriodo' los atrasados que no se dictan en este período
   const inscribible = (a: Asignatura) => {
     const e = estados.get(a.id)
     return e === 'disponible' || e === 'condicional'
   }
-  const candidatos = malla.asignaturas.filter((a) => a.semestre <= referencia && inscribible(a))
-  const enPeriodo = candidatos.filter((a) => seDictaEn(a, periodo))
   return {
-    atrasados: enPeriodo.filter((a) => a.semestre < referencia),
-    proximo: enPeriodo.filter((a) => a.semestre === referencia),
-    otroPeriodo: candidatos.filter((a) => !seDictaEn(a, periodo)),
+    periodo: periodoDeSemestre(referencia),
+    atrasados: malla.asignaturas.filter((a) => a.semestre < referencia && inscribible(a)),
+    proximo: malla.asignaturas.filter((a) => a.semestre === referencia && inscribible(a)),
+    otroPeriodo: malla.asignaturas.filter((a) => estados.get(a.id) === 'otroPeriodo'),
     bloqueadosProximo: malla.asignaturas.filter((a) => a.semestre === referencia && estados.get(a.id) === 'bloqueada'),
   }
 }
@@ -143,9 +141,13 @@ export function topeSCT(malla: Malla, semestre: number): number {
 /** Estados de todos los ramos, considerando el semestre de referencia del estudiante. */
 export function calcularEstados(malla: Malla, aprobadas: Set<string>, referencia: number): Map<string, Estado> {
   const m = new Map<string, Estado>()
+  const periodo = periodoDeSemestre(referencia)
   for (const a of malla.asignaturas) {
     const e = estadoDe(a, malla, aprobadas)
-    m.set(a.id, (e === 'disponible' || e === 'condicional') && a.semestre > referencia ? 'adelantable' : e)
+    const cumple = e === 'disponible' || e === 'condicional'
+    if (cumple && a.semestre > referencia) m.set(a.id, 'adelantable')
+    else if (cumple && a.semestre < referencia && !seDictaEn(a, periodo)) m.set(a.id, 'otroPeriodo')
+    else m.set(a.id, e)
   }
   return m
 }
