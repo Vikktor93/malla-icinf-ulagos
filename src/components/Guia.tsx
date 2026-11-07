@@ -102,6 +102,12 @@ const ESTADOS: { estado: Estado; a: Asignatura; titulo: string; texto: string }[
     texto: 'Cumples sus previaturas, pero es de un semestre más adelante del que te toca cursar.',
   },
   {
+    estado: 'otroPeriodo',
+    a: ejemplo('Cálculo Diferencial e Integral', 'basicas', 6, 5, 5),
+    titulo: 'Pendiente para otro período',
+    texto: 'Es de un semestre anterior y cumples sus previaturas, pero se dicta en el otro período del año.',
+  },
+  {
     estado: 'bloqueada',
     a: ejemplo('Estructuras de Datos', 'software', 6, 4, 5),
     titulo: 'Previaturas pendientes',
@@ -287,17 +293,17 @@ function InscribirRamos() {
           y proyecto de título se dictan en ambos períodos.
         </p>
         <p className="mt-2 text-mar-suave">
-          Por eso, un ramo atrasado solo lo puedes inscribir en el período en que se dicta. En el panel de inscripción elige
-          para qué período estás planificando (la plataforma sugiere uno según la fecha): los ramos que se dictan en el otro
-          período aparecen aparte. La Dirección Docente puede definir excepciones, por ejemplo para asignaturas con alta
-          reprobación.
+          Los ramos de tu semestre siempre se ofrecen para inscribir. La regla importa para los ramos atrasados: si reprobaste o
+          dejaste pendiente un ramo de un semestre impar, solo podrás tomarlo cuando curses un semestre impar, y lo mismo con
+          los pares. Por ejemplo, si vas al semestre 4 y reprobaste un ramo del semestre 3, lo verás como pendiente para tu
+          próximo semestre. La Dirección Docente puede definir excepciones, por ejemplo para asignaturas con alta reprobación.
         </p>
       </Seccion>
 
       <Seccion titulo="Qué inscribir primero">
         <ol className="space-y-3">
           <Paso n={1} titulo="Ramos pendientes de semestres anteriores">
-            Aparecen primero y con borde ámbar. Priorízalos: pueden ser previatura de otros ramos y dejarlos para después te puede atrasar.
+            Aparecen primero y con borde ámbar, si se dictan en el período de tu semestre. Priorízalos: pueden ser previatura de otros ramos y dejarlos para después te puede atrasar.
           </Paso>
           <Paso n={2} titulo="Ramos de tu semestre">
             Son los que corresponden a tu avance según la malla.
