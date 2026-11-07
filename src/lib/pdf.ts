@@ -2,6 +2,7 @@ import logo from '../assets/logo-icinf.webp'
 import { AREAS } from '../data/mallas'
 import type { Asignatura, Malla } from '../data/types'
 import { nombrePeriodo, opcionesInscripcion, topeSCT, type Estado } from './malla'
+import { AMBAR, BRUMA, MAR, MAR_SUAVE, MAREA, NIEBLA } from './pdfColores'
 
 interface Datos {
   malla: Malla
@@ -13,11 +14,6 @@ interface Datos {
   nombre?: string
 }
 
-const MAR = '#123540'
-const MAR_SUAVE = '#4B6670'
-const MAREA = '#0E8A80'
-const BRUMA = '#D3DEE2'
-const AMBAR = '#B7791F'
 const SITIO = 'malla-icinf-ulagos.vercel.app'
 const URL_SITIO = 'https://malla-icinf-ulagos.vercel.app/'
 
@@ -278,7 +274,7 @@ export async function descargarPDF({ malla, aprobadas, estados, referencia, plan
       {
         content: `Semestre ${s}   ${sumaSCT(ramos.filter((a) => aprobadas.has(a.id)))} de ${sumaSCT(ramos)} SCT aprobados`,
         colSpan: 6,
-        styles: { fontStyle: 'bold', fillColor: '#E6EDEF', textColor: MAR },
+        styles: { fontStyle: 'bold', fillColor: NIEBLA, textColor: MAR },
       },
     ])
     for (const a of ramos) {
