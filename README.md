@@ -250,4 +250,4 @@ Si tienes una idea para mejorar la plataforma, compártela en
 
 ---
 
-**Versión:** 1.2.0 | **Última actualización:** 6 de noviembre de 2026
+**Versión:** 1.3.0 | **Última actualización:** 6 de noviembre de 2026
