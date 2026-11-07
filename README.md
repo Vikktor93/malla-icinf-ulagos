@@ -36,8 +36,9 @@ qué pueden inscribir.
   semestre.
 - Indicadores de avance: créditos y ramos aprobados, porcentaje hacia la Licenciatura (semestres
   1 al 8) y hacia el Título profesional (toda la malla).
-- Guía integrada con el significado de cada estado y área, cómo marcar el avance, qué son los
-  créditos SCT y cómo planificar la carga académica. El botón se anima hasta que el estudiante la
+- Guía integrada con el significado de cada estado y área, cómo marcar el avance, las
+  equivalencias SCT de la Universidad de Los Lagos (con una calculadora de horas por asignatura) y
+  cómo planificar la carga académica. El botón se anima hasta que el estudiante la
   abre por primera vez.
 - Botón "Reportar problema" que abre un issue en este repositorio con la malla ya indicada.
 - Sección "Sugerir mejoras" que abre una discusión en la categoría Ideas de
@@ -194,7 +195,7 @@ repositorio:
 ### Fase 4: Ajustes según la operación de la carrera
 
 - [ ] Mostrar los ramos atrasados solo en el período en que se dictan (por definir)
-- [ ] Incorporar en la Guía el valor oficial de 1 SCT en la Universidad de Los Lagos
+- [x] Incorporar en la Guía el valor oficial de 1 SCT en la Universidad de Los Lagos
 - [ ] Canal para reportar problemas sin necesidad de una cuenta de GitHub
 
 ### Fase 5: Estadísticas para el estudiante
