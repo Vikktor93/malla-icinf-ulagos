@@ -40,6 +40,8 @@ qué pueden inscribir.
   créditos SCT y cómo planificar la carga académica. El botón se anima hasta que el estudiante la
   abre por primera vez.
 - Botón "Reportar problema" que abre un issue en este repositorio con la malla ya indicada.
+- Modo claro y oscuro. Por defecto sigue el tema del sistema operativo y recuerda la elección del
+  estudiante.
 
 ## Stack tecnológico
 
@@ -65,6 +67,7 @@ qué pueden inscribir.
   de unos 90 KB comprimidos.
 - **Sitio estático:** no hay servidor ni base de datos. Vercel entrega los archivos desde su red de
   distribución (CDN), lo que hace que la plataforma cargue rápido y no tenga costos de operación.
+- **Logo en WebP:** pesa 18 KB, frente a los 68 KB que tenía en PNG.
 - **Fuentes incluidas en el sitio:** las tipografías se sirven desde el mismo dominio con
   Fontsource, sin depender de Google Fonts.
 - **Cálculos precalculados y memorizados:** las relaciones entre ramos (qué abre cada uno) se
@@ -87,18 +90,21 @@ qué pueden inscribir.
   con Esc.
 - Respeta la preferencia de movimiento reducido del sistema operativo en animaciones y
   transiciones.
+- Modo oscuro, que se aplica antes de mostrar la página para evitar un destello claro.
 - Diseño adaptado a celulares, tablets y computadores.
 
 ## Estructura
 
 ```
 └── 📁malla-icinf
+    └── 📁docs
+        ├── demo.gif
     └── 📁public
         ├── apple-touch-icon.png
         ├── favicon.svg
     └── 📁src
         └── 📁assets
-            ├── logo-icinf.png
+            ├── logo-icinf.webp
         └── 📁components
             ├── Cinta.tsx
             ├── Detalle.tsx
@@ -115,6 +121,7 @@ qué pueden inscribir.
             ├── malla.ts
             ├── pdf.ts
             ├── useProgreso.ts
+            ├── useTema.ts
         ├── App.tsx
         ├── index.css
         ├── main.tsx
