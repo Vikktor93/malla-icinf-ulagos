@@ -1,7 +1,8 @@
-import { BookOpen, FileDown, Flag, Moon, Sun, Link2, ListChecks, RotateCcw, Search, X } from 'lucide-react'
+import { BookOpen, ChartColumn, FileDown, LayoutGrid, Flag, Moon, Sun, Link2, ListChecks, RotateCcw, Search, X } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Cinta } from './components/Cinta'
 import { Detalle } from './components/Detalle'
+import { Estadisticas } from './components/Estadisticas'
 import { Guia } from './components/Guia'
 import { Inscribir } from './components/Inscribir'
 import { MapaMalla } from './components/MapaMalla'
@@ -9,6 +10,7 @@ import { Reportar } from './components/Reportar'
 import { SugerirMejoras } from './components/SugerirMejoras'
 import { MALLAS } from './data/mallas'
 import type { Malla } from './data/types'
+import { calcularEstadisticas } from './lib/estadisticas'
 import { calcularEstados, indexar, opcionesInscripcion, semestreReferencia } from './lib/malla'
 import { useProgreso } from './lib/useProgreso'
 import { useTema } from './lib/useTema'
@@ -28,6 +30,7 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
   const [vista, setVista] = useState<Vista>(null)
   const [hover, setHover] = useState<string | null>(null)
   const [filtro, setFiltro] = useState<'todo' | 'inscribir'>('todo')
+  const [pestana, setPestana] = useState<'malla' | 'estadisticas'>('malla')
   const [busqueda, setBusqueda] = useState('')
   const [aviso, setAviso] = useState<string | null>(null)
   const [confirmarReinicio, setConfirmarReinicio] = useState(false)
@@ -54,6 +57,10 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
   const licTotal = lic.reduce((t, a) => t + a.sct, 0)
   const licAprob = lic.filter((a) => prog.aprobadas.has(a.id)).reduce((t, a) => t + a.sct, 0)
   const opciones = useMemo(() => opcionesInscripcion(malla, estados, referencia), [malla, estados, referencia])
+  const estadisticas = useMemo(
+    () => (pestana === 'estadisticas' ? calcularEstadisticas(malla, prog.aprobadas, idx) : null),
+    [pestana, malla, prog.aprobadas, idx],
+  )
   const disponibles = opciones.atrasados.length + opciones.proximo.length
   const carreraCompleta = prog.aprobadas.size === malla.asignaturas.length
 
@@ -231,31 +238,57 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
 
       {/* Herramientas */}
       <div className="mx-auto flex max-w-[1500px] flex-wrap items-center gap-x-3 gap-y-2.5 px-4 pt-5 pb-3 sm:px-6">
-        <label className="relative">
-          <span className="sr-only">Buscar asignatura</span>
-          <Search size={16} className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-mar-suave" />
-          <input
-            value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
-            placeholder="Buscar asignatura"
-            className="h-9 w-56 rounded-full bg-superficie pr-8 pl-9 text-[14px] ring-1 ring-bruma placeholder:text-mar-suave/80 focus:ring-2 focus:ring-marea focus:outline-none"
-          />
-          {busqueda && (
-            <button type="button" onClick={() => setBusqueda('')} aria-label="Borrar búsqueda" className="absolute top-1/2 right-2 -translate-y-1/2 text-mar-suave">
-              <X size={15} />
+        <div className="flex rounded-full bg-superficie p-1 ring-1 ring-bruma" role="tablist" aria-label="Vista">
+          {(
+            [
+              ['malla', 'Malla', <LayoutGrid key="i" size={15} />],
+              ['estadisticas', 'Mis estadísticas', <ChartColumn key="i" size={15} />],
+            ] as const
+          ).map(([id, texto, icono]) => (
+            <button
+              key={id}
+              type="button"
+              role="tab"
+              aria-selected={pestana === id}
+              onClick={() => setPestana(id)}
+              className={`flex h-7 items-center gap-1.5 rounded-full px-3 text-[14px] font-semibold transition-colors ${
+                pestana === id ? 'bg-primario text-sobre-primario' : 'text-mar-suave hover:text-tinta'
+              }`}
+            >
+              {icono} {texto}
             </button>
-          )}
-        </label>
-        <button
-          type="button"
-          aria-pressed={filtro === 'inscribir'}
-          onClick={() => setFiltro((f) => (f === 'todo' ? 'inscribir' : 'todo'))}
-          className={`h-9 rounded-full px-4 text-[14px] font-semibold transition-colors ${
-            filtro === 'inscribir' ? 'bg-marea text-white' : 'bg-superficie text-tinta ring-1 ring-bruma hover:ring-marea'
-          }`}
-        >
-          Destacar lo que puedo inscribir
-        </button>
+          ))}
+        </div>
+
+        {pestana === 'malla' && (
+          <>
+            <label className="relative">
+              <span className="sr-only">Buscar asignatura</span>
+              <Search size={16} className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-mar-suave" />
+              <input
+                value={busqueda}
+                onChange={(e) => setBusqueda(e.target.value)}
+                placeholder="Buscar asignatura"
+                className="h-9 w-56 rounded-full bg-superficie pr-8 pl-9 text-[14px] ring-1 ring-bruma placeholder:text-mar-suave/80 focus:ring-2 focus:ring-marea focus:outline-none"
+              />
+              {busqueda && (
+                <button type="button" onClick={() => setBusqueda('')} aria-label="Borrar búsqueda" className="absolute top-1/2 right-2 -translate-y-1/2 text-mar-suave">
+                  <X size={15} />
+                </button>
+              )}
+            </label>
+            <button
+              type="button"
+              aria-pressed={filtro === 'inscribir'}
+              onClick={() => setFiltro((f) => (f === 'todo' ? 'inscribir' : 'todo'))}
+              className={`h-9 rounded-full px-4 text-[14px] font-semibold transition-colors ${
+                filtro === 'inscribir' ? 'bg-marea text-white' : 'bg-superficie text-tinta ring-1 ring-bruma hover:ring-marea'
+              }`}
+            >
+              Destacar lo que puedo inscribir
+            </button>
+          </>
+        )}
 
         <div className="ml-auto flex items-center gap-2">
           <button type="button" onClick={compartir} className="flex h-9 items-center gap-2 rounded-full bg-superficie px-4 text-[14px] font-semibold ring-1 ring-bruma hover:ring-marea">
@@ -338,20 +371,29 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
       </div>
 
       <main className="mt-2">
-        <MapaMalla
-          malla={malla}
-          idx={idx}
-          estados={estados}
-          plan={prog.plan}
-          foco={foco}
-          filtro={filtro}
-          busqueda={busqueda}
-          soloLectura={soloLectura}
-          onAbrir={(id) => setVista({ tipo: 'detalle', id })}
-          onAlternar={prog.alternar}
-          onHover={setHover}
-          onSemestre={prog.fijarVarias}
-        />
+        {estadisticas ? (
+          <Estadisticas
+            malla={malla}
+            datos={estadisticas}
+            onIr={(id) => setVista({ tipo: 'detalle', id })}
+            onVerMalla={() => setPestana('malla')}
+          />
+        ) : (
+            <MapaMalla
+              malla={malla}
+              idx={idx}
+              estados={estados}
+              plan={prog.plan}
+              foco={foco}
+              filtro={filtro}
+              busqueda={busqueda}
+              soloLectura={soloLectura}
+              onAbrir={(id) => setVista({ tipo: 'detalle', id })}
+              onAlternar={prog.alternar}
+              onHover={setHover}
+              onSemestre={prog.fijarVarias}
+            />
+        )}
       </main>
 
       {/* pb-24: espacio para que el botón flotante no tape el texto del footer */}
