@@ -105,6 +105,7 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
         referencia,
         // En un avance compartido no se incluye el plan propio
         plan: soloLectura ? new Set() : prog.plan,
+        periodo,
         nombre: limpio,
       })
       setDialogoPDF(false)

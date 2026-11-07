@@ -1,7 +1,7 @@
 import logo from '../assets/logo-icinf.webp'
 import { AREAS } from '../data/mallas'
 import type { Asignatura, Malla } from '../data/types'
-import { topeSCT, type Estado } from './malla'
+import { nombrePeriodo, opcionesInscripcion, topeSCT, type Estado, type Periodo } from './malla'
 
 interface Datos {
   malla: Malla
@@ -9,6 +9,8 @@ interface Datos {
   estados: Map<string, Estado>
   referencia: number
   plan: Set<string>
+  /** Período para el que se planifica la inscripción */
+  periodo: Periodo
   /** Nombre del estudiante (opcional) para el encabezado */
   nombre?: string
 }
@@ -48,7 +50,7 @@ async function imagenComoPNG(url: string): Promise<string | null> {
 const sumaSCT = (xs: Asignatura[]) => xs.reduce((t, a) => t + a.sct, 0)
 
 /** Genera y descarga el informe de avance en PDF. Las librerías se cargan solo al usarlo. */
-export async function descargarPDF({ malla, aprobadas, estados, referencia, plan, nombre = '' }: Datos) {
+export async function descargarPDF({ malla, aprobadas, estados, referencia, plan, periodo, nombre = '' }: Datos) {
   const [{ jsPDF }, { default: autoTable }, logoData] = await Promise.all([
     import('jspdf'),
     import('jspdf-autotable'),
@@ -216,15 +218,9 @@ export async function descargarPDF({ malla, aprobadas, estados, referencia, plan
   }
   const finTabla = () => (doc as unknown as { lastAutoTable: { finalY: number } }).lastAutoTable.finalY
 
-  const inscribible = (a: Asignatura) => {
-    const e = estados.get(a.id)
-    return e === 'disponible' || e === 'condicional'
-  }
-
   if (!completa) {
-    titulo(`Semestre ${referencia}: ramos que puede inscribir`)
-    const atrasados = malla.asignaturas.filter((a) => a.semestre < referencia && inscribible(a))
-    const proximo = malla.asignaturas.filter((a) => a.semestre === referencia && inscribible(a))
+    const { atrasados, proximo, otroPeriodo } = opcionesInscripcion(malla, estados, referencia, periodo)
+    titulo(`Semestre ${referencia}: ramos que puede inscribir en el ${nombrePeriodo(periodo)} del año`)
     const filas = [...atrasados, ...proximo].map((a) => [
       a.nombre + (estados.get(a.id) === 'condicional' ? ' (requiere Consejo de Carrera)' : ''),
       a.semestre < referencia ? `Atrasado (sem. ${a.semestre})` : `Semestre ${a.semestre}`,
@@ -244,11 +240,24 @@ export async function descargarPDF({ malla, aprobadas, estados, referencia, plan
       doc.setFont('helvetica', 'normal')
       doc.setFontSize(9)
       doc.setTextColor(MAR_SUAVE)
-      doc.text('No tiene ramos disponibles para inscribir en este semestre.', M, y + 4)
+      doc.text(`No tiene ramos disponibles para inscribir en el ${nombrePeriodo(periodo)} del año.`, M, y + 4)
       y += 10
     }
 
-    const enPlan = malla.asignaturas.filter((a) => plan.has(a.id) && inscribible(a))
+    if (otroPeriodo.length) {
+      doc.setFont('helvetica', 'normal')
+      doc.setFontSize(8.5)
+      doc.setTextColor(MAR_SUAVE)
+      const otro = nombrePeriodo(periodo === 1 ? 2 : 1)
+      const lineas = doc.splitTextToSize(
+        `Cumple también las previaturas de ramos que se dictan en el ${otro} del año: ${otroPeriodo.map((a) => a.nombre).join(', ')}.`,
+        WP - 2 * M,
+      ) as string[]
+      doc.text(lineas, M, y)
+      y += lineas.length * 4 + 3
+    }
+
+    const enPlan = [...atrasados, ...proximo].filter((a) => plan.has(a.id))
     const tope = topeSCT(malla, referencia)
     const sctPlan = sumaSCT(enPlan)
     doc.setFont('helvetica', 'normal')
