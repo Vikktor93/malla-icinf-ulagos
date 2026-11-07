@@ -26,6 +26,10 @@ qué pueden inscribir.
 - Inscripción acotada al semestre que le corresponde al estudiante (el más alto con algún ramo
   aprobado, más uno). El panel separa los ramos pendientes de semestres anteriores de los del
   semestre siguiente, ordenados por cuántos ramos abren.
+- Inscripción según el período de dictación: los ramos de semestres impares se dictan en el primer
+  semestre del año y los pares en el segundo, con excepciones para asignaturas que se dictan en
+  ambos. El período se sugiere según la fecha (inscripciones en marzo y agosto) y el estudiante lo
+  puede cambiar.
 - Plan de inscripción con contador de SCT y horas semanales. Si el plan supera el tope (30 SCT o
   los SCT oficiales del semestre, lo que sea mayor) aparece un aviso informativo, que no bloquea.
 - Marcar un semestre completo de una vez, búsqueda y filtro de lo inscribible.
@@ -150,6 +154,11 @@ Previaturas especiales soportadas en `mallas.ts`:
 - `SEM(8)` semestres 1 al 8 aprobados
 - `CONSEJO` aprobación del Consejo de Carrera (se muestra como condicional)
 
+Período de dictación: cada malla define al final, con `conDictacion`, las asignaturas que no siguen
+la regla general (impares en el primer semestre del año, pares en el segundo). Hoy se marcan como
+`ambos` inglés, electivos de formación integral, prácticas, anteproyecto y proyecto de título. Si la
+Dirección Docente define otra excepción, basta con agregar el ramo a `ambos`, `impar` o `par`.
+
 ## Desarrollo
 
 ```bash
@@ -194,7 +203,7 @@ repositorio:
 
 ### Fase 4: Ajustes según la operación de la carrera
 
-- [ ] Mostrar los ramos atrasados solo en el período en que se dictan (por definir)
+- [x] Mostrar los ramos atrasados solo en el período en que se dictan, con selector de período
 - [x] Incorporar en la Guía el valor oficial de 1 SCT en la Universidad de Los Lagos
 - [ ] Canal para reportar problemas sin necesidad de una cuenta de GitHub
 
