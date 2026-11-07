@@ -233,4 +233,4 @@ Si tienes dudas o consultas sobre el uso de la plataforma, contáctame a través
 
 ---
 
-**Versión:** 1.0.0 | **Última actualización:** 6 de noviembre de 2026
+**Versión:** 1.1.0 | **Última actualización:** 6 de noviembre de 2026
