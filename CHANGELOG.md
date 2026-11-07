@@ -4,6 +4,21 @@ Todos los cambios relevantes de la plataforma se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el proyecto usa
 [versionamiento semántico](https://semver.org/lang/es/).
 
+## [1.5.0] - 2026-11-07
+
+Completa la fase 4: ajustes según la operación de la carrera.
+
+### Agregado
+
+- Reporte de problemas por correo electrónico, para quienes no tienen cuenta de GitHub, con la
+  dirección visible y un botón para copiarla.
+- Opción de enviar sugerencias por correo electrónico.
+
+### Cambiado
+
+- "Sugerir mejoras" pasa de una tarjeta al final de la página a un botón flotante en la esquina
+  inferior derecha, que abre un panel con las opciones de GitHub Discussions y correo electrónico.
+
 ## [1.4.1] - 2026-11-06
 
 ### Corregido
@@ -76,6 +91,7 @@ Primera versión publicada en https://malla-icinf-ulagos.vercel.app/.
 - Guía de uso integrada y opción para reportar problemas en GitHub.
 - Indicadores de avance hacia la Licenciatura y el Título profesional.
 
+[1.5.0]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.5.0
 [1.4.1]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.4.1
 [1.4.0]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.4.0
 [1.3.0]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.3.0
