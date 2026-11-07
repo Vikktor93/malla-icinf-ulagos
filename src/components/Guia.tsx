@@ -215,27 +215,60 @@ function InscribirRamos() {
       <Seccion titulo="¿Qué son los créditos SCT?">
         <p>
           El Sistema de Créditos Transferibles (SCT-Chile) mide la carga de trabajo total que te pide una asignatura: las horas
-          de clases y también tu estudio personal. Según SCT-Chile, 1 crédito equivale a entre 24 y 31 horas de trabajo, y
-          cada universidad fija su valor dentro de ese rango.
+          de docencia directa y también tu trabajo autónomo. La Universidad de Los Lagos fija estas equivalencias:
         </p>
-        <div className="mt-4 grid gap-3 sm:grid-cols-3">
-          <Dato valor="30 SCT" texto="un semestre a tiempo completo" />
-          <Dato valor="60 SCT" texto="un año académico" />
-          <Dato valor={`${300} SCT`} texto="la Malla 2027 completa (330 SCT la DU 416)" />
+        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Dato valor="27 h" texto="equivale 1 SCT" />
+          <Dato valor="17" texto="semanas tiene un semestre" />
+          <Dato valor="30 SCT" texto="por semestre (60 al año)" />
+          <Dato valor="48 h" texto="de trabajo a la semana, como máximo" />
         </div>
+
+        <div className="mt-4 rounded-xl bg-superficie px-4 pt-3 pb-1 ring-1 ring-bruma">
+          <p className="font-semibold">Equivalencias SCT de la Universidad de Los Lagos</p>
+          <dl className="mt-1 grid text-[13px] tabular-nums sm:grid-cols-2 sm:gap-x-8">
+            {(
+              [
+                ['SCT anuales', '60 SCT'],
+                ['SCT por semestre', '30 SCT'],
+                ['Horas por SCT', '27 h'],
+                ['Semanas por semestre', '17'],
+                ['Semanas al año', '34'],
+                ['Máximo de docencia directa semanal', '20 h'],
+                ['Máximo de horas semanales por estudiante', '48 h'],
+                ['Total de horas anuales', '1.620 h'],
+              ] as const
+            ).map(([nombre, valor]) => (
+              <div key={nombre} className="flex justify-between gap-4 border-b border-bruma py-2 last:border-b-0 sm:[&:nth-last-child(2)]:border-b-0">
+                <dt className="text-mar-suave">{nombre}</dt>
+                <dd className="font-semibold whitespace-nowrap">{valor}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
           <div className="rounded-xl bg-superficie p-4 ring-1 ring-bruma">
             <p className="font-semibold">Docencia directa (DD)</p>
-            <p className="text-mar-suave">Horas semanales con profesor: clases, ayudantías, laboratorios y talleres.</p>
+            <p className="text-mar-suave">
+              Horas semanales con profesor: clases, ayudantías, laboratorios y talleres. Como máximo 20 horas a la semana, en
+              bloques de 45 minutos más 15 minutos.
+            </p>
           </div>
           <div className="rounded-xl bg-superficie p-4 ring-1 ring-bruma">
             <p className="font-semibold">Trabajo autónomo (TA)</p>
             <p className="text-mar-suave">Horas semanales de trabajo personal: estudio, tareas, lecturas y proyectos.</p>
           </div>
         </div>
-        <p className="mt-3 text-mar-suave">
-          Ejemplo: Cálculo II tiene 6 DD y 4 TA, es decir, te pide unas 10 horas a la semana en total.
-        </p>
+      </Seccion>
+
+      <Seccion titulo="¿Cuántas horas te pide una asignatura?">
+        <div className="space-y-2 rounded-xl bg-superficie p-4 ring-1 ring-bruma">
+          <Formula calculo="SCT × 27 h ÷ 17 semanas" resultado="horas semanales de la asignatura (DD 42 % + TA 58 %)" />
+          <Formula calculo="30 SCT × 27 h ÷ 17 semanas" resultado="≈ 48 horas semanales en un semestre completo" />
+          <Formula calculo="30 SCT × 27 h" resultado="810 horas en el semestre (1.620 al año)" />
+        </div>
+        <CalculadoraSCT />
       </Seccion>
 
       <Seccion titulo="Tu semestre">
@@ -262,8 +295,9 @@ function InscribirRamos() {
 
       <Seccion titulo="Carga académica">
         <p>
-          La carga recomendada es de <strong className="font-semibold">30 SCT por semestre</strong>. Al armar tu plan, el contador
-          muestra cuántos SCT llevas.
+          La carga recomendada es de <strong className="font-semibold">30 SCT por semestre</strong>, que equivalen a unas 48 horas
+          de trabajo a la semana: el máximo que la universidad considera para un estudiante. Al armar tu plan, el contador muestra
+          cuántos SCT llevas.
         </p>
         <div className="mt-3 rounded-xl bg-superficie p-4 ring-1 ring-bruma">
           <p className="font-display text-[20px] font-bold tabular-nums">24 de 30 SCT</p>
@@ -303,6 +337,50 @@ function Dato({ valor, texto }: { valor: string; texto: string }) {
     <div className="rounded-xl bg-superficie p-4 ring-1 ring-bruma">
       <p className="font-display text-[24px] leading-none font-extrabold">{valor}</p>
       <p className="mt-1.5 text-[13px] leading-snug text-mar-suave">{texto}</p>
+    </div>
+  )
+}
+
+function Formula({ calculo, resultado }: { calculo: string; resultado: string }) {
+  return (
+    <p className="flex flex-wrap items-baseline gap-x-2">
+      <span className="font-display font-bold whitespace-nowrap tabular-nums">{calculo}</span>
+      <span className="text-mar-suave">=</span>
+      <span className="text-mar-suave">{resultado}</span>
+    </p>
+  )
+}
+
+const decimal = (n: number) => n.toLocaleString('es-CL', { maximumFractionDigits: 1 })
+
+/** Calcula las horas que pide una asignatura según su cantidad de SCT. */
+function CalculadoraSCT() {
+  const [sct, setSct] = useState(6)
+  const semanales = (sct * 27) / 17
+  return (
+    <div className="mt-3 rounded-xl bg-marea-clara/60 p-4">
+      <label htmlFor="calc-sct" className="font-semibold">
+        Calcula las horas de una asignatura
+      </label>
+      <div className="mt-2 flex flex-wrap items-center gap-3">
+        <input
+          id="calc-sct"
+          type="number"
+          min={1}
+          max={30}
+          value={sct}
+          onChange={(e) => setSct(Math.min(30, Math.max(1, Number(e.target.value) || 1)))}
+          className="h-10 w-20 rounded-lg bg-superficie px-3 text-[15px] font-semibold tabular-nums ring-1 ring-bruma focus:ring-2 focus:ring-marea focus:outline-none"
+        />
+        <span className="font-semibold">SCT</span>
+        <span className="text-mar-suave" aria-live="polite">
+          ≈ <strong className="text-tinta">{decimal(semanales)} h por semana</strong> ({decimal(semanales * 0.42)} DD y{' '}
+          {decimal(semanales * 0.58)} TA) y <strong className="text-tinta">{decimal(sct * 27)} h</strong> en el semestre.
+        </span>
+      </div>
+      <p className="mt-2 text-[13px] text-mar-suave">
+        Las horas DD y TA de cada asignatura en la malla oficial pueden variar un poco respecto de este cálculo de referencia.
+      </p>
     </div>
   )
 }
