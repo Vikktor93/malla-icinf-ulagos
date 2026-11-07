@@ -213,9 +213,27 @@ repositorio:
 
 ### Fase 5: Estadísticas para el estudiante
 
-- [ ] Gráfico de aprobación por semestre (SCT y ramos aprobados en cada semestre)
+- [ ] Vista "Mis estadísticas", con pestañas para alternar entre la malla y las estadísticas
+- [ ] Avance por semestre: barras con los SCT aprobados y pendientes de cada semestre
 - [ ] Avance por área de formación
-- [ ] Vista de estadísticas más visual y atractiva dentro de la plataforma
+- [ ] Indicadores circulares de avance hacia la Licenciatura y el Título profesional
+- [ ] Ramos clave pendientes: los que más ramos desbloquean más adelante
+- [ ] Proyección de egreso según los SCT pendientes y la carga de 30 SCT por semestre
+- [ ] Gráficos incluidos en el informe PDF
+- [ ] Gráficos hechos en SVG propio, compatibles con el modo oscuro y sin dependencias nuevas
+
+### Fase 6: Accesibilidad
+
+- [ ] Botón flotante de accesibilidad en la esquina inferior izquierda, con un panel de opciones
+- [ ] Lectura en voz alta (texto a voz) del detalle de cada ramo, el panel de inscripción y la Guía,
+  con la síntesis de voz del navegador
+- [ ] Ajuste del tamaño del texto
+- [ ] Modo de alto contraste
+- [ ] Tipografía de lectura fácil y mayor espaciado entre líneas
+- [ ] Opción para detener animaciones
+- [ ] Preferencias de accesibilidad guardadas en el navegador
+- [ ] Revisión con lector de pantalla y de contraste según WCAG 2.2 nivel AA
+- [ ] Opcional: audios de la Guía pregrabados con voces de alta calidad (por ejemplo, ElevenLabs)
 
 ## Privacidad
 
