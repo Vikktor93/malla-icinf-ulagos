@@ -61,7 +61,7 @@ body {
   }
 }
 
-/* Halo del botón Guía: invita a abrirla hasta la primera vez que se usa */
+/* Halo del botón Guía: invita a abrirla de forma permanente */
 @keyframes halo {
   0% {
     transform: scale(1);
