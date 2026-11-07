@@ -6,6 +6,7 @@ import { Guia } from './components/Guia'
 import { Inscribir } from './components/Inscribir'
 import { MapaMalla } from './components/MapaMalla'
 import { Reportar } from './components/Reportar'
+import { SugerirMejoras } from './components/SugerirMejoras'
 import { MALLAS } from './data/mallas'
 import type { Malla } from './data/types'
 import { calcularEstados, indexar, semestreReferencia } from './lib/malla'
@@ -351,6 +352,10 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
           onSemestre={prog.fijarVarias}
         />
       </main>
+
+      <div className="mx-auto max-w-[1500px] px-4 pb-6 sm:px-6">
+        <SugerirMejoras malla={malla} />
+      </div>
 
       <footer className="mx-auto max-w-[1500px] px-4 pb-8 text-[13px] leading-relaxed text-mar-suave sm:px-6">
         <p className="border-t border-bruma pt-4 text-center text-balance">
