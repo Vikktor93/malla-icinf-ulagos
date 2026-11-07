@@ -42,7 +42,7 @@ export function Detalle({ a, malla, idx, estados, aprobadas, enPlan, soloLectura
       <div className="scroll-fino flex-1 space-y-6 overflow-y-auto px-5 py-5">
         <EstadoAviso estado={estado} pendientes={pendientes.map((q) => textoRequisito(q, idx))} />
 
-        <dl className="grid grid-cols-3 overflow-hidden rounded-xl border border-bruma bg-white">
+        <dl className="grid grid-cols-3 overflow-hidden rounded-xl border border-bruma bg-superficie">
           <Dato valor={a.sct} nombre="Créditos SCT" />
           <Dato valor={a.dd} nombre="Docencia directa (DD)" borde />
           <Dato valor={a.ta} nombre="Trabajo autónomo (TA)" borde />
@@ -71,13 +71,13 @@ export function Detalle({ a, malla, idx, estados, aprobadas, enPlan, soloLectura
                 return (
                   <li key={i}>
                     {q.tipo === 'curso' ? (
-                      <button type="button" onClick={() => onIr(q.id)} className="flex w-full items-center gap-2.5 rounded-lg bg-white px-3 py-2 text-left text-[14px] hover:bg-marea-clara/60">
+                      <button type="button" onClick={() => onIr(q.id)} className="flex w-full items-center gap-2.5 rounded-lg bg-superficie px-3 py-2 text-left text-[14px] hover:bg-marea-clara/60">
                         {icono}
                         <span className="flex-1">{texto}</span>
                         <span className="text-[12px] text-mar-suave">{ok ? 'aprobada' : 'pendiente'}</span>
                       </button>
                     ) : (
-                      <div className="flex items-center gap-2.5 rounded-lg bg-white px-3 py-2 text-[14px]">
+                      <div className="flex items-center gap-2.5 rounded-lg bg-superficie px-3 py-2 text-[14px]">
                         {icono}
                         <span className="flex-1">{texto}</span>
                       </div>
@@ -101,7 +101,7 @@ export function Detalle({ a, malla, idx, estados, aprobadas, enPlan, soloLectura
               <ul className="mt-2 space-y-1.5">
                 {abreDirecto.map((h) => (
                   <li key={h.id}>
-                    <button type="button" onClick={() => onIr(h.id)} className="flex w-full items-center gap-2.5 rounded-lg bg-white px-3 py-2 text-left text-[14px] hover:bg-marea-clara/60">
+                    <button type="button" onClick={() => onIr(h.id)} className="flex w-full items-center gap-2.5 rounded-lg bg-superficie px-3 py-2 text-left text-[14px] hover:bg-marea-clara/60">
                       <ArrowRight size={16} className="text-marea" />
                       <span className="flex-1">{h.nombre}</span>
                       <span className="text-[12px] text-mar-suave">sem. {h.semestre}</span>
@@ -110,7 +110,7 @@ export function Detalle({ a, malla, idx, estados, aprobadas, enPlan, soloLectura
                 ))}
                 {abrePorSem.map((h) => (
                   <li key={h.id}>
-                    <button type="button" onClick={() => onIr(h.id)} className="flex w-full items-center gap-2.5 rounded-lg bg-white px-3 py-2 text-left text-[14px] hover:bg-marea-clara/60">
+                    <button type="button" onClick={() => onIr(h.id)} className="flex w-full items-center gap-2.5 rounded-lg bg-superficie px-3 py-2 text-left text-[14px] hover:bg-marea-clara/60">
                       <ArrowRight size={16} className="text-mar-suave" />
                       <span className="flex-1">
                         {h.nombre}
@@ -126,12 +126,12 @@ export function Detalle({ a, malla, idx, estados, aprobadas, enPlan, soloLectura
       </div>
 
       {!soloLectura && (
-        <div className="flex gap-2 border-t border-bruma bg-white px-5 py-3.5">
+        <div className="flex gap-2 border-t border-bruma bg-superficie px-5 py-3.5">
           <button
             type="button"
             onClick={onAlternar}
             className={`flex-1 rounded-full px-4 py-2.5 text-[14px] font-semibold transition-colors ${
-              estado === 'aprobada' ? 'bg-bruma text-mar hover:bg-bruma/70' : 'bg-mar text-white hover:bg-mar/90'
+              estado === 'aprobada' ? 'bg-bruma text-tinta hover:bg-bruma/70' : 'bg-primario text-sobre-primario hover:bg-primario/90'
             }`}
           >
             {estado === 'aprobada' ? 'Desmarcar aprobada' : 'Marcar como aprobada'}
@@ -178,19 +178,19 @@ function EstadoAviso({ estado, pendientes }: { estado: Estado; pendientes: strin
     )
   if (estado === 'adelantable')
     return (
-      <p className="flex items-start gap-2 rounded-xl bg-white px-3.5 py-3 text-[14px] ring-1 ring-bruma">
+      <p className="flex items-start gap-2 rounded-xl bg-superficie px-3.5 py-3 text-[14px] ring-1 ring-bruma">
         <Clock size={17} className="mt-0.5 shrink-0 text-mar-suave" />
         Cumples sus previaturas, pero corresponde a un semestre posterior al que te toca cursar.
       </p>
     )
   if (estado === 'condicional')
     return (
-      <p className="flex items-start gap-2 rounded-xl bg-amber-50 px-3.5 py-3 text-[14px] text-amber-900 ring-1 ring-amber-200">
+      <p className="flex items-start gap-2 rounded-xl bg-amber-50 dark:bg-amber-950/50 px-3.5 py-3 text-[14px] text-amber-900 dark:text-amber-200 ring-1 ring-amber-200 dark:ring-amber-800">
         <ShieldQuestion size={18} className="mt-px shrink-0" /> Para inscribirla necesitas la aprobación del Consejo de Carrera.
       </p>
     )
   return (
-    <div className="flex items-start gap-2 rounded-xl bg-white px-3.5 py-3 text-[14px] ring-1 ring-bruma">
+    <div className="flex items-start gap-2 rounded-xl bg-superficie px-3.5 py-3 text-[14px] ring-1 ring-bruma">
       <Lock size={17} className="mt-0.5 shrink-0 text-mar-suave" />
       <p>
         Aún no puedes inscribirla. Te falta: <strong className="font-semibold">{pendientes.join(', ')}</strong>.

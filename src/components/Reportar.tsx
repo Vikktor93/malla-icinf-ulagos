@@ -41,7 +41,7 @@ export function Reportar({ malla, onCerrar }: { malla: Malla; onCerrar: () => vo
           href={enlaceIssue(malla)}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex h-11 w-full items-center justify-center gap-2 rounded-full bg-mar text-[15px] font-semibold text-white hover:bg-mar/90"
+          className="flex h-11 w-full items-center justify-center gap-2 rounded-full bg-primario text-[15px] font-semibold text-sobre-primario hover:bg-primario/90"
         >
           Reportar en GitHub <ExternalLink size={16} />
         </a>

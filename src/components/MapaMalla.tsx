@@ -119,7 +119,7 @@ export function MapaMalla(p: Props) {
                 <header className="sticky top-0 z-10 -mx-1 flex items-end justify-between rounded-lg bg-niebla/95 px-1 pt-2 pb-1.5 backdrop-blur">
                   <div>
                     <h3 className="font-display text-[13px] leading-none font-semibold text-mar-suave">
-                      Semestre <span className="text-[22px] font-extrabold text-mar">{s}</span>
+                      Semestre <span className="text-[22px] font-extrabold text-tinta">{s}</span>
                     </h3>
                     <div className="mt-1.5 h-[3px] w-[110px] overflow-hidden rounded-full bg-bruma">
                       <div className="h-full rounded-full bg-marea transition-[width] duration-300" style={{ width: `${(hechos / sct) * 100}%` }} />
@@ -174,8 +174,7 @@ export function MapaMalla(p: Props) {
               d={l.d}
               fill="none"
               className="linea-dep"
-              style={{ ['--largo' as string]: l.largo }}
-              stroke={l.tipo === 'previa' ? '#123540' : '#0e8a80'}
+              style={{ ['--largo' as string]: l.largo, stroke: l.tipo === 'previa' ? 'var(--color-tinta)' : 'var(--color-marea)' }}
               strokeWidth={l.directa ? 2.4 : 1.4}
               strokeOpacity={l.directa ? 0.95 : 0.55}
               strokeLinecap="round"
@@ -189,7 +188,7 @@ export function MapaMalla(p: Props) {
 
 function Hito({ texto, final }: { texto: string; final?: boolean }) {
   return (
-    <div className={`flex w-8 shrink-0 items-center justify-center rounded-lg ${final ? 'bg-mar text-white' : 'bg-bruma text-mar'}`}>
+    <div className={`flex w-8 shrink-0 items-center justify-center rounded-lg ${final ? 'bg-mar text-white' : 'bg-bruma text-tinta'}`}>
       <span className="font-display text-[12px] font-semibold whitespace-nowrap [writing-mode:vertical-rl] rotate-180">{texto}</span>
     </div>
   )

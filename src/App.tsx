@@ -1,4 +1,4 @@
-import { BookOpen, FileDown, Flag, Link2, ListChecks, RotateCcw, Search, X } from 'lucide-react'
+import { BookOpen, FileDown, Flag, Moon, Sun, Link2, ListChecks, RotateCcw, Search, X } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Cinta } from './components/Cinta'
 import { Detalle } from './components/Detalle'
@@ -10,6 +10,7 @@ import { MALLAS } from './data/mallas'
 import type { Malla } from './data/types'
 import { calcularEstados, indexar, semestreReferencia } from './lib/malla'
 import { useProgreso } from './lib/useProgreso'
+import { useTema } from './lib/useTema'
 import logo from './assets/logo-icinf.webp'
 
 type Vista = { tipo: 'detalle'; id: string } | { tipo: 'inscribir' } | null
@@ -33,6 +34,7 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
   const [dialogoPDF, setDialogoPDF] = useState(false)
   const [guia, setGuia] = useState(false)
   const [reportar, setReportar] = useState(false)
+  const { tema, alternarTema } = useTema()
   const [nombre, setNombre] = useState(() => {
     try {
       return localStorage.getItem('icinf:nombre') ?? ''
@@ -155,6 +157,15 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
               >
                 <Flag size={15} /> Reportar problema
               </button>
+              <button
+                type="button"
+                onClick={alternarTema}
+                title={tema === 'oscuro' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
+                aria-label={tema === 'oscuro' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
+                className="grid size-8 place-items-center rounded-full text-white/85 ring-1 ring-white/20 transition-colors hover:bg-white/10 hover:text-white"
+              >
+                {tema === 'oscuro' ? <Sun size={15} /> : <Moon size={15} />}
+              </button>
             </nav>
             <div className="flex rounded-full bg-white/10 p-1" role="radiogroup" aria-label="Elegir malla">
               {[MALLAS.du416, MALLAS['2027']].map((m) => (
@@ -203,13 +214,13 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
       </header>
 
       {soloLectura && (
-        <div className="border-b border-amber-200 bg-amber-50 text-amber-950">
+        <div className="border-b border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/50 text-amber-950 dark:text-amber-100">
           <div className="mx-auto flex max-w-[1500px] flex-wrap items-center gap-3 px-4 py-2.5 text-[14px] sm:px-6">
             <p className="flex-1">Estás viendo un avance compartido. Tu propio avance no ha cambiado.</p>
-            <button type="button" onClick={prog.adoptarCompartido} className="rounded-full bg-mar px-3.5 py-1.5 font-semibold text-white">
+            <button type="button" onClick={prog.adoptarCompartido} className="rounded-full bg-primario px-3.5 py-1.5 font-semibold text-sobre-primario">
               Usar este avance como mío
             </button>
-            <button type="button" onClick={prog.descartarCompartido} className="rounded-full px-3.5 py-1.5 font-semibold ring-1 ring-amber-300">
+            <button type="button" onClick={prog.descartarCompartido} className="rounded-full px-3.5 py-1.5 font-semibold ring-1 ring-amber-300 dark:ring-amber-700">
               Volver a mi avance
             </button>
           </div>
@@ -225,7 +236,7 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
             placeholder="Buscar asignatura"
-            className="h-9 w-56 rounded-full bg-white pr-8 pl-9 text-[14px] ring-1 ring-bruma placeholder:text-mar-suave/80 focus:ring-2 focus:ring-marea focus:outline-none"
+            className="h-9 w-56 rounded-full bg-superficie pr-8 pl-9 text-[14px] ring-1 ring-bruma placeholder:text-mar-suave/80 focus:ring-2 focus:ring-marea focus:outline-none"
           />
           {busqueda && (
             <button type="button" onClick={() => setBusqueda('')} aria-label="Borrar búsqueda" className="absolute top-1/2 right-2 -translate-y-1/2 text-mar-suave">
@@ -238,14 +249,14 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
           aria-pressed={filtro === 'inscribir'}
           onClick={() => setFiltro((f) => (f === 'todo' ? 'inscribir' : 'todo'))}
           className={`h-9 rounded-full px-4 text-[14px] font-semibold transition-colors ${
-            filtro === 'inscribir' ? 'bg-marea text-white' : 'bg-white text-mar ring-1 ring-bruma hover:ring-marea'
+            filtro === 'inscribir' ? 'bg-marea text-white' : 'bg-superficie text-tinta ring-1 ring-bruma hover:ring-marea'
           }`}
         >
           Destacar lo que puedo inscribir
         </button>
 
         <div className="ml-auto flex items-center gap-2">
-          <button type="button" onClick={compartir} className="flex h-9 items-center gap-2 rounded-full bg-white px-4 text-[14px] font-semibold ring-1 ring-bruma hover:ring-marea">
+          <button type="button" onClick={compartir} className="flex h-9 items-center gap-2 rounded-full bg-superficie px-4 text-[14px] font-semibold ring-1 ring-bruma hover:ring-marea">
             <Link2 size={16} /> Compartir avance
           </button>
           <div className="relative">
@@ -253,7 +264,7 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
               type="button"
               onClick={() => setDialogoPDF((v) => !v)}
               aria-expanded={dialogoPDF}
-              className="flex h-9 items-center gap-2 rounded-full bg-white px-4 text-[14px] font-semibold ring-1 ring-bruma hover:ring-marea"
+              className="flex h-9 items-center gap-2 rounded-full bg-superficie px-4 text-[14px] font-semibold ring-1 ring-bruma hover:ring-marea"
             >
               <FileDown size={16} /> Descargar PDF
             </button>
@@ -263,7 +274,7 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
                   e.preventDefault()
                   exportarPDF()
                 }}
-                className="absolute top-11 right-0 z-30 w-[300px] rounded-2xl bg-white p-4 shadow-[0_12px_40px_-12px_rgba(18,53,64,0.45)] ring-1 ring-bruma"
+                className="absolute top-11 right-0 z-30 w-[300px] rounded-2xl bg-superficie p-4 shadow-[0_12px_40px_-12px_rgba(18,53,64,0.45)] ring-1 ring-bruma"
               >
                 <label htmlFor="nombre-pdf" className="block text-[14px] font-semibold">
                   Nombre del estudiante <span className="font-normal text-mar-suave">(opcional)</span>
@@ -285,7 +296,7 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
                   <button
                     type="submit"
                     disabled={generandoPDF}
-                    className="h-9 rounded-full bg-mar px-4 text-[14px] font-semibold text-white hover:bg-mar/90 disabled:opacity-60"
+                    className="h-9 rounded-full bg-primario px-4 text-[14px] font-semibold text-sobre-primario hover:bg-primario/90 disabled:opacity-60"
                   >
                     {generandoPDF ? 'Generando PDF…' : 'Descargar PDF'}
                   </button>
@@ -316,7 +327,7 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
                 onClick={() => setConfirmarReinicio(true)}
                 title="Reiniciar avance"
                 aria-label="Reiniciar avance"
-                className="grid size-9 place-items-center rounded-full bg-white text-mar-suave ring-1 ring-bruma hover:text-mar"
+                className="grid size-9 place-items-center rounded-full bg-superficie text-mar-suave ring-1 ring-bruma hover:text-tinta"
               >
                 <RotateCcw size={16} />
               </button>
@@ -345,7 +356,7 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
         <p className="border-t border-bruma pt-4 text-center text-balance">
           Tu avance se guarda solo en este navegador. Esta herramienta es referencial: la inscripción oficial y la validación de
           previaturas se realizan en los sistemas de la universidad. ¿Ingresaste en otra cohorte? Cambia a la{' '}
-          <button type="button" onClick={() => prog.elegirMalla(otra.id)} className="font-semibold text-mar underline underline-offset-2">
+          <button type="button" onClick={() => prog.elegirMalla(otra.id)} className="font-semibold text-tinta underline underline-offset-2">
             {otra.nombre}
           </button>
           . Plataforma desarrollada por{' '}
@@ -353,7 +364,7 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
             href="https://github.com/Vikktor93/malla-icinf-ulagos"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-semibold text-mar underline underline-offset-2"
+            className="font-semibold text-tinta underline underline-offset-2"
           >
             @Vikktor93
           </a>

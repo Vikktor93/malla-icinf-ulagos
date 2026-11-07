@@ -28,14 +28,14 @@ export function Tarjeta({ a, estado, enfasis, enPlan, soloLectura, onAbrir, onAl
   const area = AREAS[a.area]
   const aprobada = estado === 'aprobada'
 
-  const fondo = aprobada ? area.color : '#ffffff'
+  const fondo = aprobada ? area.color : 'var(--color-superficie)'
   const tinta = aprobada ? area.tinta : undefined
 
   const anillo =
     enfasis === 'foco'
-      ? 'ring-[3px] ring-mar'
+      ? 'ring-[3px] ring-tinta'
       : enfasis === 'previa'
-        ? 'ring-2 ring-mar/70'
+        ? 'ring-2 ring-tinta/70'
         : enfasis === 'abre'
           ? 'ring-2 ring-marea'
           : estado === 'disponible'

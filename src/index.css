@@ -2,23 +2,46 @@
 @import '@fontsource-variable/bricolage-grotesque';
 @import '@fontsource-variable/instrument-sans';
 
+/* Modo oscuro controlado por la clase .dark en <html> */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-display: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
   --font-sans: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
 
   /* Paleta: niebla y mar del sur de Chiloé */
   --color-niebla: #e6edef; /* fondo */
+  --color-superficie: #ffffff; /* tarjetas, paneles y campos */
+  --color-tinta: #123540; /* texto principal */
+  --color-primario: #123540; /* botones principales */
+  --color-sobre-primario: #ffffff; /* texto sobre botones principales */
   --color-bruma: #d3dee2; /* superficies hundidas, bordes */
-  --color-mar: #123540; /* texto principal y barra superior */
+  --color-mar: #123540; /* barra superior y superficies de marca */
   --color-mar-suave: #4b6670; /* texto secundario */
   --color-marea: #0e8a80; /* acción y estado "puedes inscribir" */
   --color-marea-clara: #c9ebe6;
   --color-ambar: #b7791f; /* condicional */
 }
 
+/* Paleta del modo oscuro: mismo tono marino, con superficies hundidas y texto claro */
+.dark {
+  color-scheme: dark;
+  --color-niebla: #0c1a1f;
+  --color-superficie: #14282f;
+  --color-bruma: #27424b;
+  --color-tinta: #e3eef1;
+  --color-mar: #0f2c35;
+  --color-mar-suave: #9cb3ba;
+  --color-marea: #2aa597;
+  --color-marea-clara: #143f3a;
+  --color-ambar: #e2a54a;
+  --color-primario: #5fc7bb;
+  --color-sobre-primario: #0c1a1f;
+}
+
 html {
   background: var(--color-niebla);
-  color: var(--color-mar);
+  color: var(--color-tinta);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }

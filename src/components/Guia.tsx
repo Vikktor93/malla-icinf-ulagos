@@ -14,7 +14,7 @@ export function Guia({ onCerrar }: { onCerrar: () => void }) {
   return (
     <Modal titulo="Guía" subtitulo="Cómo usar la malla interactiva e inscribir tus ramos" icono={<BookOpen size={18} />} onCerrar={onCerrar}>
       <div className="sticky top-0 z-10 flex justify-center bg-niebla/95 px-5 pt-4 pb-3 backdrop-blur">
-        <div className="flex rounded-full bg-white p-1 ring-1 ring-bruma" role="tablist" aria-label="Secciones de la guía">
+        <div className="flex rounded-full bg-superficie p-1 ring-1 ring-bruma" role="tablist" aria-label="Secciones de la guía">
           {(
             [
               ['malla', 'Usar la malla'],
@@ -28,7 +28,7 @@ export function Guia({ onCerrar }: { onCerrar: () => void }) {
               aria-selected={pestana === id}
               onClick={() => setPestana(id)}
               className={`rounded-full px-4 py-1.5 text-[14px] font-semibold transition-colors ${
-                pestana === id ? 'bg-mar text-white' : 'text-mar-suave hover:text-mar'
+                pestana === id ? 'bg-primario text-sobre-primario' : 'text-mar-suave hover:text-tinta'
               }`}
             >
               {texto}
@@ -55,7 +55,7 @@ function Seccion({ titulo, children }: { titulo: string; children: ReactNode }) 
 function Item({ icono, titulo, children }: { icono: ReactNode; titulo: string; children: ReactNode }) {
   return (
     <li className="flex gap-3">
-      <span className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-full bg-white text-marea ring-1 ring-bruma">{icono}</span>
+      <span className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-full bg-superficie text-marea ring-1 ring-bruma">{icono}</span>
       <div>
         <p className="font-semibold">{titulo}</p>
         <p className="text-mar-suave">{children}</p>
@@ -163,16 +163,16 @@ function UsarMalla() {
           <strong className="font-semibold text-marea">verde marea</strong> van hacia los ramos que abre.
         </p>
         <svg viewBox="0 0 360 64" className="my-3 h-16 w-full max-w-[420px]" aria-hidden>
-          <rect x="1" y="20" width="84" height="24" rx="6" fill="#fff" stroke="#D3DEE2" />
-          <rect x="138" y="20" width="84" height="24" rx="6" fill="#fff" stroke="#123540" strokeWidth="2.5" />
-          <rect x="275" y="4" width="84" height="24" rx="6" fill="#fff" stroke="#0E8A80" strokeWidth="2" />
-          <rect x="275" y="36" width="84" height="24" rx="6" fill="#fff" stroke="#0E8A80" strokeWidth="2" />
-          <path d="M85 32 C112 32 112 32 138 32" stroke="#123540" strokeWidth="2.4" fill="none" />
-          <path d="M222 32 C248 32 248 16 275 16 M222 32 C248 32 248 48 275 48" stroke="#0E8A80" strokeWidth="2.4" fill="none" />
-          <text x="43" y="36" textAnchor="middle" fontSize="10" fill="#4B6670">Previatura</text>
-          <text x="180" y="36" textAnchor="middle" fontSize="10" fontWeight="700" fill="#123540">Ramo</text>
-          <text x="317" y="20" textAnchor="middle" fontSize="10" fill="#4B6670">Abre</text>
-          <text x="317" y="52" textAnchor="middle" fontSize="10" fill="#4B6670">Abre</text>
+          <rect x="1" y="20" width="84" height="24" rx="6" className="fill-superficie stroke-bruma" />
+          <rect x="138" y="20" width="84" height="24" rx="6" className="fill-superficie stroke-tinta" strokeWidth="2.5" />
+          <rect x="275" y="4" width="84" height="24" rx="6" className="fill-superficie stroke-marea" strokeWidth="2" />
+          <rect x="275" y="36" width="84" height="24" rx="6" className="fill-superficie stroke-marea" strokeWidth="2" />
+          <path d="M85 32 C112 32 112 32 138 32" className="stroke-tinta" strokeWidth="2.4" fill="none" />
+          <path d="M222 32 C248 32 248 16 275 16 M222 32 C248 32 248 48 275 48" className="stroke-marea" strokeWidth="2.4" fill="none" />
+          <text x="43" y="36" textAnchor="middle" fontSize="10" className="fill-mar-suave">Previatura</text>
+          <text x="180" y="36" textAnchor="middle" fontSize="10" fontWeight="700" className="fill-tinta">Ramo</text>
+          <text x="317" y="20" textAnchor="middle" fontSize="10" className="fill-mar-suave">Abre</text>
+          <text x="317" y="52" textAnchor="middle" fontSize="10" className="fill-mar-suave">Abre</text>
         </svg>
         <p className="text-mar-suave">
           Al hacer clic en un ramo se abre su detalle: estado, créditos y horas, cada previatura (cumplida o pendiente) y cuántos
@@ -224,11 +224,11 @@ function InscribirRamos() {
           <Dato valor={`${300} SCT`} texto="la Malla 2027 completa (330 SCT la DU 416)" />
         </div>
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
-          <div className="rounded-xl bg-white p-4 ring-1 ring-bruma">
+          <div className="rounded-xl bg-superficie p-4 ring-1 ring-bruma">
             <p className="font-semibold">Docencia directa (DD)</p>
             <p className="text-mar-suave">Horas semanales con profesor: clases, ayudantías, laboratorios y talleres.</p>
           </div>
-          <div className="rounded-xl bg-white p-4 ring-1 ring-bruma">
+          <div className="rounded-xl bg-superficie p-4 ring-1 ring-bruma">
             <p className="font-semibold">Trabajo autónomo (TA)</p>
             <p className="text-mar-suave">Horas semanales de trabajo personal: estudio, tareas, lecturas y proyectos.</p>
           </div>
@@ -265,7 +265,7 @@ function InscribirRamos() {
           La carga recomendada es de <strong className="font-semibold">30 SCT por semestre</strong>. Al armar tu plan, el contador
           muestra cuántos SCT llevas.
         </p>
-        <div className="mt-3 rounded-xl bg-white p-4 ring-1 ring-bruma">
+        <div className="mt-3 rounded-xl bg-superficie p-4 ring-1 ring-bruma">
           <p className="font-display text-[20px] font-bold tabular-nums">24 de 30 SCT</p>
           <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-bruma">
             <div className="h-full w-[80%] rounded-full bg-marea" />
@@ -300,7 +300,7 @@ function InscribirRamos() {
 
 function Dato({ valor, texto }: { valor: string; texto: string }) {
   return (
-    <div className="rounded-xl bg-white p-4 ring-1 ring-bruma">
+    <div className="rounded-xl bg-superficie p-4 ring-1 ring-bruma">
       <p className="font-display text-[24px] leading-none font-extrabold">{valor}</p>
       <p className="mt-1.5 text-[13px] leading-snug text-mar-suave">{texto}</p>
     </div>
@@ -310,7 +310,7 @@ function Dato({ valor, texto }: { valor: string; texto: string }) {
 function Paso({ n, titulo, children }: { n: number; titulo: string; children: ReactNode }) {
   return (
     <li className="flex gap-3">
-      <span className="grid size-8 shrink-0 place-items-center rounded-full bg-mar font-display text-[15px] font-bold text-white">{n}</span>
+      <span className="grid size-8 shrink-0 place-items-center rounded-full bg-primario font-display text-[15px] font-bold text-sobre-primario">{n}</span>
       <div>
         <p className="font-semibold">{titulo}</p>
         <p className="text-mar-suave">{children}</p>
