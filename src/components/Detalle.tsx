@@ -1,7 +1,7 @@
-import { ArrowRight, Check, CircleDashed, Clock, Lock, ShieldQuestion, X } from 'lucide-react'
+import { ArrowRight, CalendarClock, Check, CircleDashed, Clock, Lock, ShieldQuestion, X } from 'lucide-react'
 import { AREAS } from '../data/mallas'
 import type { Asignatura, Malla } from '../data/types'
-import { descendientes, requisitoCumplido, textoRequisito, type Estado, type Indice } from '../lib/malla'
+import { descendientes, requisitoCumplido, textoDictacion, textoRequisito, type Estado, type Indice } from '../lib/malla'
 
 interface Props {
   a: Asignatura
@@ -49,6 +49,13 @@ export function Detalle({ a, malla, idx, estados, aprobadas, enPlan, soloLectura
         </dl>
         <p className="-mt-3.5 text-[12px] leading-snug text-mar-suave">
           DD y TA en horas semanales. Dedicación total: {a.dd + a.ta} h por semana.
+        </p>
+
+        <p className="flex items-center gap-2 rounded-xl bg-superficie px-3.5 py-2.5 text-[14px] ring-1 ring-bruma">
+          <CalendarClock size={17} className="shrink-0 text-marea" />
+          <span>
+            Se dicta en: <strong className="font-semibold">{textoDictacion(a)}</strong>
+          </span>
         </p>
 
         <section>
