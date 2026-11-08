@@ -96,8 +96,8 @@ export async function descargarPDF({ malla, aprobadas, estados, referencia, plan
   const cifras: [string, string][] = [
     [`${sctAprob} de ${total} SCT`, 'créditos aprobados'],
     [`${aprob.length} de ${malla.asignaturas.length}`, 'ramos aprobados'],
-    [`${licPct}%`, 'hacia la Licenciatura'],
-    [`${Math.round((sctAprob / total) * 100)}%`, 'hacia el Título profesional'],
+    [`${licPct}%`, 'de avance a la Licenciatura'],
+    [`${Math.round((sctAprob / total) * 100)}%`, 'de avance al Título profesional'],
     [completa ? 'Malla completa' : `Semestre ${referencia}`, completa ? 'todos los ramos aprobados' : 'le corresponde cursar'],
   ]
   cifras.forEach(([valor, texto], i) => {

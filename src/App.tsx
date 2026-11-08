@@ -202,9 +202,17 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
           <div className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-3">
             <Cifra valor={`${sctAprob}`} sufijo={`de ${total} SCT`} texto="créditos aprobados" />
             <Cifra valor={`${prog.aprobadas.size}`} sufijo={`de ${malla.asignaturas.length}`} texto="ramos aprobados" />
-            <Cifra valor={`${Math.round((licAprob / licTotal) * 100)}%`} texto="hacia la Licenciatura" />
+            <Cifra
+              valor={`${Math.round((licAprob / licTotal) * 100)}%`}
+              texto="de avance hacia la Licenciatura"
+              detalle={`${licAprob} de ${licTotal} SCT, semestres 1 al ${malla.licenciaturaTras}`}
+            />
             {/* El título exige aprobar toda la malla, por eso se calcula sobre el total de SCT */}
-            <Cifra valor={`${Math.round((sctAprob / total) * 100)}%`} texto="hacia el Título profesional" />
+            <Cifra
+              valor={`${Math.round((sctAprob / total) * 100)}%`}
+              texto="de avance hacia el Título profesional"
+              detalle={`${sctAprob} de ${total} SCT, malla completa`}
+            />
             <button
               type="button"
               onClick={() => setVista({ tipo: 'inscribir' })}
@@ -475,12 +483,13 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
   )
 }
 
-function Cifra({ valor, sufijo, texto }: { valor: string; sufijo?: string; texto: string }) {
+function Cifra({ valor, sufijo, texto, detalle }: { valor: string; sufijo?: string; texto: string; detalle?: string }) {
   return (
     <p className="leading-tight">
       <span className="font-display text-[26px] font-extrabold tabular-nums">{valor}</span>
       {sufijo && <span className="ml-1.5 text-[14px] font-semibold text-white/80">{sufijo}</span>}
-      <span className="block text-[13px] text-white/65">{texto}</span>
+      <span className="block text-[13px] text-white/75">{texto}</span>
+      {detalle && <span className="mt-0.5 block text-[12px] text-white/55 tabular-nums">{detalle}</span>}
     </p>
   )
 }
