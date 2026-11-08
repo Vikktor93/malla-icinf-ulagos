@@ -4,6 +4,20 @@ Todos los cambios relevantes de la plataforma se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el proyecto usa
 [versionamiento semántico](https://semver.org/lang/es/).
 
+## [1.7.0] - 2026-11-07
+
+Completa la fase 5: estadísticas para el estudiante.
+
+### Agregado
+
+- Página "Mis estadísticas" en el informe PDF, entre el resumen y el detalle, con los mismos
+  gráficos de la plataforma dibujados en vectores. Como en papel no hay tooltips, cada barra por
+  semestre lleva su valor escrito.
+
+### Cambiado
+
+- Los colores del PDF pasan a un módulo propio, compartido por las páginas del informe.
+
 ## [1.6.0] - 2026-11-07
 
 Primera parte de la fase 5: estadísticas para el estudiante.
@@ -106,6 +120,7 @@ Primera versión publicada en https://malla-icinf-ulagos.vercel.app/.
 - Guía de uso integrada y opción para reportar problemas en GitHub.
 - Indicadores de avance hacia la Licenciatura y el Título profesional.
 
+[1.7.0]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.7.0
 [1.6.0]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.6.0
 [1.5.0]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.5.0
 [1.4.1]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.4.1
