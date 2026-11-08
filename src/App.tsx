@@ -1,4 +1,4 @@
-import { BookOpen, ChartColumn, FileDown, LayoutGrid, Flag, Moon, Sun, Link2, ListChecks, RotateCcw, Search, X } from 'lucide-react'
+import { BookOpen, ChartColumn, FileDown, Highlighter, LayoutGrid, Flag, Moon, Sun, Link2, ListChecks, RotateCcw, Search, X } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Cinta } from './components/Cinta'
 import { Detalle } from './components/Detalle'
@@ -284,11 +284,11 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
               type="button"
               aria-pressed={filtro === 'inscribir'}
               onClick={() => setFiltro((f) => (f === 'todo' ? 'inscribir' : 'todo'))}
-              className={`h-9 rounded-full px-4 text-[14px] font-semibold transition-colors ${
+              className={`flex h-9 items-center gap-2 rounded-full px-4 text-[14px] font-semibold transition-colors ${
                 filtro === 'inscribir' ? 'bg-marea text-white' : 'bg-superficie text-tinta ring-1 ring-bruma hover:ring-marea'
               }`}
             >
-              Destacar lo que puedo inscribir
+              <Highlighter size={16} /> Destacar lo que puedo inscribir
             </button>
           </>
         )}
