@@ -203,7 +203,7 @@ function UsarMalla() {
             más te conviene priorizar y una estimación mínima de los semestres que te faltan.
           </Item>
           <Item icono={<FileDown size={16} />} titulo="Descargar PDF">
-            Genera un informe con tu malla, tu avance y los ramos que puedes inscribir. Puedes agregar tu nombre.
+            Genera un informe con tu malla, tus estadísticas en gráficos y los ramos que puedes inscribir. Puedes agregar tu nombre.
           </Item>
           <Item icono={<RotateCcw size={15} />} titulo="Reiniciar">
             Borra tu avance de la malla actual. Pide confirmación antes de hacerlo.
