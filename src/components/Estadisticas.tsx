@@ -1,3 +1,4 @@
+import { Info } from 'lucide-react'
 import { useId, useState, type ReactNode } from 'react'
 import type { Malla } from '../data/types'
 import type { Estadisticas as Datos } from '../lib/estadisticas'
@@ -113,7 +114,7 @@ function Proyeccion({ datos }: { datos: Datos }) {
     )
   }
   return (
-    <Tarjeta titulo="Proyección de egreso" bajada="Estimación mínima para terminar la carrera">
+    <Tarjeta titulo="Proyección de egreso" bajada="Semestres que te faltan, como mínimo">
       <p className="font-display leading-none font-extrabold">
         <span className="text-[44px] tabular-nums">{minimo}</span>
         <span className="ml-2 text-[20px]">{minimo === 1 ? 'semestre' : 'semestres'}</span>
@@ -128,8 +129,12 @@ function Proyeccion({ datos }: { datos: Datos }) {
           larga tiene {porPreviaturas} {porPreviaturas === 1 ? 'eslabón' : 'eslabones'}, y cada uno toma al menos un semestre.
         </li>
       </ul>
-      <p className="mt-3 text-[12px] text-mar-suave">
-        Es un mínimo: no considera ramos que se puedan reprobar ni el período en que se dicta cada uno.
+      <p className="mt-3 flex items-start gap-2 rounded-lg bg-niebla px-3 py-2.5 text-[12px] leading-snug text-mar-suave">
+        <Info size={15} className="mt-px shrink-0 text-marea" aria-hidden />
+        <span>
+          <strong className="font-semibold text-tinta">Estimación referencial.</strong> Supone que apruebas todos los ramos que
+          inscribas y no considera el período en que se dicta cada uno, así que tu egreso real puede tomar más tiempo.
+        </span>
       </p>
     </Tarjeta>
   )

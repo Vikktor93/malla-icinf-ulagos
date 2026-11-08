@@ -1,7 +1,7 @@
 import type { jsPDF } from 'jspdf'
 import type { Malla } from '../data/types'
 import type { Estadisticas } from './estadisticas'
-import { BRUMA, MAR, MAR_SUAVE, MAREA } from './pdfColores'
+import { BRUMA, MAR, MAR_SUAVE, MAREA, NIEBLA } from './pdfColores'
 
 const pct = (a: number, b: number) => (b === 0 ? 0 : Math.round((a / b) * 100))
 
@@ -53,7 +53,7 @@ export function dibujarEstadisticas(doc: jsPDF, malla: Malla, e: Estadisticas) {
   // Proyección de egreso
   x += w1 + gap
   const p = e.proyeccion
-  tarjeta(x, y1, w1, h1, 'Proyección de egreso', 'Estimación mínima para terminar la carrera')
+  tarjeta(x, y1, w1, h1, 'Proyección de egreso', 'Semestres que faltan, como mínimo')
   doc.setTextColor(MAR)
   doc.setFont('helvetica', 'bold')
   if (p.sctPendientes === 0) {
@@ -61,29 +61,43 @@ export function dibujarEstadisticas(doc: jsPDF, malla: Malla, e: Estadisticas) {
     doc.text('Malla completa', x + 5, y1 + 30)
   } else {
     doc.setFontSize(30)
-    doc.text(String(p.minimo), x + 5, y1 + 32)
+    doc.text(String(p.minimo), x + 5, y1 + 28)
     const anchoNum = doc.getTextWidth(String(p.minimo))
     doc.setFontSize(13)
-    doc.text(p.minimo === 1 ? 'semestre' : 'semestres', x + 7 + anchoNum, y1 + 32)
+    doc.text(p.minimo === 1 ? 'semestre' : 'semestres', x + 7 + anchoNum, y1 + 28)
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(8)
     const lineas = [
       `${p.porCreditos} por créditos: faltan ${p.sctPendientes} SCT, con hasta ${p.cargaSemestral} SCT por semestre.`,
       `${p.porPreviaturas} por previaturas: la cadena de ramos pendientes más larga tiene ${p.porPreviaturas} ${p.porPreviaturas === 1 ? 'eslabón' : 'eslabones'}.`,
     ]
-    let yy = y1 + 41
+    let yy = y1 + 36
     for (const l of lineas) {
       const partes = doc.splitTextToSize(l, w1 - 10) as string[]
-      doc.text(partes, x + 5, yy)
-      yy += partes.length * 3.6 + 1.5
+      doc.text(partes, x + 5, yy, { lineHeightFactor: 1.25 })
+      yy += partes.length * 3.5 + 1.2
     }
+    // Nota con ícono de información, sobre fondo suave
+    doc.setFontSize(7)
+    const nota = doc.splitTextToSize(
+      'Estimación referencial: supone que se aprueban todos los ramos inscritos y no considera el período en que se dicta cada uno, así que el egreso real puede tomar más tiempo.',
+      w1 - 19,
+    ) as string[]
+    const altoNota = nota.length * 2.9 + 3.6
+    const yNota = y1 + h1 - 4 - altoNota
+    doc.setFillColor(NIEBLA)
+    doc.roundedRect(x + 4, yNota, w1 - 8, altoNota, 1.5, 1.5, 'F')
+    doc.setDrawColor(MAREA)
+    doc.setLineWidth(0.3)
+    doc.circle(x + 8, yNota + 3.4, 1.6, 'S')
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(6)
+    doc.setTextColor(MAREA)
+    doc.text('i', x + 8, yNota + 4.4, { align: 'center' })
+    doc.setFont('helvetica', 'normal')
     doc.setFontSize(7)
     doc.setTextColor(MAR_SUAVE)
-    doc.text(
-      doc.splitTextToSize('Es un mínimo: no considera ramos que se puedan reprobar ni el período en que se dicta cada uno.', w1 - 10) as string[],
-      x + 5,
-      y1 + h1 - 7,
-    )
+    doc.text(nota, x + 11.5, yNota + 4.3)
   }
 
   // Ramos clave pendientes
