@@ -216,7 +216,7 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
                 ? 'Completaste la malla'
                 : `Ramos para tu semestre ${referencia}`}
               {!carreraCompleta && (
-                <span className="grid h-6 min-w-6 place-items-center rounded-full bg-[#EBC24A] px-1.5 text-[13px] font-extrabold text-mar tabular-nums shadow-[0_0_0_2px_rgba(18,53,64,0.12)]">
+                <span className="grid h-6 min-w-6 place-items-center rounded-full bg-[#0b6b63] px-1.5 text-[13px] font-extrabold text-white tabular-nums">
                   {disponibles}
                 </span>
               )}
