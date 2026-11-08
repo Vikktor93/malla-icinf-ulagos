@@ -503,7 +503,9 @@ function Bienvenida({ onElegir }: { onElegir: (id: Malla['id']) => void }) {
     <div className="grid min-h-dvh place-items-center bg-mar px-5 py-12 text-white">
       <div className="w-full max-w-[920px]">
         <img src={logo} alt="Logo de Ingeniería Civil en Informática, Universidad de Los Lagos" className="mb-7 size-24 sm:size-28" />
-        <p className="text-[14px] text-white/65">Ingeniería Civil en Informática, Universidad de Los Lagos</p>
+        <p className="text-[14px] text-white/65">
+          Ingeniería Civil en Informática, Departamento de Ciencias de la Ingeniería, Universidad de Los Lagos
+        </p>
         <h1 className="mt-3 font-display text-[40px] leading-[1.02] font-extrabold sm:text-[60px] md:whitespace-nowrap">
           ¿Con qué malla estudias?
         </h1>
