@@ -4,6 +4,7 @@ import { Cinta } from './components/Cinta'
 import { Detalle } from './components/Detalle'
 import { Estadisticas } from './components/Estadisticas'
 import { Guia } from './components/Guia'
+import { IconoGitHub } from './components/IconoGitHub'
 import { Inscribir } from './components/Inscribir'
 import { MapaMalla } from './components/MapaMalla'
 import { Reportar } from './components/Reportar'
@@ -411,8 +412,9 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
             href="https://github.com/Vikktor93/malla-icinf-ulagos"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-semibold text-tinta underline underline-offset-2"
+            className="inline-flex items-baseline gap-1 font-semibold text-tinta underline underline-offset-2"
           >
+            <IconoGitHub size={13} className="self-center" />
             @Vikktor93
           </a>
           .
