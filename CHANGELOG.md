@@ -4,6 +4,21 @@ Todos los cambios relevantes de la plataforma se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el proyecto usa
 [versionamiento semántico](https://semver.org/lang/es/).
 
+## [1.7.2] - 2026-11-07
+
+### Agregado
+
+- Etiqueta con la versión de la plataforma en el footer, que enlaza al último Release.
+- Ícono de GitHub junto a @Vikktor93 en el footer.
+- Ícono en el botón "Destacar lo que puedo inscribir".
+
+### Cambiado
+
+- Los porcentajes de avance muestran solo "de avance hacia la Licenciatura" y "de avance hacia el
+  Título profesional", sin la línea de SCT.
+- El contador de ramos del botón "Ramos para tu semestre" pasa a verde oscuro.
+- La pantalla de inicio menciona el Departamento de Ciencias de la Ingeniería.
+
 ## [1.7.1] - 2026-11-07
 
 ### Cambiado
@@ -132,6 +147,7 @@ Primera versión publicada en https://malla-icinf-ulagos.vercel.app/.
 - Guía de uso integrada y opción para reportar problemas en GitHub.
 - Indicadores de avance hacia la Licenciatura y el Título profesional.
 
+[1.7.2]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.7.2
 [1.7.1]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.7.1
 [1.7.0]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.7.0
 [1.6.0]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.6.0

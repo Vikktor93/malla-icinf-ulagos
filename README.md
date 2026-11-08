@@ -63,6 +63,7 @@ qué pueden inscribir.
 | [Vite 8](https://vite.dev/) | Servidor de desarrollo y compilación para producción |
 | [Tailwind CSS 4](https://tailwindcss.com/) | Estilos y diseño responsive |
 | [Lucide](https://lucide.dev/) | Íconos |
+| [Simple Icons](https://simpleicons.org/) | Ícono de GitHub |
 | [jsPDF 4](https://github.com/parallax/jsPDF) y [jsPDF-AutoTable 5](https://github.com/simonbengtsson/jsPDF-AutoTable) | Generación del informe de avance en PDF |
 | [Fontsource](https://fontsource.org/) | Tipografías Bricolage Grotesque e Instrument Sans, incluidas en el sitio |
 | [Oxlint](https://oxc.rs/docs/guide/usage/linter) | Revisión de calidad del código |
@@ -123,6 +124,7 @@ qué pueden inscribir.
             ├── Detalle.tsx
             ├── Estadisticas.tsx
             ├── Guia.tsx
+            ├── IconoGitHub.tsx
             ├── Inscribir.tsx
             ├── MapaMalla.tsx
             ├── Modal.tsx
@@ -289,4 +291,4 @@ Si tienes una idea para mejorar la plataforma, compártela en
 
 ---
 
-**Versión:** 1.7.1 | **Última actualización:** 7 de noviembre de 2026
+**Versión:** 1.7.2 | **Última actualización:** 7 de noviembre de 2026
