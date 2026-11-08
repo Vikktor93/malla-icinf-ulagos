@@ -4,6 +4,18 @@ Todos los cambios relevantes de la plataforma se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el proyecto usa
 [versionamiento semántico](https://semver.org/lang/es/).
 
+## [1.7.1] - 2026-11-07
+
+### Cambiado
+
+- Los porcentajes de la barra superior dicen "de avance hacia la Licenciatura" y "de avance hacia
+  el Título profesional", con una línea que muestra los SCT aprobados sobre el total de cada hito.
+- La nota sobre la Dirección Docente en el panel de inscripción queda más pequeña y separada del
+  texto anterior.
+- La proyección de egreso se presenta como estimación referencial, en un recuadro con ícono de
+  información, en la plataforma y en el PDF.
+- El contador de ramos del botón "Ramos para tu semestre" se destaca en amarillo.
+
 ## [1.7.0] - 2026-11-07
 
 Completa la fase 5: estadísticas para el estudiante.
@@ -120,6 +132,7 @@ Primera versión publicada en https://malla-icinf-ulagos.vercel.app/.
 - Guía de uso integrada y opción para reportar problemas en GitHub.
 - Indicadores de avance hacia la Licenciatura y el Título profesional.
 
+[1.7.1]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.7.1
 [1.7.0]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.7.0
 [1.6.0]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.6.0
 [1.5.0]: https://github.com/Vikktor93/malla-icinf-ulagos/releases/tag/v1.5.0

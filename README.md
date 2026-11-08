@@ -289,4 +289,4 @@ Si tienes una idea para mejorar la plataforma, compártela en
 
 ---
 
-**Versión:** 1.7.0 | **Última actualización:** 7 de noviembre de 2026
+**Versión:** 1.7.1 | **Última actualización:** 7 de noviembre de 2026
