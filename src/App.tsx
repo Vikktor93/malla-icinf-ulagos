@@ -418,6 +418,15 @@ function Plataforma({ prog, malla }: { prog: ReturnType<typeof useProgreso>; mal
             @Vikktor93
           </a>
           .
+          <a
+            href="https://github.com/Vikktor93/malla-icinf-ulagos/releases/latest"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Ver las novedades de esta versión"
+            className="ml-2 inline-flex items-center rounded-full bg-superficie px-2 py-px align-[1px] text-[11.5px] font-semibold text-mar-suave ring-1 ring-bruma tabular-nums hover:text-tinta hover:ring-marea"
+          >
+            v{__VERSION__}
+          </a>
         </p>
       </footer>
 
