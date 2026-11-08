@@ -36,8 +36,8 @@ qué pueden inscribir.
 - Avance guardado automáticamente en el navegador (sin cuenta ni archivos) y botón para
   compartirlo por enlace.
 - Descarga del avance en PDF, con el nombre del estudiante como dato opcional: resumen con la malla
-  en miniatura, ramos que puede inscribir, plan de inscripción y estado de cada asignatura por
-  semestre.
+  en miniatura, página de estadísticas con los mismos gráficos de la plataforma, ramos que puede
+  inscribir, plan de inscripción y estado de cada asignatura por semestre.
 - Indicadores de avance: créditos y ramos aprobados, porcentaje hacia la Licenciatura (semestres
   1 al 8) y hacia el Título profesional (toda la malla).
 - Vista "Mis estadísticas" con gráficos de avance por semestre y por área de formación,
@@ -137,6 +137,8 @@ qué pueden inscribir.
             ├── estadisticas.ts
             ├── malla.ts
             ├── pdf.ts
+            ├── pdfColores.ts
+            ├── pdfEstadisticas.ts
             ├── useProgreso.ts
             ├── useTema.ts
         ├── App.tsx
@@ -223,7 +225,7 @@ repositorio:
 - [x] Indicadores circulares de avance hacia la Licenciatura y el Título profesional
 - [x] Ramos clave pendientes: los que más ramos desbloquean más adelante
 - [x] Proyección mínima de egreso según los SCT pendientes y la cadena de previaturas más larga
-- [ ] Gráficos incluidos en el informe PDF
+- [x] Gráficos incluidos en el informe PDF
 - [x] Gráficos hechos en SVG propio, compatibles con el modo oscuro y sin dependencias nuevas
 
 ### Fase 6: Accesibilidad
